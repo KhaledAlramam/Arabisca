@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/playerParent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:keepScreenOn="true">
+
+        <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/video_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/black"
+            app:controller_layout_id="@layout/custom_playback_control"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </com.google.android.exoplayer2.ui.PlayerView>
+
+        <!--    <androidx.recyclerview.widget.RecyclerView-->
+        <!--        android:id="@+id/channelCategoryInPlayer"-->
+        <!--        android:layout_width="0dp"-->
+        <!--        android:layout_height="0dp"-->
+        <!--        android:layout_marginStart="16dp"-->
+        <!--        android:layout_marginTop="24dp"-->
+        <!--        android:layout_marginEnd="8dp"-->
+        <!--        android:layout_marginBottom="24dp"-->
+        <!--        android:alpha="0.9"-->
+        <!--        android:background="@drawable/purple_btn_round_corners_background"-->
+        <!--        android:backgroundTint="@color/half_black"-->
+        <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--        app:layout_constraintEnd_toStartOf="@+id/guideline3"-->
+        <!--        app:layout_constraintStart_toStartOf="parent"-->
+        <!--        app:layout_constraintTop_toTopOf="parent"-->
+        <!--        tools:listitem="@layout/adapter_channel_category" />-->
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.20" />
+
+        <!--    <androidx.recyclerview.widget.RecyclerView-->
+        <!--        android:id="@+id/ChannelInPlayerRv"-->
+        <!--        android:layout_width="0dp"-->
+        <!--        android:layout_height="0dp"-->
+        <!--        android:layout_marginTop="24dp"-->
+        <!--        android:layout_marginEnd="8dp"-->
+        <!--        android:layout_marginBottom="24dp"-->
+        <!--        android:alpha="0.9"-->
+        <!--        android:background="@drawable/purple_btn_round_corners_background"-->
+        <!--        android:backgroundTint="@color/half_black"-->
+        <!--        android:visibility="invisible"-->
+        <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--        app:layout_constraintEnd_toStartOf="@+id/guideline6"-->
+        <!--        app:layout_constraintStart_toStartOf="@+id/guideline3"-->
+        <!--        app:layout_constraintTop_toTopOf="parent"-->
+        <!--        tools:listitem="@layout/adapter_channel_item" />-->
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.50" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/fitScreen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/black_bk_selector"
+            android:padding="8dp"
+            android:text="Full Screen"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/closePlayer"
+            app:layout_constraintEnd_toStartOf="@+id/closePlayer"
+            app:layout_constraintTop_toTopOf="@+id/closePlayer" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/closePlayer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/black_bk_selector"
+            android:padding="8dp"
+            android:text="close"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--    <TextView-->
+        <!--        android:id="@+id/epgTextView"-->
+        <!--        android:layout_width="0dp"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:layout_marginEnd="16dp"-->
+        <!--        android:alpha=".8"-->
+        <!--        android:background="@drawable/purple_btn_round_corners_background"-->
+        <!--        android:backgroundTint="@color/half_black"-->
+        <!--        android:visibility="gone"-->
+        <!--        android:padding="8dp"-->
+        <!--        app:layout_constrainedHeight="true"-->
+        <!--        app:layout_constraintBottom_toBottomOf="@+id/ChannelInPlayerRv"-->
+        <!--        app:layout_constraintEnd_toEndOf="parent"-->
+        <!--        app:layout_constraintStart_toStartOf="@+id/guideline6"-->
+        <!--        app:layout_constraintTop_toBottomOf="@+id/fitScreen"-->
+        <!--        app:layout_constraintVertical_bias="1.0" />-->
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="fitScreen,closePlayer" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

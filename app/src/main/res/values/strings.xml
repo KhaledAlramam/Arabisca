@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Go IPTV</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_your_code_here">Enter Your Code Here</string>
+    <string name="enter_your_name_here">Enter Your Name Here</string>
+    <string name="movie_info">RELEASE DATE: %s\tRATE: %s\tDURATION: %s</string>
+    <string name="series_info">RELEASE DATE: %s    RATE: %s    SEASONS: %s</string>
+    <string name="add_to_favourite">Add To Favourites</string>
+    <string name="dashed">-</string>
+    <string name="under_score">_</string>
+    <string name="space">\u0020</string>
+    <string name="cast">Cast: %s</string>
+    <string name="season">Season %s</string>
+    <string name="remove_from_fav">حذف المفضلة</string>
+    <string name="default_notification_channel_id">cobraNotificationChannel</string>
+    <string name="restart_app_to_apply_server">يجب اعادة تشغيل التطبيق لتفعيل التغيير</string>
+    <string name="movies">Movies</string>
+    <string name="series">Series</string>
+    <string name="channels">Channels</string>
+    <string name="movies_">Movies></string>
+    <string name="series_">Series></string>
+    <string name="channels_">Channels></string>
+
+</resources>

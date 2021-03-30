@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="mText">18sp</dimen>
+    <dimen name="mPadding">8dp</dimen>
+    <dimen name="sPadding">4dp</dimen>
+    <dimen name="sText">14sp</dimen>
+    <dimen name="header_text">18sp</dimen>
+    <dimen name="xPadding">16dp</dimen>
+</resources>
