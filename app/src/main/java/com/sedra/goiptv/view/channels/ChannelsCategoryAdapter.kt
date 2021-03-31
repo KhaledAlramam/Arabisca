@@ -9,7 +9,6 @@ import com.sedra.goiptv.utils.CategoryOnClick
 import com.sedra.goiptv.view.department.CustomViewHolder
 
 class ChannelsCategoryAdapter(
-    private val onTv: Boolean,
     var categoryList: List<Category>,
     private val clickListener: CategoryOnClick
 ) : RecyclerView.Adapter<CustomViewHolder>() {

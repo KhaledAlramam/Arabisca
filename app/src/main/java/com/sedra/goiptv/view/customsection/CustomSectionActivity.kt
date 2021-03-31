@@ -103,6 +103,7 @@ class CustomSectionActivity : AppCompatActivity() {
                 GridLayoutManager(this@CustomSectionActivity, 1, LinearLayoutManager.HORIZONTAL, false)
             }
         }
+        getItems(response.data.first().id)
     }
 
     private fun checkTv(): Boolean {

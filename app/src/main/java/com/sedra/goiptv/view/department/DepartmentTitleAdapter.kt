@@ -38,7 +38,7 @@ class DepartmentTitleAdapter(
             holder.itemView.setBackgroundResource(R.drawable.round_corners_8_white)
             itemBinding.departmentName.setTextColor(context.resources.getColor(R.color.mainDark))
         }else{
-            holder.itemView.setBackgroundColor(context.resources.getColor(android.R.color.transparent))
+            holder.itemView.setBackgroundResource(R.drawable.selector_black)
             itemBinding.departmentName.setTextColor(context.resources.getColor(R.color.white))
         }
         holder.itemView.setOnClickListener {

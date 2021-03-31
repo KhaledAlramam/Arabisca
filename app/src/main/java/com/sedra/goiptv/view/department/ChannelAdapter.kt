@@ -1,6 +1,5 @@
 package com.sedra.goiptv.view.department
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -44,13 +43,7 @@ class ChannelAdapter(
             movieName.text = currentChannel.name?.replace(itemBinding.root.context.getString(R.string.dashed),
                     itemBinding.root.context.getString(R.string.space))
         }
-        holder.itemView.setOnClickListener {
-        }
         itemBinding.root.setOnClickListener {
-//            val intent = Intent(it.context, PlayChannelActivity::class.java)
-//            intent.putExtra(STREAM_ID_INTENT_EXTRA, currentChannel.streamId)
-//            intent.putExtra(CATEGORY_LIST_INTENT_EXTRA, )
-//            it.context.startActivity(intent)
             listener.onClick(it, currentChannel)
         }
     }

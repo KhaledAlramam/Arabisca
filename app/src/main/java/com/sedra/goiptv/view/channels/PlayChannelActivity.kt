@@ -58,7 +58,7 @@ class PlayChannelActivity : AppCompatActivity() {
         setupUI()
     }
 
-    //
+
     private fun setupUI() {
         val url = "http://${preferences.getString(PREF_URL, "")}:${preferences.getString(PREF_PORT, "")}/"
         countDownTimer = object : CountDownTimer(3000, 1000) {
@@ -111,7 +111,7 @@ class PlayChannelActivity : AppCompatActivity() {
                         player!!.play()
                     }
                 })
-        categoryAdapter = ChannelsCategoryAdapter(false,
+        categoryAdapter = ChannelsCategoryAdapter(
                 intent.extras?.getSerializable(CATEGORY_LIST_INTENT_EXTRA) as List<Category>,
                 object : CategoryOnClick {
                     override fun onClick(view: View, category: Category) {
@@ -124,7 +124,6 @@ class PlayChannelActivity : AppCompatActivity() {
             ChannelInPlayerRv.layoutManager = LinearLayoutManager(this@PlayChannelActivity)
             channelCategoryInPlayer.adapter = categoryAdapter
             ChannelInPlayerRv.adapter = channelsAdapter
-
         }
         fetchChannels()
         binding.apply {
@@ -143,7 +142,7 @@ class PlayChannelActivity : AppCompatActivity() {
         }
     }
 
-    //
+
     private fun fetchChannels() {
         val url = "http://${preferences.getString(PREF_URL, "")}:${preferences.getString(PREF_PORT, "")}/"
         viewModel.getAllChannels().observe(this, {

@@ -9,11 +9,8 @@ import androidx.recyclerview.widget.ListAdapter
 import com.bumptech.glide.Glide
 import com.sedra.goiptv.R
 import com.sedra.goiptv.data.model.CustomItem
-import com.sedra.goiptv.data.model.Movie
 import com.sedra.goiptv.databinding.ListItemMovieSeriesBinding
-import com.sedra.goiptv.utils.MOVIE_ID_PARAMETER
-import com.sedra.goiptv.utils.STREAM_EXT
-import com.sedra.goiptv.view.movie.MovieDetailsActivity
+import com.sedra.goiptv.utils.EXTRA_ITEM
 
 class ItemsAdapter : ListAdapter<CustomItem, CustomViewHolder>(Companion) {
 
@@ -45,10 +42,10 @@ class ItemsAdapter : ListAdapter<CustomItem, CustomViewHolder>(Companion) {
             movieName.text = currentMovie.name.replace(itemBinding.root.context.getString(R.string.dashed),
                     itemBinding.root.context.getString(R.string.space))
         }
-//        itemBinding.root.setOnClickListener {
-//            val intent = Intent(it.context, MovieDetailsActivity::class.java)
-//            intent.putExtra(MOVIE_ID_PARAMETER, currentMovie.stream_id)
-//            it.context.startActivity(intent)
-//        }
+        itemBinding.root.setOnClickListener {
+            val intent = Intent(it.context, PlayItemActivity::class.java)
+            intent.putExtra(EXTRA_ITEM, currentMovie)
+            it.context.startActivity(intent)
+        }
     }
 }

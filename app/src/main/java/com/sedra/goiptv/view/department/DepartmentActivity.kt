@@ -17,10 +17,7 @@ import com.sedra.goiptv.data.model.LiveStream
 import com.sedra.goiptv.data.model.Movie
 import com.sedra.goiptv.data.model.Series
 import com.sedra.goiptv.databinding.ActivityDepartmentBinding
-import com.sedra.goiptv.utils.CATEGORY_LIST_INTENT_EXTRA
-import com.sedra.goiptv.utils.ChannelOnClick
-import com.sedra.goiptv.utils.EXTRA_TYPE_ID
-import com.sedra.goiptv.utils.STREAM_ID_INTENT_EXTRA
+import com.sedra.goiptv.utils.*
 import com.sedra.goiptv.utils.Status.*
 import com.sedra.goiptv.view.channels.PlayChannelActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -102,10 +99,11 @@ class DepartmentActivity : AppCompatActivity() {
         channelList.addAll(list)
         val channelAdapter = ChannelAdapter(object : ChannelOnClick {
             override fun onClick(view: View, liveStream: LiveStream) {
-                val intent = Intent(this@DepartmentActivity, PlayChannelActivity::class.java)
-                intent.putExtra(STREAM_ID_INTENT_EXTRA, liveStream.streamId)
-                intent.putExtra(CATEGORY_LIST_INTENT_EXTRA, catList)
-                this@DepartmentActivity.startActivity(intent)
+                GoTo.playChannel(this@DepartmentActivity, liveStream.streamId!!, catList)
+                val i = Intent(this@DepartmentActivity, PlayChannelActivity::class.java)
+                i.putExtra(STREAM_ID_INTENT_EXTRA, liveStream.streamId)
+                i.putExtra(CATEGORY_LIST_INTENT_EXTRA, catList)
+                startActivity(i)
             }
         })
 
