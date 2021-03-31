@@ -99,11 +99,11 @@ class DepartmentActivity : AppCompatActivity() {
         channelList.addAll(list)
         val channelAdapter = ChannelAdapter(object : ChannelOnClick {
             override fun onClick(view: View, liveStream: LiveStream) {
-                GoTo.playChannel(this@DepartmentActivity, liveStream.streamId!!, catList)
-                val i = Intent(this@DepartmentActivity, PlayChannelActivity::class.java)
-                i.putExtra(STREAM_ID_INTENT_EXTRA, liveStream.streamId)
-                i.putExtra(CATEGORY_LIST_INTENT_EXTRA, catList)
-                startActivity(i)
+                GoTo.playChannel(
+                        this@DepartmentActivity,
+                        liveStream.streamId!!,
+                        liveStream.streamIcon!!,
+                        catList)
             }
         })
 

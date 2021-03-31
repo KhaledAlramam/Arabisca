@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="movieDetails"
+            name="seriesDetails"
             type="com.sedra.goiptv.data.model.series_models.SeriesDetailsResponse" />
     </data>
 
@@ -15,14 +15,31 @@
         android:background="@color/mainDark"
         tools:context=".view.series.SeriesDetailsActivity">
 
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/openSeasons"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/round_input_text"
+            android:backgroundTint="@color/white"
+            android:minHeight="0dp"
+            android:padding="8dp"
+            android:text="Seasons"
+            android:textColor="@color/mainDark"
+            app:layout_constraintEnd_toStartOf="@+id/cardView"
+            app:layout_constraintStart_toEndOf="@+id/imageView5"
+            app:layout_constraintTop_toTopOf="@+id/cardView" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:adjustViewBounds="true"
+            app:layout_constraintBottom_toBottomOf="@+id/openSeasons"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/openSeasons"
             app:srcCompat="@drawable/logo" />
 
         <TextView
@@ -32,9 +49,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
-            android:text="@{movieDetails.info.name.replace(@string/dashed, @string/space)}"
-            android:textStyle="bold"
+            android:text="@{seriesDetails.info.name.replace(@string/dashed, @string/space)}"
             android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/cardView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView5" />
@@ -46,17 +63,17 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
-            android:text="@{String.format(@string/movie_info, movieDetails.info.releaseDate, movieDetails.info.rating, movieDetails.seasons.size())}"
+            android:text="@{String.format(@string/series_info, seriesDetails.info.releaseDate, seriesDetails.info.rating, seriesDetails.seasons.size())}"
             app:layout_constraintEnd_toStartOf="@+id/cardView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
         <TextView
             android:id="@+id/textView9"
+            style="@style/header_style"
             android:text="About"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView8"
-            style="@style/header_style" />
+            app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
         <TextView
             android:id="@+id/textView10"
@@ -65,7 +82,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
-            android:text="@{movieDetails.info.plot}"
+            android:text="@{seriesDetails.info.plot}"
             app:layout_constraintEnd_toStartOf="@+id/cardView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView9" />
@@ -84,7 +101,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
-            android:text="@{movieDetails.info.cast}"
+            android:text="@{seriesDetails.info.cast}"
             app:layout_constraintEnd_toStartOf="@+id/cardView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView11" />

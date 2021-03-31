@@ -47,10 +47,11 @@ object GoTo{
         context.startActivity(i)
     }
 
-    fun playChannel(context: Context, id: Int, catList: ArrayList<Category>){
+    fun playChannel(context: Context, id: Int, streamIcon: String, catList: ArrayList<Category>){
         val i = Intent(context, PlayChannelActivity::class.java)
         i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
         i.putExtra(STREAM_ID_INTENT_EXTRA, id)
+        i.putExtra(STREAM_IMG, streamIcon)
         i.putExtra(CATEGORY_LIST_INTENT_EXTRA, catList)
         context.startActivity(i)
     }

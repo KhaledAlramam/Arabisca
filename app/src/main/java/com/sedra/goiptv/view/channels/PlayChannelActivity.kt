@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
@@ -67,7 +68,7 @@ class PlayChannelActivity : AppCompatActivity() {
 
             override fun onFinish() {
                 binding.group.visibility = View.GONE
-                binding.epgTextView.visibility = View.GONE
+                binding.bottomBannerGroup.visibility = View.GONE
                 binding.ChannelInPlayerRv.visibility = View.GONE
             }
         }
@@ -90,9 +91,9 @@ class PlayChannelActivity : AppCompatActivity() {
                 object : ChannelOnClick {
                     override fun onClick(view: View, liveStream: LiveStream) {
                         if (epgMap[liveStream.streamId!!] == null) {
-                            fetchEpg(liveStream)
+                            fetchEpg(liveStream.streamId!!)
                         } else
-                            populateEpgAndDetermineVisibility(epgMap[liveStream.streamId!!])
+                            populateEpgAndDetermineVisibility(epgMap[liveStream.streamId!!], liveStream.streamIcon)
                         val currentId = liveStream.streamId
                         Log.e(
                                 "TAG",
@@ -130,16 +131,18 @@ class PlayChannelActivity : AppCompatActivity() {
             videoView.setOnClickListener {
                 if (group.visibility == View.VISIBLE) {
                     group.visibility = View.GONE
-                    epgTextView.visibility = View.GONE
                     ChannelInPlayerRv.visibility = View.GONE
                 } else {
                     group.visibility = View.VISIBLE
-                    epgTextView.visibility = View.VISIBLE
                     ChannelInPlayerRv.visibility = View.VISIBLE
                 }
             }
 
         }
+        fetchEpg(
+                intent.getIntExtra(STREAM_ID_INTENT_EXTRA, 0),
+                intent.getStringExtra(STREAM_IMG),
+        )
     }
 
 
@@ -185,14 +188,14 @@ class PlayChannelActivity : AppCompatActivity() {
         })
     }
 
-    private fun fetchEpg(channel: LiveStream) {
-        viewModel.getEpg(channel.streamId!!, 2)
+    private fun fetchEpg(streamId: Int, streamIcon:String? = null) {
+        viewModel.getEpg(streamId, 2)
                 .observe(this) {
                     it?.let { resource ->
                         when (resource.status) {
                             SUCCESS -> {
-                                epgMap[channel.streamId!!] = it.data!!.epg_listings
-                                populateEpgAndDetermineVisibility(epgMap[channel.streamId!!])
+                                epgMap[streamId] = it.data!!.epg_listings
+                                populateEpgAndDetermineVisibility(epgMap[streamId], streamIcon)
                             }
                             ERROR -> {
                             }
@@ -204,28 +207,37 @@ class PlayChannelActivity : AppCompatActivity() {
     }
 
     //
-    private fun populateEpgAndDetermineVisibility(epgList: List<EpgListings>?) {
-        binding.epgTextView.text = ""
+    private fun populateEpgAndDetermineVisibility(epgList: List<EpgListings>?, streamIcon: String?) {
+        Glide.with(this@PlayChannelActivity)
+                .load(streamIcon)
+                .into(binding.channelImg)
         if (epgList != null) {
             if (epgList.isNotEmpty()) {
-                var addedLine = false
-                binding.epgTextView.isVisible = true
-                for (epgItem in epgList) {
-                    val startTime = epgItem.start.split(" ")[1]
-                    val endTime = epgItem.end.split(" ")[1]
-                    val decodedBytes: ByteArray = Base64.decode(epgItem.title, Base64.DEFAULT)
-                    val decodedString = String(decodedBytes)
-                    binding.epgTextView.append("$startTime -> $endTime | $decodedString")
-                    if (!addedLine) binding.epgTextView.append("\n")
-                    addedLine = true
+                val epgItem = epgList[0]
+                val startTime = epgItem.start.split(" ")[1]
+                val endTime = epgItem.end.split(" ")[1]
+                val decodedBytes: ByteArray = Base64.decode(epgItem.title, Base64.DEFAULT)
+                val decodedString = String(decodedBytes)
+                val secondEpgItem = epgList.last()
+                val startTimeNext = secondEpgItem.start.split(" ")[1]
+                val endTimeNext = secondEpgItem.end.split(" ")[1]
+                val decodedBytesNext: ByteArray = Base64.decode(secondEpgItem.title, Base64.DEFAULT)
+                val decodedStringNext = String(decodedBytesNext)
+                binding.apply {
+                    upNextTime.text = "$startTimeNext -> $endTimeNext"
+                    upNextTitle.text = decodedStringNext
+                    nowWatchingTime.text = "$startTime -> $endTime"
+                    nowWatchingTitle.text = decodedString
+
                 }
             } else {
-                binding.epgTextView.visibility = View.GONE
+//                binding.bottomBannerGroup.visibility = View.GONE
             }
         } else {
-            binding.epgTextView.visibility = View.GONE
+//            binding.bottomBannerGroup.visibility = View.GONE
         }
     }
+
 
     override fun onPause() {
         super.onPause()
@@ -295,12 +307,7 @@ class PlayChannelActivity : AppCompatActivity() {
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
 
-        countDownTimer.cancel()
-        countDownTimer.start()
-        if (binding.group.visibility == View.GONE) {
-            binding.group.visibility = View.VISIBLE
-
-        }
+        restartTimer()
 
         when (keyCode) {
             KeyEvent.KEYCODE_MEDIA_FAST_FORWARD -> {
@@ -313,6 +320,15 @@ class PlayChannelActivity : AppCompatActivity() {
 
 
         return super.onKeyDown(keyCode, event)
+    }
+
+    private fun restartTimer() {
+        countDownTimer.cancel()
+        countDownTimer.start()
+        if (binding.group.visibility == View.GONE) {
+            binding.group.visibility = View.VISIBLE
+            binding.bottomBannerGroup.isVisible = true
+        }
     }
 
     override fun onDestroy() {

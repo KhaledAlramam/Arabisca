@@ -43,8 +43,6 @@ class MovieAdapter : ListAdapter<Movie, CustomViewHolder>(Companion) {
             movieName.text = currentMovie.name.replace(itemBinding.root.context.getString(R.string.dashed),
                     itemBinding.root.context.getString(R.string.space))
         }
-        holder.itemView.setOnClickListener {
-        }
         itemBinding.root.setOnClickListener {
             val intent = Intent(it.context, MovieDetailsActivity::class.java)
             intent.putExtra(MOVIE_ID_PARAMETER, currentMovie.stream_id)
