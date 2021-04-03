@@ -96,8 +96,11 @@
             android:padding="8dp"
             android:text="Close"
             android:visibility="visible"
+            android:focusableInTouchMode="true"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" >
+            <requestFocus/>
+        </androidx.appcompat.widget.AppCompatButton>
 
 
         <androidx.constraintlayout.widget.Group

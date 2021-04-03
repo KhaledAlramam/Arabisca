@@ -1,5 +1,7 @@
 package com.sedra.goiptv.view.department
 
+import android.app.Activity
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -10,9 +12,12 @@ import com.sedra.goiptv.R
 import com.sedra.goiptv.data.model.LiveStream
 import com.sedra.goiptv.databinding.ListItemMovieSeriesBinding
 import com.sedra.goiptv.utils.*
+import com.sedra.goiptv.view.channels.PlayChannelsNewActivity
 
 class ChannelAdapter(
-        val listener: ChannelOnClick
+        val activity: Activity,
+        val listener: ChannelOnClick,
+        val inPlayer: Boolean = false
 ) : ListAdapter<LiveStream, CustomViewHolder>(Companion) {
 
     companion object : DiffUtil.ItemCallback<LiveStream>() {
@@ -43,8 +48,8 @@ class ChannelAdapter(
             movieName.text = currentChannel.name?.replace(itemBinding.root.context.getString(R.string.dashed),
                     itemBinding.root.context.getString(R.string.space))
         }
-        itemBinding.root.setOnClickListener {
-            listener.onClick(it, currentChannel)
+        itemBinding.root.setOnClickListener { v ->
+            listener.onClick(v, currentChannel)
         }
     }
 }

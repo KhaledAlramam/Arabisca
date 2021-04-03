@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sedra.goiptv">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <uses-feature
         android:name="android.software.leanback"
@@ -21,7 +23,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GoIPTV"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.department.DepartmentActivity"
+        <activity android:name=".view.channels.PlayChannelsNewActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".view.department.DepartmentActivity"
             android:configChanges="orientation"
             android:screenOrientation="landscape" />
         <activity
@@ -47,24 +53,26 @@
             android:name=".view.sections.MainActivity"
             android:configChanges="orientation"
             android:screenOrientation="landscape" />
-        <activity android:name=".view.movie.PlayMovieActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="landscape"/>
-        <activity android:name=".view.series.SeriesDetailsForTv"
+        <activity
+            android:name=".view.movie.PlayMovieActivity"
             android:configChanges="orientation"
             android:screenOrientation="landscape" />
-        <activity android:name=".view.series.PlaySeriesActivity"
+        <activity
+            android:name=".view.series.SeriesDetailsForTv"
             android:configChanges="orientation"
             android:screenOrientation="landscape" />
-        <activity android:name=".view.channels.PlayChannelActivity"
+        <activity
+            android:name=".view.series.PlaySeriesActivity"
             android:configChanges="orientation"
             android:screenOrientation="landscape" />
-        <activity android:name=".view.customsection.CustomSectionActivity"
+        <activity
+            android:name=".view.customsection.CustomSectionActivity"
             android:configChanges="orientation"
-            android:screenOrientation="landscape"  />
-        <activity android:name=".view.customsection.PlayItemActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".view.customsection.PlayItemActivity"
             android:configChanges="orientation"
-            android:screenOrientation="landscape"  />
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

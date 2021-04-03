@@ -12,14 +12,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sedra.goiptv.R
-import com.sedra.goiptv.data.model.Category
-import com.sedra.goiptv.data.model.LiveStream
-import com.sedra.goiptv.data.model.Movie
-import com.sedra.goiptv.data.model.Series
+import com.sedra.goiptv.data.model.*
 import com.sedra.goiptv.databinding.ActivityDepartmentBinding
 import com.sedra.goiptv.utils.*
 import com.sedra.goiptv.utils.Status.*
-import com.sedra.goiptv.view.channels.PlayChannelActivity
+import com.sedra.goiptv.view.channels.PlayChannelsNewActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -97,13 +94,12 @@ class DepartmentActivity : AppCompatActivity() {
     private fun manipulateChannels(categories: List<Category>, list: List<LiveStream>) {
         channelList.clear()
         channelList.addAll(list)
-        val channelAdapter = ChannelAdapter(object : ChannelOnClick {
+        val channelAdapter = ChannelAdapter(this, object : ChannelOnClick {
             override fun onClick(view: View, liveStream: LiveStream) {
-                GoTo.playChannel(
-                        this@DepartmentActivity,
-                        liveStream.streamId!!,
-                        liveStream.streamIcon!!,
-                        catList)
+                val i = Intent(this@DepartmentActivity, PlayChannelsNewActivity::class.java)
+                i.putExtra(STREAM_ID_INTENT_EXTRA, liveStream.streamId)
+                i.putExtra(STREAM_IMG, liveStream.streamIcon)
+                startActivity(i)
             }
         })
 
@@ -263,7 +259,7 @@ class DepartmentActivity : AppCompatActivity() {
             layoutManager = if (checkTv()) {
                 GridLayoutManager(this@DepartmentActivity, 2, LinearLayoutManager.HORIZONTAL, false)
             } else {
-                GridLayoutManager(this@DepartmentActivity, 1, LinearLayoutManager.HORIZONTAL, false)
+                GridLayoutManager(this@DepartmentActivity, 2, LinearLayoutManager.HORIZONTAL, false)
             }
         }
         gridAdapter.submitList(categories[0].movies)

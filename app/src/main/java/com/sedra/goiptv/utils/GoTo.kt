@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import com.sedra.goiptv.data.model.Category
-import com.sedra.goiptv.view.channels.PlayChannelActivity
+import com.sedra.goiptv.view.channels.PlayChannelsNewActivity
 import com.sedra.goiptv.view.customsection.CustomSectionActivity
 import com.sedra.goiptv.view.movie.MovieDetailsActivity
 import com.sedra.goiptv.view.department.DepartmentActivity
@@ -48,8 +48,8 @@ object GoTo{
     }
 
     fun playChannel(context: Context, id: Int, streamIcon: String, catList: ArrayList<Category>){
-        val i = Intent(context, PlayChannelActivity::class.java)
-        i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+        val i = Intent(context, PlayChannelsNewActivity::class.java)
+//        i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
         i.putExtra(STREAM_ID_INTENT_EXTRA, id)
         i.putExtra(STREAM_IMG, streamIcon)
         i.putExtra(CATEGORY_LIST_INTENT_EXTRA, catList)

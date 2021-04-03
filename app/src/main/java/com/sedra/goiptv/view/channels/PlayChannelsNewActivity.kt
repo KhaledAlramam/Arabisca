@@ -1,6 +1,7 @@
 package com.sedra.goiptv.view.channels
 
 import android.content.SharedPreferences
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Base64
@@ -8,7 +9,6 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,22 +19,16 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.util.Util
 import com.sedra.goiptv.R
-import com.sedra.goiptv.data.model.Category
-import com.sedra.goiptv.data.model.EpgListings
-import com.sedra.goiptv.data.model.LiveStream
-import com.sedra.goiptv.data.model.UserInfo
+import com.sedra.goiptv.data.model.*
 import com.sedra.goiptv.databinding.ActivityPlayChannelBinding
 import com.sedra.goiptv.utils.*
-import com.sedra.goiptv.utils.Status.*
 import com.sedra.goiptv.view.department.ChannelAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class PlayChannelActivity : AppCompatActivity() {
-
-    var _binding: ActivityPlayChannelBinding? = null
-    val binding by lazy { _binding!! }
+class PlayChannelsNewActivity : AppCompatActivity() {
+    var binding: ActivityPlayChannelBinding? = null
     val viewModel: ChannelsViewModel by viewModels()
     var player: SimpleExoPlayer? = null
     private var playWhenReady = true
@@ -52,13 +46,14 @@ class PlayChannelActivity : AppCompatActivity() {
     private val epgMap = HashMap<Int, List<EpgListings>>()
     lateinit var categoryAdapter: ChannelsCategoryAdapter
     lateinit var channelsAdapter: ChannelAdapter
+    private val catList = ArrayList<Category>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = DataBindingUtil.setContentView(this, R.layout.activity_play_channel)
-        setupUI()
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_play_channel)
+        getChannelsData()
     }
-
 
     private fun setupUI() {
         val url = "http://${preferences.getString(PREF_URL, "")}:${preferences.getString(PREF_PORT, "")}/"
@@ -67,12 +62,15 @@ class PlayChannelActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
-                binding.group.visibility = View.GONE
-                binding.bottomBannerGroup.visibility = View.GONE
-                binding.ChannelInPlayerRv.visibility = View.GONE
+                binding?.apply{
+                    group.visibility = View.GONE
+                    bottomBannerGroup.visibility = View.GONE
+                    ChannelInPlayerRv.visibility = View.GONE
+                }
+
             }
         }
-        binding.apply {
+        binding?.apply {
             fitScreen.setOnClickListener {
                 if (originalSize) {
                     videoView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FILL
@@ -87,7 +85,7 @@ class PlayChannelActivity : AppCompatActivity() {
                 finish()
             }
         }
-        channelsAdapter = ChannelAdapter(
+        channelsAdapter = ChannelAdapter(this,
                 object : ChannelOnClick {
                     override fun onClick(view: View, liveStream: LiveStream) {
                         if (epgMap[liveStream.streamId!!] == null) {
@@ -95,14 +93,9 @@ class PlayChannelActivity : AppCompatActivity() {
                         } else
                             populateEpgAndDetermineVisibility(epgMap[liveStream.streamId!!], liveStream.streamIcon)
                         val currentId = liveStream.streamId
-                        Log.e(
-                                "TAG",
-                                "$url/${this@PlayChannelActivity.userInfo?.username}/${this@PlayChannelActivity.userInfo?.password}/${
-                                    currentId
-                                }",
-                        )
+
                         val mediaItem = MediaItem.Builder().setUri(
-                                "$url/${this@PlayChannelActivity.userInfo?.username}/${this@PlayChannelActivity.userInfo?.password}/${
+                                "$url/${userInfo?.username}/${userInfo?.password}/${
                                     currentId
                                 }").build()
                         player!!.setMediaItem(mediaItem)
@@ -111,23 +104,20 @@ class PlayChannelActivity : AppCompatActivity() {
                         player!!.prepare()
                         player!!.play()
                     }
-                })
+                }, true)
         categoryAdapter = ChannelsCategoryAdapter(
-                intent.extras?.getSerializable(CATEGORY_LIST_INTENT_EXTRA) as List<Category>,
+                catList,
                 object : CategoryOnClick {
                     override fun onClick(view: View, category: Category) {
                         channelsAdapter.submitList(channelList.filter { it.categoryId == category.category_id })
-                        binding.ChannelInPlayerRv.visibility = View.VISIBLE
+                        binding!!.ChannelInPlayerRv.visibility = View.VISIBLE
                     }
                 })
-        binding.apply {
-            channelCategoryInPlayer.layoutManager = LinearLayoutManager(this@PlayChannelActivity)
-            ChannelInPlayerRv.layoutManager = LinearLayoutManager(this@PlayChannelActivity)
+        binding?.apply {
+            channelCategoryInPlayer.layoutManager = LinearLayoutManager(this@PlayChannelsNewActivity)
+            ChannelInPlayerRv.layoutManager = LinearLayoutManager(this@PlayChannelsNewActivity)
             channelCategoryInPlayer.adapter = categoryAdapter
             ChannelInPlayerRv.adapter = channelsAdapter
-        }
-        fetchChannels()
-        binding.apply {
             videoView.setOnClickListener {
                 if (group.visibility == View.VISIBLE) {
                     group.visibility = View.GONE
@@ -137,49 +127,68 @@ class PlayChannelActivity : AppCompatActivity() {
                     ChannelInPlayerRv.visibility = View.VISIBLE
                 }
             }
-
         }
+        fetchChannels()
         fetchEpg(
                 intent.getIntExtra(STREAM_ID_INTENT_EXTRA, 0),
                 intent.getStringExtra(STREAM_IMG),
         )
     }
 
+    private fun getChannelsData() {
+        viewModel.getChannelsCategories().observe(this) {
+            it?.let { resource ->
+                when (resource.status) {
+                    Status.SUCCESS -> {
+                        if (resource.data != null){
+                            catList.clear()
+                            catList.addAll(resource.data)
+                            setupUI()
+                        }
 
+                    }
+                    Status.ERROR -> {
+                    }
+                    Status.LOADING -> {
+                    }
+                }
+            }
+        }
+    }
     private fun fetchChannels() {
         val url = "http://${preferences.getString(PREF_URL, "")}:${preferences.getString(PREF_PORT, "")}/"
         viewModel.getAllChannels().observe(this, {
             it?.let { resource ->
                 when (resource.status) {
-                    SUCCESS -> {
+                    Status.SUCCESS -> {
                         resource.data?.let { data ->
                             channelList.clear()
                             channelList.addAll(data)
-                            val selectedOne = intent.getIntExtra(STREAM_ID_INTENT_EXTRA, 0)
+//                            val selectedOne = intent.getIntExtra(STREAM_ID_INTENT_EXTRA, 0)
 
                             countDownTimer.start()
-                            player!!.setMediaItems(channelList.map {
-                                MediaItem.Builder()
-                                        .apply {
-                                            setUri(
-                                                    "$url/${this@PlayChannelActivity.userInfo?.username}/${this@PlayChannelActivity.userInfo?.password}/${
-                                                        it.streamId
-                                                    }"
-                                            )
-                                        }.build()
-                            })
-                            player!!.seekToDefaultPosition(
-                                    channelList.indexOf(channelList.find { stream ->
-                                        stream.streamId == selectedOne
-
-                                    })
-                            )
+//                            player!!.setMediaItems(channelList.map {
+//                                MediaItem.Builder()
+//                                        .apply {
+//                                            setUri(
+//                                                    "$url/${userInfo.username}/${userInfo.password}/${
+//                                                        it.streamId
+//                                                    }"
+//                                            )
+//                                        }.build()
+//                            })
+//                            player!!.seekToDefaultPosition(
+//                                    channelList.indexOf(channelList.find { stream ->
+//                                        stream.streamId == selectedOne
+//
+//                                    })
+//                            )
                         }
                     }
-                    ERROR -> {
+                    Status.ERROR -> {
 
                     }
-                    LOADING -> {
+                    Status.LOADING -> {
 
                     }
                 }
@@ -187,30 +196,28 @@ class PlayChannelActivity : AppCompatActivity() {
 
         })
     }
-
     private fun fetchEpg(streamId: Int, streamIcon:String? = null) {
         viewModel.getEpg(streamId, 2)
                 .observe(this) {
                     it?.let { resource ->
                         when (resource.status) {
-                            SUCCESS -> {
+                            Status.SUCCESS -> {
                                 epgMap[streamId] = it.data!!.epg_listings
                                 populateEpgAndDetermineVisibility(epgMap[streamId], streamIcon)
                             }
-                            ERROR -> {
+                            Status.ERROR -> {
                             }
-                            LOADING -> {
+                            Status.LOADING -> {
                             }
                         }
                     }
                 }
     }
 
-    //
     private fun populateEpgAndDetermineVisibility(epgList: List<EpgListings>?, streamIcon: String?) {
-        Glide.with(this@PlayChannelActivity)
+        Glide.with(this)
                 .load(streamIcon)
-                .into(binding.channelImg)
+                .into(binding!!.channelImg)
         if (epgList != null) {
             if (epgList.isNotEmpty()) {
                 val epgItem = epgList[0]
@@ -223,7 +230,7 @@ class PlayChannelActivity : AppCompatActivity() {
                 val endTimeNext = secondEpgItem.end.split(" ")[1]
                 val decodedBytesNext: ByteArray = Base64.decode(secondEpgItem.title, Base64.DEFAULT)
                 val decodedStringNext = String(decodedBytesNext)
-                binding.apply {
+                binding?.apply {
                     upNextTime.text = "$startTimeNext -> $endTimeNext"
                     upNextTitle.text = decodedStringNext
                     nowWatchingTime.text = "$startTime -> $endTime"
@@ -237,7 +244,6 @@ class PlayChannelActivity : AppCompatActivity() {
 //            binding.bottomBannerGroup.visibility = View.GONE
         }
     }
-
 
     override fun onPause() {
         super.onPause()
@@ -279,7 +285,7 @@ class PlayChannelActivity : AppCompatActivity() {
                     .setTrackSelector(trackSelector)
                     .build()
         }
-        _binding?.videoView?.player = player
+        binding?.videoView?.player = player
         val mediaItem = MediaItem.Builder().apply {
             setUri(
                     "${url}${userInfo.username}/${userInfo.password}/${
@@ -323,16 +329,18 @@ class PlayChannelActivity : AppCompatActivity() {
     }
 
     private fun restartTimer() {
+
         countDownTimer.cancel()
         countDownTimer.start()
-        if (binding.group.visibility == View.GONE) {
-            binding.group.visibility = View.VISIBLE
-            binding.bottomBannerGroup.isVisible = true
+        if (binding!!.group.visibility == View.GONE) {
+            binding!!.group.visibility = View.VISIBLE
+            binding!!.bottomBannerGroup.isVisible = true
         }
     }
 
     override fun onDestroy() {
         countDownTimer.cancel()
+        binding = null
         super.onDestroy()
     }
 }
