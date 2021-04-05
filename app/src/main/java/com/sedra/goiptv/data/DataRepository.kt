@@ -12,8 +12,6 @@ class DataRepository @Inject constructor(
     @IptvApiService private val iptvApiService: ApiService
     ) {
 
-    suspend fun login(code: String) =
-        service.login(code)
 
     suspend fun getSections() =
         service.getSections()

@@ -2,7 +2,6 @@ package com.sedra.goiptv.view.login
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -33,17 +32,15 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         super.onViewCreated(view, savedInstanceState)
         val loginButton: Button = view.findViewById(R.id.loginButton)
         val codeEt: EditText = view.findViewById(R.id.codeEt)
+        val macAdd = getMacAddress()
         loginButton.setOnClickListener {
             val code = codeEt.text.toString()
-            login(code)
+            login(code, macAdd)
         }
-        val macAdd = getMacAddress() //call the method that return mac address
-
-        Toast.makeText(requireContext(), macAdd, Toast.LENGTH_SHORT).show()
     }
 
-    private fun login(code: String) {
-        viewModel.login(code).observe(viewLifecycleOwner){
+    private fun login(code: String, macAdd: String) {
+        viewModel.login(code, macAdd).observe(viewLifecycleOwner){
             it?.let { resource ->
                 when(resource.status){
                     SUCCESS -> {

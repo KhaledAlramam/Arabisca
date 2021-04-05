@@ -15,6 +15,7 @@ interface ApiService {
     @FormUrlEncoded
     suspend fun login(
             @Field("code") code: String,
+            @Field("mac_address") macAdd: String
     ): LoginResponse
 
     @GET("/gotv/public/api/sections")
