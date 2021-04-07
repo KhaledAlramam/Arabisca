@@ -40,7 +40,6 @@ class PlayChannelsNewActivity : AppCompatActivity() {
 
     @Inject
     lateinit var preferences: SharedPreferences
-    var originalSize = true
     val channelList = ArrayList<LiveStream>()
     lateinit var countDownTimer: CountDownTimer
     private val epgMap = HashMap<Int, List<EpgListings>>()
@@ -68,21 +67,6 @@ class PlayChannelsNewActivity : AppCompatActivity() {
                     ChannelInPlayerRv.visibility = View.GONE
                 }
 
-            }
-        }
-        binding?.apply {
-            fitScreen.setOnClickListener {
-                if (originalSize) {
-                    videoView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FILL
-                    fitScreen.text = "Restore"
-                } else {
-                    videoView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
-                    fitScreen.text = "Full Screen"
-                }
-                originalSize = !originalSize
-            }
-            closePlayer.setOnClickListener {
-                finish()
             }
         }
         channelsAdapter = ChannelAdapter(this,

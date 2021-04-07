@@ -1,5 +1,6 @@
 package com.sedra.goiptv.view.department
 
+import android.app.AlertDialog
 import android.app.UiModeManager
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -18,6 +19,7 @@ import com.sedra.goiptv.utils.*
 import com.sedra.goiptv.utils.Status.*
 import com.sedra.goiptv.view.channels.PlayChannelsNewActivity
 import dagger.hilt.android.AndroidEntryPoint
+import dmax.dialog.SpotsDialog
 
 @AndroidEntryPoint
 class DepartmentActivity : AppCompatActivity() {
@@ -30,10 +32,18 @@ class DepartmentActivity : AppCompatActivity() {
     private val catList = ArrayList<Category>()
     private val gridAdapter = MovieAdapter()
     private val gridSeriesAdapter = SeriesAdapter()
+    var progressDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_department)
+        progressDialog = SpotsDialog.Builder()
+                .setContext(this)
+                .setMessage("Please Wait...")
+                .setCancelable(false)
+                .setTheme(R.style.CustomProgressDialogTheme)
+                .build()
+
         when (intent.getIntExtra(EXTRA_TYPE_ID, 0)) {
             MOVIES_ID -> {
                 getMoviesData()
@@ -59,12 +69,15 @@ class DepartmentActivity : AppCompatActivity() {
             it?.let { resource ->
                 when (resource.status) {
                     SUCCESS -> {
+                        progressDialog?.dismiss()
                         if (resource.data != null)
                             getAllChannels(resource.data)
                     }
                     ERROR -> {
+                        progressDialog?.dismiss()
                     }
                     LOADING -> {
+                        progressDialog?.show()
                     }
                 }
             }
@@ -76,14 +89,17 @@ class DepartmentActivity : AppCompatActivity() {
             it?.let { resource ->
                 when (resource.status) {
                     SUCCESS -> {
+                        progressDialog?.dismiss()
                         if (resource.data != null)
                             manipulateChannels(category, resource.data)
                     }
                     ERROR -> {
 
+                        progressDialog?.dismiss()
                     }
                     LOADING -> {
 
+                        progressDialog?.show()
                     }
                 }
             }
@@ -136,12 +152,15 @@ class DepartmentActivity : AppCompatActivity() {
             it?.let { resource ->
                 when (resource.status) {
                     SUCCESS -> {
+                        progressDialog?.dismiss()
                         if (resource.data != null)
                             getAllSeries(resource.data)
                     }
                     ERROR -> {
+                        progressDialog?.dismiss()
                     }
                     LOADING -> {
+                        progressDialog?.show()
                     }
                 }
             }
@@ -153,14 +172,17 @@ class DepartmentActivity : AppCompatActivity() {
             it?.let { resource ->
                 when (resource.status) {
                     SUCCESS -> {
+                        progressDialog?.dismiss()
                         if (resource.data != null)
                             manipulateSeriesData(data, resource.data)
                     }
                     ERROR -> {
 
+                        progressDialog?.dismiss()
                     }
                     LOADING -> {
 
+                        progressDialog?.show()
                     }
                 }
             }
@@ -192,7 +214,7 @@ class DepartmentActivity : AppCompatActivity() {
             layoutManager = if (checkTv()) {
                 GridLayoutManager(this@DepartmentActivity, 2, LinearLayoutManager.HORIZONTAL, false)
             } else {
-                GridLayoutManager(this@DepartmentActivity, 1, LinearLayoutManager.HORIZONTAL, false)
+                GridLayoutManager(this@DepartmentActivity, 2, LinearLayoutManager.HORIZONTAL, false)
             }
         }
         gridSeriesAdapter.submitList(categories[0].series)
@@ -203,12 +225,15 @@ class DepartmentActivity : AppCompatActivity() {
             it?.let { resource ->
                 when (resource.status) {
                     SUCCESS -> {
+                        progressDialog?.dismiss()
                         if (resource.data != null)
                             getAllMovies(resource.data)
                     }
                     ERROR -> {
+                        progressDialog?.dismiss()
                     }
                     LOADING -> {
+                        progressDialog?.show()
                     }
                 }
             }
@@ -220,14 +245,17 @@ class DepartmentActivity : AppCompatActivity() {
             it?.let { resource ->
                 when (resource.status) {
                     SUCCESS -> {
+                        progressDialog?.dismiss()
                         if (resource.data != null)
                             manipulateData(categories, resource.data)
                     }
                     ERROR -> {
+                        progressDialog?.dismiss()
 
                     }
                     LOADING -> {
 
+                        progressDialog?.show()
                     }
                 }
             }

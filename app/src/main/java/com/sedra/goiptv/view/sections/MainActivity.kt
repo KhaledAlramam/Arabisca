@@ -1,5 +1,6 @@
 package com.sedra.goiptv.view.sections
 
+import android.app.AlertDialog
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,6 +16,7 @@ import com.sedra.goiptv.utils.PREF_NAME
 import com.sedra.goiptv.utils.Status
 import com.sedra.goiptv.utils.Status.*
 import dagger.hilt.android.AndroidEntryPoint
+import dmax.dialog.SpotsDialog
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -23,10 +25,17 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var preferences: SharedPreferences
     private val viewModel by viewModels<MainViewModel>()
+    var progressDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        progressDialog = SpotsDialog.Builder()
+                .setContext(this)
+                .setMessage("Please Wait...")
+                .setCancelable(false)
+                .setTheme(R.style.CustomProgressDialogTheme)
+                .build()
         binding?.apply {
             userName = preferences.getString(PREF_NAME, "User")
             textView3.isSelected = true
@@ -39,14 +48,18 @@ class MainActivity : AppCompatActivity() {
             it?.let { resource ->
                 when(resource.status){
                     SUCCESS -> {
+                        progressDialog?.dismiss()
                         resource.data?.let { data->
                             showSections(data.data)
                         }
                     }
                     ERROR -> {
+                        progressDialog?.dismiss()
                         Log.e("TAG", "getSections: ${resource.message}", )
                     }
-                    LOADING -> {}
+                    LOADING -> {
+                        progressDialog?.show()
+                    }
                 }
             }
         }

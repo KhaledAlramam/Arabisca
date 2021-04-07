@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/mPadding"
-        android:background="@drawable/lb_selectable_item_rounded_rect"
+        android:background="@drawable/selector_black"
         android:clickable="true"
         android:focusable="true">
 

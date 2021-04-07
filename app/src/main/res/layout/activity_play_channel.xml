@@ -73,35 +73,6 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.50" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/fitScreen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/black_bk_selector"
-            android:padding="8dp"
-            android:text="Full Screen"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/closePlayer"
-            app:layout_constraintEnd_toStartOf="@+id/closePlayer"
-            app:layout_constraintTop_toTopOf="@+id/closePlayer" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/closePlayer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/black_bk_selector"
-            android:padding="8dp"
-            android:text="Close"
-            android:visibility="visible"
-            android:focusableInTouchMode="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" >
-            <requestFocus/>
-        </androidx.appcompat.widget.AppCompatButton>
-
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/bottomBannerGroup"
@@ -118,7 +89,7 @@
             android:id="@+id/group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="channelCategoryInPlayer,fitScreen,closePlayer" />
+            app:constraint_referenced_ids="channelCategoryInPlayer" />
 
         <TextView
             android:id="@+id/upNextTitle"

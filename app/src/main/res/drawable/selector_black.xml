@@ -6,6 +6,7 @@
     <item android:drawable="@drawable/btn_not_focused_black" android:state_focused="true" />
 
     <item android:drawable="@drawable/btn_not_focused_black" android:state_active="true" />
+
     <item android:drawable="@android:color/transparent" />
 
 </selector>

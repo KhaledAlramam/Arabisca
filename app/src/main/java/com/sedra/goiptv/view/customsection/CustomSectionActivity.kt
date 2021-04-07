@@ -1,8 +1,5 @@
 package com.sedra.goiptv.view.customsection
 
-import android.app.UiModeManager
-import android.content.pm.PackageManager
-import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -73,7 +70,6 @@ class CustomSectionActivity : AppCompatActivity() {
     }
 
     fun showItems(items: List<CustomItem>){
-
         itemsAdapter.submitList(items)
     }
 
@@ -97,27 +93,9 @@ class CustomSectionActivity : AppCompatActivity() {
         }
         binding?.itemsRv?.apply {
             adapter = itemsAdapter
-            layoutManager = if (checkTv()) {
-                GridLayoutManager(this@CustomSectionActivity, 2, LinearLayoutManager.HORIZONTAL, false)
-            } else {
-                GridLayoutManager(this@CustomSectionActivity, 1, LinearLayoutManager.HORIZONTAL, false)
-            }
+            layoutManager = GridLayoutManager(this@CustomSectionActivity, 2, LinearLayoutManager.HORIZONTAL, false)
         }
         getItems(response.data.first().id)
-    }
-
-    private fun checkTv(): Boolean {
-        var isAndroidTv = false
-        if ((getSystemService(UI_MODE_SERVICE) as UiModeManager).currentModeType == Configuration.UI_MODE_TYPE_TELEVISION) {
-            isAndroidTv = true
-        } else if (packageManager!!
-                        .hasSystemFeature(PackageManager.FEATURE_TELEVISION) || packageManager!!
-                        .hasSystemFeature(PackageManager.FEATURE_LEANBACK)
-        ) {
-            isAndroidTv = true
-        }
-
-        return isAndroidTv
     }
 
     override fun onDestroy() {
