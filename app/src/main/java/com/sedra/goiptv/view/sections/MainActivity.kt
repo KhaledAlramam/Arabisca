@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.sedra.goiptv.R
 import com.sedra.goiptv.data.model.Section
 import com.sedra.goiptv.databinding.ActivityMainBinding
+import com.sedra.goiptv.utils.PREF_BANNER
 import com.sedra.goiptv.utils.PREF_NAME
 import com.sedra.goiptv.utils.Status
 import com.sedra.goiptv.utils.Status.*
@@ -38,6 +39,8 @@ class MainActivity : AppCompatActivity() {
                 .build()
         binding?.apply {
             userName = preferences.getString(PREF_NAME, "User")
+            val txt = "${preferences.getString(PREF_BANNER,"No Text")}                              ${preferences.getString(com.sedra.goiptv.utils.PREF_BANNER,"No Text")}"
+            textView3.text = txt
             textView3.isSelected = true
         }
         getSections()

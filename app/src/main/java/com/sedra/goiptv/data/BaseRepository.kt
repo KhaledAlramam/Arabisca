@@ -23,5 +23,9 @@ class BaseRepository @Inject constructor(
         service.getSections()
 
 
+    suspend fun getSettings() =
+        service.getSettings()
+
+
 
 }

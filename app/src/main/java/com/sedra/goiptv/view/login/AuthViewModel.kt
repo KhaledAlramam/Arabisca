@@ -21,4 +21,13 @@ class AuthViewModel @Inject constructor(
         }
 
     }
+    fun getSetting() = liveData(Dispatchers.IO) {
+        emit(Resource.loading(data = null))
+        try {
+            emit(Resource.success(data = repository.getSettings()))
+        } catch (exception: Exception) {
+            emit(Resource.error(data = null, message = exception.localizedMessage ?: "حدث خطأ ما"))
+        }
+
+    }
 }

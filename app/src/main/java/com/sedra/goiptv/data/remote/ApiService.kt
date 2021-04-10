@@ -22,6 +22,10 @@ interface ApiService {
     suspend fun getSections(): SectionsResponse
 
 
+    @GET("/gotv/public/api/settings")
+    suspend fun getSettings(): SettingsResponse
+
+
     @GET("/gotv/public/api/subsections/section/{id}}")
     suspend fun getSubSections(
             @Path("id") id: Int

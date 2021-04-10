@@ -81,7 +81,6 @@
             android:paddingBottom="8dp"
             android:scrollHorizontally="true"
             android:singleLine="true"
-            android:text="This Is Dummy Image This Is Dummy Image This Is Dummy Image This Is Dummy Image This Is Dummy Image This Is Dummy Image This Is Dummy Image "
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageView7"
             app:layout_constraintStart_toStartOf="parent"
