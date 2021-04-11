@@ -25,7 +25,6 @@ class CustomSectionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_department)
-        binding?.subCategoryName?.text = intent.getStringExtra(EXTRA_TYPE_NAME)
         getSubSections()
     }
 
@@ -78,7 +77,6 @@ class CustomSectionActivity : AppCompatActivity() {
         val departmentTitleAdapter = CustomSectionTitleAdapter(response.data, object : OnDepartmentClicked {
             override fun onClick(view: View, position: Int) {
                 val id = response.data[position].id
-                binding?.subCategoryName?.text = response.data[position].name
                 if (itemsHashMap.keys.contains(id)){
                     showItems(itemsHashMap[id]!!)
                 }else{

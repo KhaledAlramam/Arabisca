@@ -23,6 +23,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     var binding: ActivityMainBinding? = null
+
     @Inject
     lateinit var preferences: SharedPreferences
     private val viewModel by viewModels<MainViewModel>()
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
                 .build()
         binding?.apply {
             userName = preferences.getString(PREF_NAME, "User")
-            val txt = "${preferences.getString(PREF_BANNER,"No Text")}                              ${preferences.getString(com.sedra.goiptv.utils.PREF_BANNER,"No Text")}"
+            val txt = "${preferences.getString(PREF_BANNER, "No Text")}                              ${preferences.getString(com.sedra.goiptv.utils.PREF_BANNER, "No Text")}"
             textView3.text = txt
             textView3.isSelected = true
         }
@@ -47,18 +48,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getSections() {
-        viewModel.getSections().observe(this){
+        viewModel.getSections().observe(this) {
             it?.let { resource ->
-                when(resource.status){
+                when (resource.status) {
                     SUCCESS -> {
                         progressDialog?.dismiss()
-                        resource.data?.let { data->
+                        resource.data?.let { data ->
                             showSections(data.data)
                         }
                     }
                     ERROR -> {
                         progressDialog?.dismiss()
-                        Log.e("TAG", "getSections: ${resource.message}", )
+                        Log.e("TAG", "getSections: ${resource.message}")
                     }
                     LOADING -> {
                         progressDialog?.show()
@@ -70,9 +71,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun showSections(sections: List<Section>) {
         val fixedList = listOf(
-            Section(-1, "https://www.logomoose.com/wp-content/uploads/2016/01/GoMovies.jpg", getString(R.string.movies)),
-            Section(-2, "", getString(R.string.series)),
-            Section(-3, "", getString(R.string.channels)),
+                Section(-3, "", getString(R.string.channels)),
+                Section(-1, "https://www.logomoose.com/wp-content/uploads/2016/01/GoMovies.jpg", getString(R.string.movies)),
+                Section(-2, "", getString(R.string.series)),
         ) + sections
         val sectionsAdapter = SectionsAdapter(fixedList)
         binding!!.sectionsRv.apply {
@@ -88,4 +89,5 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         binding = null
     }
+
 }

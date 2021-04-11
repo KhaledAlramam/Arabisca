@@ -17,12 +17,11 @@
 
 
         <ak.sh.ay.oblique.ObliqueView
-            android:id="@+id/obliqueView2"
+            android:id="@+id/obliqueImage"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
             android:background="@android:color/transparent"
+            android:scaleType="centerCrop"
             app:angle="LEFT_BOTTOM_TO_RIGHT_TOP"
             app:basecolor="@color/white"
             app:ending_slant_angle="80"
@@ -33,42 +32,43 @@
             app:layout_constraintTop_toTopOf="parent"
             app:shadow_height="10"
             app:starting_slant_angle="80"
-            app:type="solid_color" />
+            app:type="image" />
 
         <ak.sh.ay.oblique.ObliqueView
-            android:id="@+id/obliqueImage"
+            android:id="@+id/obliqueView2"
+            android:alpha=".5"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="6dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginStart="4dp"
             android:background="@android:color/transparent"
-            android:scaleType="centerCrop"
             app:angle="LEFT_BOTTOM_TO_RIGHT_TOP"
             app:basecolor="@color/white"
             app:ending_slant_angle="80"
-            app:layout_constraintBottom_toTopOf="@+id/textView6"
-            app:layout_constraintEnd_toEndOf="@+id/obliqueView2"
-            app:layout_constraintStart_toStartOf="@+id/obliqueView2"
-            app:layout_constraintTop_toTopOf="@+id/obliqueView2"
+            app:layout_constraintBottom_toBottomOf="@+id/textView6"
+            app:layout_constraintDimensionRatio="h,"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView6"
             app:shadow_height="10"
             app:starting_slant_angle="80"
-            app:type="image" />
+            app:type="solid_color" />
 
         <TextView
             android:id="@+id/textView6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:background="@android:color/transparent"
             android:elevation="50dp"
+            android:ellipsize="end"
             android:gravity="end"
+            android:maxLines="1"
             android:textColor="@color/mainDark"
             android:textSize="14sp"
             android:textStyle="italic"
-            android:maxLines="1"
-            android:ellipsize="end"
-            app:layout_constraintBottom_toBottomOf="@+id/obliqueView2"
+            app:layout_constraintBottom_toBottomOf="@+id/obliqueImage"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/obliqueView2" />
@@ -78,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.7" />
+            app:layout_constraintGuide_percent="0.77" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

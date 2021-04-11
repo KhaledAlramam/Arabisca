@@ -126,7 +126,6 @@ class DepartmentActivity : AppCompatActivity() {
         }
         val departmentTitleAdapter = DepartmentTitleAdapter(categories, object : OnDepartmentClicked {
             override fun onClick(view: View, position: Int) {
-                binding?.subCategoryName?.text = categories[position].category_name
                 channelAdapter.submitList(categories[position].channels)
             }
         })
@@ -200,7 +199,6 @@ class DepartmentActivity : AppCompatActivity() {
         }
         val departmentTitleAdapter = DepartmentTitleAdapter(categories, object : OnDepartmentClicked {
             override fun onClick(view: View, position: Int) {
-                binding?.subCategoryName?.text = categories[position].category_name
                 gridSeriesAdapter.submitList(categories[position].series)
             }
         })
@@ -273,7 +271,6 @@ class DepartmentActivity : AppCompatActivity() {
         }
         val departmentTitleAdapter = DepartmentTitleAdapter(categories, object : OnDepartmentClicked {
             override fun onClick(view: View, position: Int) {
-                binding?.subCategoryName?.text = categories[position].category_name
                 gridAdapter.submitList(categories[position].movies)
             }
         })

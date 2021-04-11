@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="mainDark">#060a2f</color>
+    <color name="mainDarkHalfTransparent">#80060A2F</color>
     <color name="etBack">#c1c2cb</color>
     <color name="duskYellow">#FFD400</color>
     <color name="marquee_bk">#80C1C2CB</color>
