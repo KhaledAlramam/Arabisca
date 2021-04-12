@@ -61,6 +61,8 @@ class PlayChannelsNewActivity : AppCompatActivity() {
         channelsAdapter = ChannelAdapter(this,
                 object : ChannelOnClick {
                     override fun onClick(view: View, liveStream: LiveStream, position: Int) {
+                        binding!!.group.visibility = View.GONE
+                        binding!!.ChannelInPlayerRv.visibility = View.GONE
                         handleChannelChoosed(liveStream, position)
                     }
                 })
