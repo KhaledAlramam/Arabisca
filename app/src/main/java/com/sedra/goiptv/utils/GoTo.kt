@@ -25,6 +25,11 @@ object GoTo{
         i.putExtra(EXTRA_TYPE_NAME, name)
         context.startActivity(i)
     }
+    fun goToPlayChannelActivity(context: Context){
+        val i = Intent(context, PlayChannelsNewActivity::class.java)
+        i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+        context.startActivity(i)
+    }
 
     fun goToCustomSectionActivity(context: Context, id: Int, name: String){
         val i = Intent(context, CustomSectionActivity::class.java)

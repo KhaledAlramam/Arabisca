@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.bumptech.glide.Glide
 import com.sedra.goiptv.R
 import com.sedra.goiptv.data.model.LiveStream
+import com.sedra.goiptv.databinding.AdapterChannelItemBinding
 import com.sedra.goiptv.databinding.ListItemMovieSeriesBinding
 import com.sedra.goiptv.utils.*
 import com.sedra.goiptv.view.channels.PlayChannelsNewActivity
@@ -17,7 +18,6 @@ import com.sedra.goiptv.view.channels.PlayChannelsNewActivity
 class ChannelAdapter(
         val activity: Activity,
         val listener: ChannelOnClick,
-        val inPlayer: Boolean = false
 ) : ListAdapter<LiveStream, CustomViewHolder>(Companion) {
 
     companion object : DiffUtil.ItemCallback<LiveStream>() {
@@ -32,24 +32,23 @@ class ChannelAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ListItemMovieSeriesBinding.inflate(inflater, parent, false)
+        val binding = AdapterChannelItemBinding.inflate(inflater, parent, false)
         return CustomViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val currentChannel = getItem(position)
-        val itemBinding = holder.binding as ListItemMovieSeriesBinding
+        val itemBinding = holder.binding as AdapterChannelItemBinding
         Glide.with(holder.itemView)
                 .load(currentChannel.streamIcon)
                 .placeholder(R.drawable.logo)
-                .into(itemBinding.imageView8)
+                .into(itemBinding.channelIcon)
         itemBinding.apply {
-            ratingTv.isVisible = false
-            movieName.text = currentChannel.name?.replace(itemBinding.root.context.getString(R.string.dashed),
+            channelName.text = currentChannel.name?.replace(itemBinding.root.context.getString(R.string.dashed),
                     itemBinding.root.context.getString(R.string.space))
         }
         itemBinding.root.setOnClickListener { v ->
-            listener.onClick(v, currentChannel)
+            listener.onClick(v, currentChannel, position)
         }
     }
 }

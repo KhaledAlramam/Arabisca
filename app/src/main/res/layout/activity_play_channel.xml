@@ -24,8 +24,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:use_controller="false"
-            tools:visibility="gone">
+            app:use_controller="false">
 
         </com.google.android.exoplayer2.ui.PlayerView>
 
@@ -33,13 +32,10 @@
             android:id="@+id/channelCategoryInPlayer"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"
             android:alpha="0.9"
-            android:background="@drawable/round_corners_8"
-            android:backgroundTint="@color/half_black"
-            app:layout_constraintBottom_toTopOf="@+id/bottomBannerGroup"
+            android:background="@color/half_black"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -56,13 +52,11 @@
             android:id="@+id/ChannelInPlayerRv"
             android:layout_width="120dp"
             android:layout_height="0dp"
-            android:layout_marginTop="24dp"
             android:alpha="0.9"
-            android:background="@drawable/round_corners_8"
-            android:backgroundTint="@color/half_black"
+            android:background="@color/half_black"
             android:visibility="invisible"
-            app:layout_constraintBottom_toTopOf="@+id/bottomBannerGroup"
-            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/channelCategoryInPlayer"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/adapter_channel_item" />
 
@@ -74,92 +68,143 @@
             app:layout_constraintGuide_percent="0.50" />
 
 
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/bottomBannerGroup"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/epgConstraintLayout"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/gradient_shadow"
-            app:constraint_referenced_ids="textView17,nowWatchingTitle,nowWatchingTime,textView16,upNextTitle,upNextTime"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView16" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/playedChannelName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/textView17"
+                app:layout_constraintStart_toEndOf="@+id/channelImg" />
+
+            <ImageView
+                android:id="@+id/upChannel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/channelImg"
+                app:layout_constraintEnd_toEndOf="@+id/downChannel"
+                app:layout_constraintStart_toStartOf="@+id/downChannel"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_arrow_up" />
+
+            <ImageView
+                android:id="@+id/downChannel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/ic_arrow_down" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/bottomBannerGroup"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/gradient_shadow"
+                app:constraint_referenced_ids="textView17,nowWatchingTitle,nowWatchingTime,textView16,upNextTitle,upNextTime"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/nowWatchingTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/channelImg" />
+
+            <TextView
+                android:id="@+id/channelNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/downChannel"
+                app:layout_constraintEnd_toEndOf="@+id/downChannel"
+                app:layout_constraintStart_toStartOf="@+id/upChannel"
+                app:layout_constraintTop_toBottomOf="@+id/upChannel" />
+
+            <TextView
+                android:id="@+id/nowWatchingTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="8dp"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/nowWatchingTime"
+                app:layout_constraintStart_toEndOf="@+id/channelImg" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="Now Watching"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/nowWatchingTitle"
+                app:layout_constraintStart_toEndOf="@+id/channelImg" />
+
+            <TextView
+                android:id="@+id/upNextTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="Up Next"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/upNextTitle"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/upNextTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/upNextTime"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <ImageView
+                android:id="@+id/channelImg"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="16dp"
+                android:adjustViewBounds="true"
+                app:layout_constraintBottom_toTopOf="@+id/downChannel"
+                app:layout_constraintStart_toEndOf="@+id/downChannel"
+                app:layout_constraintTop_toBottomOf="@+id/playedChannelName"
+                tools:srcCompat="@tools:sample/avatars" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:constraint_referenced_ids="channelCategoryInPlayer" />
-
-        <TextView
-            android:id="@+id/upNextTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/upNextTime"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-            android:id="@+id/nowWatchingTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="8dp"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/upNextTime"
-            app:layout_constraintStart_toEndOf="@+id/channelImg" />
-
-        <TextView
-            android:id="@+id/textView16"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
-            android:text="Up Next"
-            android:paddingTop="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/upNextTitle"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-            android:id="@+id/textView17"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="8dp"
-            android:paddingTop="16dp"
-            android:text="Now Watching"
-            app:layout_constraintBottom_toTopOf="@+id/upNextTitle"
-            app:layout_constraintStart_toEndOf="@+id/channelImg" />
-
-        <TextView
-            android:id="@+id/upNextTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-            android:id="@+id/nowWatchingTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/nowWatchingTitle" />
-
-        <ImageView
-            android:id="@+id/channelImg"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:adjustViewBounds="true"
-            app:layout_constraintBottom_toTopOf="@+id/nowWatchingTime"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView17"
-            tools:srcCompat="@tools:sample/avatars" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

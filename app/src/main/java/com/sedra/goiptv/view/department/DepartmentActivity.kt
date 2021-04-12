@@ -36,6 +36,7 @@ class DepartmentActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_department)
         progressDialog = SpotsDialog.Builder()
                 .setContext(this)
@@ -43,7 +44,6 @@ class DepartmentActivity : AppCompatActivity() {
                 .setCancelable(false)
                 .setTheme(R.style.CustomProgressDialogTheme)
                 .build()
-
         when (intent.getIntExtra(EXTRA_TYPE_ID, 0)) {
             MOVIES_ID -> {
                 getMoviesData()
@@ -53,97 +53,10 @@ class DepartmentActivity : AppCompatActivity() {
                 getSeriesData()
                 binding?.categoryName = getString(R.string.series_)
 
-            }
-            CHANNELS_ID -> {
-                binding?.categoryName = getString(R.string.channels_)
-                getChannelsData()
-            }
-            else -> {
+            }else -> {
                 finish()
             }
         }
-    }
-
-    private fun getChannelsData() {
-        viewModel.getChannelsCategories().observe(this) {
-            it?.let { resource ->
-                when (resource.status) {
-                    SUCCESS -> {
-                        progressDialog?.dismiss()
-                        if (resource.data != null)
-                            getAllChannels(resource.data)
-                    }
-                    ERROR -> {
-                        progressDialog?.dismiss()
-                    }
-                    LOADING -> {
-                        progressDialog?.show()
-                    }
-                }
-            }
-        }
-    }
-
-    private fun getAllChannels(category: List<Category>) {
-        viewModel.getAllChannels().observe(this) {
-            it?.let { resource ->
-                when (resource.status) {
-                    SUCCESS -> {
-                        progressDialog?.dismiss()
-                        if (resource.data != null)
-                            manipulateChannels(category, resource.data)
-                    }
-                    ERROR -> {
-
-                        progressDialog?.dismiss()
-                    }
-                    LOADING -> {
-
-                        progressDialog?.show()
-                    }
-                }
-            }
-
-        }
-    }
-
-    private fun manipulateChannels(categories: List<Category>, list: List<LiveStream>) {
-        channelList.clear()
-        channelList.addAll(list)
-        val channelAdapter = ChannelAdapter(this, object : ChannelOnClick {
-            override fun onClick(view: View, liveStream: LiveStream) {
-                val i = Intent(this@DepartmentActivity, PlayChannelsNewActivity::class.java)
-                i.putExtra(STREAM_ID_INTENT_EXTRA, liveStream.streamId)
-                i.putExtra(STREAM_IMG, liveStream.streamIcon)
-                startActivity(i)
-            }
-        })
-
-        categories.forEach { loopedCategory ->
-            loopedCategory.channels = list
-                    .filter { channel -> channel.categoryId == loopedCategory.category_id }
-            catList.add(loopedCategory)
-        }
-        val departmentTitleAdapter = DepartmentTitleAdapter(categories, object : OnDepartmentClicked {
-            override fun onClick(view: View, position: Int) {
-                channelAdapter.submitList(categories[position].channels)
-            }
-        })
-        binding?.departmentTitleRv?.apply {
-            adapter = departmentTitleAdapter
-            layoutManager = LinearLayoutManager(this@DepartmentActivity, LinearLayoutManager.HORIZONTAL, false)
-            setHasFixedSize(true)
-        }
-        binding?.itemsRv?.apply {
-            adapter = channelAdapter
-            layoutManager = GridLayoutManager(
-                    this@DepartmentActivity,
-                    2,
-                    LinearLayoutManager.HORIZONTAL,
-                    false
-            )
-        }
-        channelAdapter.submitList(categories[0].channels)
     }
 
     private fun getSeriesData() {
