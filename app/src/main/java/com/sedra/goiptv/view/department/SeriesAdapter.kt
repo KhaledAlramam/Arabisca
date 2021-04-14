@@ -3,6 +3,8 @@ package com.sedra.goiptv.view.department
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.bumptech.glide.Glide
@@ -35,8 +37,20 @@ class SeriesAdapter : ListAdapter<Series, CustomViewHolder>(Companion) {
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+        val context = holder.binding.root.context
         val currentSeries = getItem(position)
         val itemBinding = holder.binding as ListItemMovieSeriesBinding
+        holder.binding.root.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus){
+                val anim: Animation = AnimationUtils.loadAnimation(context, R.anim.scale_in)
+                holder.binding.root.startAnimation(anim)
+                anim.fillAfter = true
+            }else{
+                val anim: Animation = AnimationUtils.loadAnimation(context, R.anim.scale_out)
+                holder.binding.root.startAnimation(anim)
+                anim.fillAfter = true
+            }
+        }
         Glide.with(holder.itemView)
                 .load(currentSeries.cover)
                 .placeholder(R.drawable.logo)

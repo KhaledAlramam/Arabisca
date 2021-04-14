@@ -35,13 +35,13 @@ class PlayChannelsNewActivity : AppCompatActivity() {
     private var currentWindow = 0
     private var playbackPosition: Long = 0
     private var currentStreamId: Int? = -1
+
     @Inject
     lateinit var userInfo: UserInfo
 
     @Inject
     lateinit var preferences: SharedPreferences
     val channelList = ArrayList<LiveStream>()
-    private var countDownTimer: CountDownTimer? = null
     private var epgCountDownTimer: CountDownTimer? = null
     private val epgMap = HashMap<Int, List<EpgListings>>()
     lateinit var categoryAdapter: ChannelsCategoryAdapter
@@ -90,17 +90,17 @@ class PlayChannelsNewActivity : AppCompatActivity() {
             }
             upChannel.setOnClickListener {
                 try {
-                    val live = channelsAdapter.currentList[currentPosition+1]
-                    handleChannelChoosed(live, currentPosition+1)
-                }catch (e: Exception){
+                    val live = channelsAdapter.currentList[currentPosition + 1]
+                    handleChannelChoosed(live, currentPosition + 1)
+                } catch (e: Exception) {
 
                 }
             }
             downChannel.setOnClickListener {
                 try {
-                    val live = channelsAdapter.currentList[currentPosition-1]
-                    handleChannelChoosed(live, currentPosition-1)
-                }catch (e: Exception){
+                    val live = channelsAdapter.currentList[currentPosition - 1]
+                    handleChannelChoosed(live, currentPosition - 1)
+                } catch (e: Exception) {
 
                 }
             }
@@ -111,7 +111,7 @@ class PlayChannelsNewActivity : AppCompatActivity() {
     private fun handleChannelChoosed(liveStream: LiveStream, position: Int) {
         binding?.playedChannelName?.text = liveStream.name
         currentPosition = position
-        binding?.channelNumber?.text = position.toString()
+        binding?.channelNumber?.text = "${position+1}"
         if (epgMap[liveStream.streamId!!] == null) {
             fetchEpg(liveStream.streamId!!, liveStream.streamIcon)
         } else
@@ -121,17 +121,6 @@ class PlayChannelsNewActivity : AppCompatActivity() {
     }
 
     private fun initTimers() {
-        countDownTimer = object : CountDownTimer(3000, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-            }
-
-            override fun onFinish() {
-                binding?.apply {
-                    group.visibility = View.GONE
-                    ChannelInPlayerRv.visibility = View.GONE
-                }
-            }
-        }
         epgCountDownTimer = object : CountDownTimer(5000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
             }
@@ -141,6 +130,20 @@ class PlayChannelsNewActivity : AppCompatActivity() {
                     epgConstraintLayout.isVisible = false
                 }
             }
+        }
+    }
+
+    private fun hideChannelList() {
+        binding?.apply {
+            group.visibility = View.GONE
+            ChannelInPlayerRv.visibility = View.GONE
+        }
+    }
+
+    private fun showChannelList() {
+        binding?.apply {
+            group.visibility = View.VISIBLE
+            ChannelInPlayerRv.visibility = View.VISIBLE
         }
     }
 
@@ -173,7 +176,6 @@ class PlayChannelsNewActivity : AppCompatActivity() {
                         resource.data?.let { data ->
                             channelList.clear()
                             channelList.addAll(data)
-                            countDownTimer?.start()
                         }
                     }
                     Status.ERROR -> {
@@ -236,10 +238,6 @@ class PlayChannelsNewActivity : AppCompatActivity() {
             }
         } else {
             binding?.apply {
-                upNextTime.isVisible = false
-                upNextTitle.isVisible = false
-                nowWatchingTime.isVisible = false
-                nowWatchingTitle.isVisible = false
                 textView17.isVisible = false
                 textView16.isVisible = false
             }
@@ -312,9 +310,8 @@ class PlayChannelsNewActivity : AppCompatActivity() {
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-
-        restartChannelViewTimer()
-
+        if (keyCode != KeyEvent.KEYCODE_BACK)
+            showChannelList()
         when (keyCode) {
             KeyEvent.KEYCODE_MEDIA_FAST_FORWARD -> {
                 player!!.next()
@@ -328,13 +325,6 @@ class PlayChannelsNewActivity : AppCompatActivity() {
         return super.onKeyDown(keyCode, event)
     }
 
-    private fun restartChannelViewTimer() {
-        countDownTimer?.cancel()
-        countDownTimer?.start()
-        if (binding!!.group.visibility == View.GONE) {
-            binding!!.group.visibility = View.VISIBLE
-        }
-    }
 
     private fun restartEpgViewTimer() {
         if (epgCountDownTimer == null) return
@@ -343,11 +333,16 @@ class PlayChannelsNewActivity : AppCompatActivity() {
         binding!!.epgConstraintLayout.isVisible = true
     }
 
+    override fun onBackPressed() {
+        if (binding!!.channelCategoryInPlayer.isVisible)
+            hideChannelList()
+        else
+            super.onBackPressed()
+    }
+
     override fun onDestroy() {
-        countDownTimer?.cancel()
         epgCountDownTimer?.cancel()
         epgCountDownTimer = null
-        countDownTimer = null
         binding = null
         super.onDestroy()
     }

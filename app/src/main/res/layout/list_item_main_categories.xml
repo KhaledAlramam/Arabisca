@@ -10,10 +10,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:focusable="true"
         android:clickable="true"
-        android:background="@drawable/selector_white"
-        >
+        android:focusable="true">
 
 
         <ak.sh.ay.oblique.ObliqueView
@@ -24,33 +22,33 @@
             android:scaleType="centerCrop"
             app:angle="LEFT_BOTTOM_TO_RIGHT_TOP"
             app:basecolor="@color/white"
-            app:ending_slant_angle="80"
+            app:ending_slant_angle="87"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="h,1.5:2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline7"
             app:shadow_height="10"
-            app:starting_slant_angle="80"
+            app:starting_slant_angle="87"
             app:type="image" />
 
         <ak.sh.ay.oblique.ObliqueView
             android:id="@+id/obliqueView2"
-            android:alpha=".5"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="2dp"
+            android:alpha=".5"
             android:background="@android:color/transparent"
             app:angle="LEFT_BOTTOM_TO_RIGHT_TOP"
             app:basecolor="@color/white"
-            app:ending_slant_angle="80"
+            app:ending_slant_angle="87"
             app:layout_constraintBottom_toBottomOf="@+id/textView6"
             app:layout_constraintDimensionRatio="h,"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView6"
             app:shadow_height="10"
-            app:starting_slant_angle="80"
+            app:starting_slant_angle="87"
             app:type="solid_color" />
 
         <TextView
@@ -78,7 +76,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.77" />
+            app:layout_constraintGuide_percent="0.88" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.44" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

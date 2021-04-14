@@ -37,6 +37,7 @@ class ChannelAdapter(
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+        val context = holder.binding.root.context
         val currentChannel = getItem(position)
         val itemBinding = holder.binding as AdapterChannelItemBinding
         Glide.with(holder.itemView)
@@ -45,8 +46,19 @@ class ChannelAdapter(
                 .into(itemBinding.channelIcon)
         itemBinding.apply {
             channelName.text = currentChannel.name?.replace(itemBinding.root.context.getString(R.string.dashed),
+                    itemBinding.root.context.getString(R.string.space))?.replace(itemBinding.root.context.getString(R.string.under_score),
                     itemBinding.root.context.getString(R.string.space))
+            channelNumberList.text = "${position+1}"
         }
+        itemBinding.root.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus){
+                itemBinding.channelName.setTextColor(context.resources.getColor(R.color.white))
+            }else{
+                itemBinding.channelName.setTextColor(context.resources.getColor(R.color.mainDark))
+
+            }
+        }
+
         itemBinding.root.setOnClickListener { v ->
             listener.onClick(v, currentChannel, position)
         }
