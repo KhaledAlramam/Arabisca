@@ -61,8 +61,8 @@ class PlayChannelsNewActivity : AppCompatActivity() {
         channelsAdapter = ChannelAdapter(this,
                 object : ChannelOnClick {
                     override fun onClick(view: View, liveStream: LiveStream, position: Int) {
-                        binding!!.group.visibility = View.GONE
-                        binding!!.ChannelInPlayerRv.visibility = View.GONE
+                        binding!!.group.isVisible = false
+                        binding!!.ChannelInPlayerRv.isVisible = false
                         handleChannelChoosed(liveStream, position)
                     }
                 })
@@ -71,7 +71,7 @@ class PlayChannelsNewActivity : AppCompatActivity() {
                 object : CategoryOnClick {
                     override fun onClick(view: View, category: Category) {
                         channelsAdapter.submitList(channelList.filter { it.categoryId == category.category_id })
-                        binding!!.ChannelInPlayerRv.visibility = View.VISIBLE
+                        binding!!.ChannelInPlayerRv.isVisible = true
                     }
                 })
         binding?.apply {
@@ -81,31 +81,37 @@ class PlayChannelsNewActivity : AppCompatActivity() {
             ChannelInPlayerRv.adapter = channelsAdapter
             playerParent.setOnClickListener {
                 if (group.visibility == View.VISIBLE) {
-                    group.visibility = View.GONE
-                    ChannelInPlayerRv.visibility = View.GONE
+                    hideChannelList()
                 } else {
-                    group.visibility = View.VISIBLE
-                    ChannelInPlayerRv.visibility = View.VISIBLE
+                    showChannelList()
                 }
             }
             upChannel.setOnClickListener {
-                try {
-                    val live = channelsAdapter.currentList[currentPosition + 1]
-                    handleChannelChoosed(live, currentPosition + 1)
-                } catch (e: Exception) {
-
-                }
+                increaseChannel()
             }
             downChannel.setOnClickListener {
-                try {
-                    val live = channelsAdapter.currentList[currentPosition - 1]
-                    handleChannelChoosed(live, currentPosition - 1)
-                } catch (e: Exception) {
-
-                }
+                decreaseChannel()
             }
         }
         fetchChannels()
+    }
+
+    private fun decreaseChannel() {
+        try {
+            val live = channelsAdapter.currentList[currentPosition - 1]
+            handleChannelChoosed(live, currentPosition - 1)
+        } catch (e: Exception) {
+
+        }
+    }
+
+    private fun increaseChannel() {
+        try {
+            val live = channelsAdapter.currentList[currentPosition + 1]
+            handleChannelChoosed(live, currentPosition + 1)
+        } catch (e: Exception) {
+
+        }
     }
 
     private fun handleChannelChoosed(liveStream: LiveStream, position: Int) {
@@ -135,15 +141,16 @@ class PlayChannelsNewActivity : AppCompatActivity() {
 
     private fun hideChannelList() {
         binding?.apply {
-            group.visibility = View.GONE
-            ChannelInPlayerRv.visibility = View.GONE
+            group.isVisible = false
+            ChannelInPlayerRv.isVisible = false
         }
     }
 
     private fun showChannelList() {
         binding?.apply {
-            group.visibility = View.VISIBLE
-            ChannelInPlayerRv.visibility = View.VISIBLE
+            epgConstraintLayout.isVisible = false
+            group.isVisible = true
+            ChannelInPlayerRv.isVisible = true
         }
     }
 
@@ -210,6 +217,12 @@ class PlayChannelsNewActivity : AppCompatActivity() {
 
     private fun populateEpgAndDetermineVisibility(epgList: List<EpgListings>?, streamIcon: String?) {
         restartEpgViewTimer()
+        binding?.apply {
+            upNextTime.text = ""
+            upNextTitle.text = ""
+            nowWatchingTime.text = ""
+            nowWatchingTitle.text = ""
+        }
         Glide.with(this)
                 .load(streamIcon)
                 .into(binding!!.channelImg)
@@ -310,17 +323,26 @@ class PlayChannelsNewActivity : AppCompatActivity() {
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (keyCode != KeyEvent.KEYCODE_BACK)
-            showChannelList()
-        when (keyCode) {
-            KeyEvent.KEYCODE_MEDIA_FAST_FORWARD -> {
-                player!!.next()
-            }
-            KeyEvent.KEYCODE_MEDIA_STEP_BACKWARD -> {
-                player!!.previous()
+        if (!binding!!.ChannelInPlayerRv.isVisible){
+            when (keyCode) {
+                KeyEvent.KEYCODE_DPAD_UP -> {
+                    increaseChannel()
+                }
+                KeyEvent.KEYCODE_DPAD_DOWN -> {
+                    decreaseChannel()
+                }
+                KeyEvent.KEYCODE_CHANNEL_UP -> {
+                    increaseChannel()
+                }
+                KeyEvent.KEYCODE_CHANNEL_DOWN -> {
+                    decreaseChannel()
+                }
+                else ->{
+                    if (keyCode != KeyEvent.KEYCODE_BACK)
+                        showChannelList()
+                }
             }
         }
-
 
         return super.onKeyDown(keyCode, event)
     }
