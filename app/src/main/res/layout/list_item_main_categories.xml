@@ -22,33 +22,33 @@
             android:scaleType="centerCrop"
             app:angle="LEFT_BOTTOM_TO_RIGHT_TOP"
             app:basecolor="@color/white"
-            app:ending_slant_angle="87"
+            app:ending_slant_angle="80"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="h,1.5:2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline7"
             app:shadow_height="10"
-            app:starting_slant_angle="87"
+            app:starting_slant_angle="80"
             app:type="image" />
 
         <ak.sh.ay.oblique.ObliqueView
             android:id="@+id/obliqueView2"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="2dp"
+            android:layout_marginStart="4dp"
             android:alpha=".5"
             android:background="@android:color/transparent"
             app:angle="LEFT_BOTTOM_TO_RIGHT_TOP"
             app:basecolor="@color/white"
-            app:ending_slant_angle="87"
+            app:ending_slant_angle="80"
             app:layout_constraintBottom_toBottomOf="@+id/textView6"
             app:layout_constraintDimensionRatio="h,"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView6"
             app:shadow_height="10"
-            app:starting_slant_angle="87"
+            app:starting_slant_angle="80"
             app:type="solid_color" />
 
         <TextView
@@ -64,7 +64,7 @@
             android:gravity="end"
             android:maxLines="1"
             android:textColor="@color/mainDark"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="@+id/obliqueImage"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
@@ -76,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.88" />
+            app:layout_constraintGuide_percent="0.72" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline7"

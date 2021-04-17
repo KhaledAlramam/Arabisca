@@ -55,7 +55,6 @@ class ChannelAdapter(
                 itemBinding.channelName.setTextColor(context.resources.getColor(R.color.white))
             }else{
                 itemBinding.channelName.setTextColor(context.resources.getColor(R.color.mainDark))
-
             }
         }
 

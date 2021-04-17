@@ -33,6 +33,7 @@ class SectionsAdapter(
         val context = holder.binding.root.context
         val currentSection = list[position]
         val itemBinding = holder.binding as ListItemMainCategoriesBinding
+        holder.binding.root.translationX= (-80f * position)
         holder.binding.root.setOnFocusChangeListener { v, hasFocus ->
             if (hasFocus){
                 val anim: Animation = AnimationUtils.loadAnimation(context, R.anim.transition_up)
