@@ -2,10 +2,14 @@ package com.sedra.goiptv.utils
 
 const val PREF_PARENT_USER = "parent_user"
 const val PREF_URL = "url"
+const val PREF_USER_NAME = "userName"
+const val PREF_PASSWORD = "password"
 const val PREF_PORT = "port"
 const val PREF_NAME = "name"
 const val PREF_APP_IMG = "app_img"
 const val PREF_BANNER = "app_banner"
+const val PREF_CODE = "code"
+const val PREF_MAC = "mac"
 
 const val EXTRA_TYPE_ID = "type_id"
 const val EXTRA_SECTION_ID = "sectionId"

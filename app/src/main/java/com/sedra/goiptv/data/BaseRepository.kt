@@ -9,8 +9,8 @@ class BaseRepository @Inject constructor(
     @BaseApiService private val service: ApiService,
     ) {
 
-    suspend fun login(code: String, macAdd: String) =
-        service.login(code, macAdd)
+    suspend fun getAccounts(code: String, macAdd: String) =
+        service.getAccounts(code, macAdd)
 
     suspend fun getSubSections(id: Int) =
         service.getSubSections(id)

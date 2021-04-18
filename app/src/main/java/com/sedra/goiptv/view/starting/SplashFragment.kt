@@ -26,8 +26,6 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
 
     @Inject
-    lateinit var user: UserInfo
-    @Inject
     lateinit var preferences: SharedPreferences
     private val viewModel: AuthViewModel by viewModels()
 
@@ -68,7 +66,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
     }
 
     private fun performNav() {
-        if (user.username.isNullOrEmpty()) {
+        if (preferences.getString(PREF_NAME,"").isNullOrEmpty()) {
             findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
         } else {
             GoTo.goToMainActivity(requireActivity())

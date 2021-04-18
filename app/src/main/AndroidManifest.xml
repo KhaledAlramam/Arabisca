@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sedra.goiptv">
 
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-feature
         android:name="android.software.leanback"
@@ -23,7 +23,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GoIPTV"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.channels.PlayChannelsNewActivity"
+        <activity android:name=".view.settings.SettingsActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".view.channels.PlayChannelsNewActivity"
             android:configChanges="orientation"
             android:screenOrientation="landscape" />
         <activity

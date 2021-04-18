@@ -12,15 +12,17 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
         private val repository: BaseRepository
 ): ViewModel() {
-    fun login(code: String, macAdd: String) = liveData(Dispatchers.IO) {
+
+    fun getAccounts(code: String, macAdd: String) = liveData(Dispatchers.IO) {
         emit(Resource.loading(data = null))
         try {
-            emit(Resource.success(data = repository.login(code, macAdd)))
+            emit(Resource.success(data = repository.getAccounts(code, macAdd)))
         } catch (exception: Exception) {
             emit(Resource.error(data = null, message = exception.localizedMessage ?: "حدث خطأ ما"))
         }
 
     }
+
     fun getSetting() = liveData(Dispatchers.IO) {
         emit(Resource.loading(data = null))
         try {

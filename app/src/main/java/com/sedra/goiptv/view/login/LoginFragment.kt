@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
 import com.sedra.goiptv.R
+import com.sedra.goiptv.data.model.Account
 import com.sedra.goiptv.data.model.LoginResponse
 import com.sedra.goiptv.utils.*
 import com.sedra.goiptv.utils.Status.*
@@ -35,20 +36,23 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         val macAdd = getMacAddress()
         loginButton.setOnClickListener {
             val code = codeEt.text.toString()
-            login(code, macAdd)
+            getAccounts(code, macAdd)
         }
     }
 
-    private fun login(code: String, macAdd: String) {
-        viewModel.login(code, macAdd).observe(viewLifecycleOwner){
+    private fun getAccounts(code: String, macAdd: String) {
+        viewModel.getAccounts(code, macAdd).observe(viewLifecycleOwner){
             it?.let { resource ->
                 when(resource.status){
                     SUCCESS -> {
-                        if (resource.data?.server_info == null) {
+                        if (resource.data == null) {
                             Toast.makeText(context, "Login Error", Toast.LENGTH_SHORT).show()
                         } else {
-                            saveLogin(resource.data)
-                            findNavController().navigate(R.id.action_loginFragment_to_nameFragment)
+                            val editor = preferences.edit()
+                            editor.putString(PREF_CODE, code)
+                            editor.putString(PREF_MAC, macAdd)
+                            editor.apply()
+                            showAccountPicker(resource.data.data)
                         }
                     }
                     ERROR -> {
@@ -61,14 +65,23 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
     }
 
-    private fun saveLogin(data: LoginResponse) {
-        val gson = Gson()
-        val hashMapString = gson.toJson(data.user_info)
+    private fun showAccountPicker(accounts: List<Account>) {
+        saveLogin(accounts[0])
+    }
+
+    private fun saveLogin(account: Account) {
         val editor = preferences.edit()
-        editor.putString(PREF_URL, data.server_info.url)
-        editor.putString(PREF_PORT, data.server_info.port)
-        editor.putString(PREF_PARENT_USER, hashMapString)
+        val wholeUrl = account.server.let {
+            it.replace("http://","")
+        }
+        val link = wholeUrl.split(":")[0]
+        val port = wholeUrl.split(":")[1].split("/")[0]
+        editor.putString(PREF_URL, link)
+        editor.putString(PREF_PORT, port)
+        editor.putString(PREF_USER_NAME, account.username)
+        editor.putString(PREF_PASSWORD, account.password)
         editor.apply()
+        findNavController().navigate(R.id.action_loginFragment_to_nameFragment)
     }
 
     fun getMacAddress(): String {

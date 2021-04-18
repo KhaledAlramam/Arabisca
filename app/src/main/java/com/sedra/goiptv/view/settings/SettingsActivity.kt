@@ -1,35 +1,38 @@
-package com.sedra.goiptv.view.sections
+package com.sedra.goiptv.view.settings
 
 import android.app.AlertDialog
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sedra.goiptv.R
 import com.sedra.goiptv.data.model.Section
+import com.sedra.goiptv.data.model.UserInfo
 import com.sedra.goiptv.databinding.ActivityMainBinding
+import com.sedra.goiptv.databinding.ActivitySettingsBinding
 import com.sedra.goiptv.utils.*
-import com.sedra.goiptv.utils.Status.*
+import com.sedra.goiptv.view.sections.SectionsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import dmax.dialog.SpotsDialog
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-    var binding: ActivityMainBinding? = null
+class SettingsActivity : AppCompatActivity() {
 
+    var binding: ActivitySettingsBinding? = null
+    val viewModel: SettingsViewModel by viewModels()
     @Inject
     lateinit var preferences: SharedPreferences
-    private val viewModel by viewModels<MainViewModel>()
+    @Inject
+    lateinit var userInfo: UserInfo
     var progressDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_settings)
         progressDialog = SpotsDialog.Builder()
                 .setContext(this)
                 .setMessage("Please Wait...")
@@ -37,15 +40,10 @@ class MainActivity : AppCompatActivity() {
                 .setTheme(R.style.CustomProgressDialogTheme)
                 .build()
         binding?.apply {
-            userName = preferences.getString(PREF_NAME, "User")
-            val txt = "${preferences.getString(PREF_BANNER, "No Text")}                              ${preferences.getString(com.sedra.goiptv.utils.PREF_BANNER, "No Text")}"
-            textView3.text = txt
-            textView3.isSelected = true
-            goToSetting.setOnClickListener {
-                GoTo.goToSettings(this@MainActivity)
-            }
+            code = preferences.getString(PREF_CODE, "Error")
+            mac = preferences.getString(PREF_MAC, "Error")
+            code = userInfo.exp_date
         }
-        Log.e("TAG", "onCreate: ${preferences.getString(PREF_PARENT_USER, "")}" )
         getSections()
     }
 
@@ -53,40 +51,37 @@ class MainActivity : AppCompatActivity() {
         viewModel.getSections().observe(this) {
             it?.let { resource ->
                 when (resource.status) {
-                    SUCCESS -> {
+                    Status.SUCCESS -> {
                         progressDialog?.dismiss()
                         resource.data?.let { data ->
                             showSections(data.data)
                         }
                     }
-                    ERROR -> {
+                    Status.ERROR -> {
                         progressDialog?.dismiss()
                         Log.e("TAG", "getSections: ${resource.message}")
                     }
-                    LOADING -> {
+                    Status.LOADING -> {
                         progressDialog?.show()
                     }
                 }
             }
         }
     }
-
     private fun showSections(sections: List<Section>) {
         val fixedList = listOf(
                 Section(-3, "", getString(R.string.channels)),
                 Section(-1, "https://www.logomoose.com/wp-content/uploads/2016/01/GoMovies.jpg", getString(R.string.movies)),
                 Section(-2, "", getString(R.string.series)),
         ) + sections
-        val sectionsAdapter = SectionsAdapter(fixedList)
-        binding!!.sectionsRv.apply {
+        val sectionsAdapter = SettingsSectionsAdapter(fixedList)
+        binding!!.settingsSectionsRv.apply {
             adapter = sectionsAdapter
-            layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(this@SettingsActivity)
             setHasFixedSize(true)
         }
 
     }
-
-
     override fun onDestroy() {
         super.onDestroy()
         binding = null

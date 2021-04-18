@@ -13,10 +13,10 @@ interface ApiService {
 
     @POST("/gotv/public/api/auth/login")
     @FormUrlEncoded
-    suspend fun login(
+    suspend fun getAccounts(
             @Field("code") code: String,
             @Field("mac_address") macAdd: String
-    ): LoginResponse
+    ): GetAccountsResponse
 
     @GET("/gotv/public/api/sections")
     suspend fun getSections(): SectionsResponse
@@ -35,6 +35,13 @@ interface ApiService {
     suspend fun getItems(
             @Path("id") id: Int
     ): ItemsResponse
+
+    @POST("/player_api.php")
+    @FormUrlEncoded
+    suspend fun login(
+            @Field("username") userName: String,
+            @Field("password") password: String
+    ): LoginResponse
 
     @POST("/player_api.php")
     @FormUrlEncoded

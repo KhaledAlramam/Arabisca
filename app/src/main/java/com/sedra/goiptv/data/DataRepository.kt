@@ -8,41 +8,44 @@ import javax.inject.Inject
 
 
 class DataRepository @Inject constructor(
-    @BaseApiService private val service: ApiService,
-    @IptvApiService private val iptvApiService: ApiService
-    ) {
+        @BaseApiService private val service: ApiService,
+        @IptvApiService private val iptvApiService: ApiService
+) {
 
 
     suspend fun getSections() =
-        service.getSections()
+            service.getSections()
 
 
     suspend fun getAllMovies(userName: String?, password: String?) =
-        iptvApiService.getMovies(userName, password, GET_MOVIES_ACTION)
+            iptvApiService.getMovies(userName, password, GET_MOVIES_ACTION)
 
     suspend fun getMovieDetails(userName: String?, password: String?, movieId: Int) =
-        iptvApiService.getMovieDetails(userName, password, GET_MOVIE_DETAILS_ACTION, movieId)
+            iptvApiService.getMovieDetails(userName, password, GET_MOVIE_DETAILS_ACTION, movieId)
 
     suspend fun getSeriesDetails(userName: String, password: String, seriesId: Int) =
-        iptvApiService.getSeriesDetails(userName, password, GET_SERIES_DETAILS_ACTION, seriesId)
+            iptvApiService.getSeriesDetails(userName, password, GET_SERIES_DETAILS_ACTION, seriesId)
 
     suspend fun getMoviesCategories(userName: String?, password: String?) =
-        iptvApiService.getSelectedCategories(userName, password, GET_MOVIES_CATEGORIES_ACTION)
+            iptvApiService.getSelectedCategories(userName, password, GET_MOVIES_CATEGORIES_ACTION)
+
+    suspend fun login(userName: String, password: String) =
+            iptvApiService.login(userName, password)
 
     suspend fun getAllSeries(userName: String?, password: String?) =
-        iptvApiService.getSeries(userName, password, GET_SERIES_ACTION)
+            iptvApiService.getSeries(userName, password, GET_SERIES_ACTION)
 
     suspend fun getSeriesCategories(userName: String?, password: String?) =
-        iptvApiService.getSelectedCategories(userName, password, GET_SERIES_CATEGORIES_ACTION)
+            iptvApiService.getSelectedCategories(userName, password, GET_SERIES_CATEGORIES_ACTION)
 
     suspend fun getAllChannels(userName: String?, password: String?) =
-        iptvApiService.getLiveStreams(userName, password, GET_LIVE_STREAMS_ACTION)
+            iptvApiService.getLiveStreams(userName, password, GET_LIVE_STREAMS_ACTION)
 
     suspend fun getChannelsCategories(userName: String?, password: String?) =
-        iptvApiService.getSelectedCategories(userName, password, GET_LIVE_CATEGORIES_ACTION)
+            iptvApiService.getSelectedCategories(userName, password, GET_LIVE_CATEGORIES_ACTION)
 
     suspend fun getEpg(userName: String?, password: String?, streamId: Int, limit: Int) =
-        iptvApiService.getEpg(userName, password, GET_EPG_ACTION, streamId, limit)
+            iptvApiService.getEpg(userName, password, GET_EPG_ACTION, streamId, limit)
 
 
 //    companion object {

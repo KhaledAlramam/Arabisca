@@ -1,7 +1,5 @@
 <resources>
-    <string name="app_name">Go IPTV</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">Go TV</string>
     <string name="enter_your_code_here">Enter Your Code Here</string>
     <string name="enter_your_name_here">Enter Your Name Here</string>
     <string name="movie_info">RELEASE DATE: %s\tRATE: %s\tDURATION: %s</string>

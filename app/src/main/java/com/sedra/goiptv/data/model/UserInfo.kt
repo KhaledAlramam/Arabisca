@@ -8,7 +8,6 @@ data class UserInfo(
     val exp_date: String?= null,
     val is_trial: String?= null,
     val max_connections: String?= null,
-    val message: String?= null,
     val password: String?= null,
     val status: String?= null,
     val username: String?= null
