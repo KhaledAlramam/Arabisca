@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
                 Section(-1, "https://www.logomoose.com/wp-content/uploads/2016/01/GoMovies.jpg", getString(R.string.movies)),
                 Section(-2, "", getString(R.string.series)),
         ) + sections
-        val sectionsAdapter = SectionsAdapter(fixedList)
+        val sectionsAdapter = SectionsAdapter(preferences, fixedList)
         binding!!.sectionsRv.apply {
             adapter = sectionsAdapter
             layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)

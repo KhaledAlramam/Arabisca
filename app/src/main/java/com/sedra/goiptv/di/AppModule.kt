@@ -10,7 +10,6 @@ import com.sedra.goiptv.data.remote.ApiService
 import com.sedra.goiptv.utils.PREF_PARENT_USER
 import com.sedra.goiptv.utils.PREF_PORT
 import com.sedra.goiptv.utils.PREF_URL
-import com.sedra.goiptv.utils.PreferenceUtils
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,14 +26,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-
-    @Provides
-    @Singleton
-    fun getPref(
-        app: Application
-    ): PreferenceUtils {
-        return PreferenceUtils.getInstance(app.applicationContext)
-    }
 
     @BaseRetrofit
     @Provides

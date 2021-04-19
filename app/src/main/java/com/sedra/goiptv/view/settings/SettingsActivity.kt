@@ -11,12 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.sedra.goiptv.R
 import com.sedra.goiptv.data.model.Section
 import com.sedra.goiptv.data.model.UserInfo
-import com.sedra.goiptv.databinding.ActivityMainBinding
 import com.sedra.goiptv.databinding.ActivitySettingsBinding
 import com.sedra.goiptv.utils.*
 import com.sedra.goiptv.view.sections.SectionsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import dmax.dialog.SpotsDialog
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -42,7 +42,9 @@ class SettingsActivity : AppCompatActivity() {
         binding?.apply {
             code = preferences.getString(PREF_CODE, "Error")
             mac = preferences.getString(PREF_MAC, "Error")
-            code = userInfo.exp_date
+            try {
+                expiry = getFormattedExpiryDate(userInfo.exp_date?.toLong())
+            }catch (e:Exception){}
         }
         getSections()
     }
@@ -70,11 +72,11 @@ class SettingsActivity : AppCompatActivity() {
     }
     private fun showSections(sections: List<Section>) {
         val fixedList = listOf(
-                Section(-3, "", getString(R.string.channels)),
+                Section(-3, "https://www.logomoose.com/wp-content/uploads/2016/01/GoMovies.jpg", getString(R.string.channels)),
                 Section(-1, "https://www.logomoose.com/wp-content/uploads/2016/01/GoMovies.jpg", getString(R.string.movies)),
-                Section(-2, "", getString(R.string.series)),
+                Section(-2, "https://www.logomoose.com/wp-content/uploads/2016/01/GoMovies.jpg", getString(R.string.series)),
         ) + sections
-        val sectionsAdapter = SettingsSectionsAdapter(fixedList)
+        val sectionsAdapter = SettingsSectionsAdapter(preferences, fixedList)
         binding!!.settingsSectionsRv.apply {
             adapter = sectionsAdapter
             layoutManager = LinearLayoutManager(this@SettingsActivity)
@@ -87,4 +89,14 @@ class SettingsActivity : AppCompatActivity() {
         binding = null
     }
 
+    fun getFormattedExpiryDate(date:Long?): String {
+        if (date == null) return ""
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = (1000L * date)
+        return "${calendar.get(Calendar.DAY_OF_MONTH)}/${calendar.get(Calendar.MONTH) + 1}/${
+            calendar.get(
+                    Calendar.YEAR
+            )
+        }"
+    }
 }
