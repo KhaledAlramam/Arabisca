@@ -18,7 +18,7 @@ class AuthViewModel @Inject constructor(
         try {
             emit(Resource.success(data = repository.getAccounts(code, macAdd)))
         } catch (exception: Exception) {
-            emit(Resource.error(data = null, message = exception.localizedMessage ?: "حدث خطأ ما"))
+            emit(Resource.error(data = null, message = "Mac Or Code are wrong"))
         }
 
     }

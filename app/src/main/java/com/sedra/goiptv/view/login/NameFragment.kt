@@ -1,5 +1,6 @@
 package com.sedra.goiptv.view.login
 
+import android.app.AlertDialog
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,7 @@ import com.sedra.goiptv.data.model.UserInfo
 import com.sedra.goiptv.utils.*
 import com.sedra.goiptv.utils.Status.*
 import dagger.hilt.android.AndroidEntryPoint
+import dmax.dialog.SpotsDialog
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -23,11 +25,19 @@ class NameFragment : Fragment(R.layout.fragment_name) {
     @Inject
     lateinit var preferences: SharedPreferences
     val viewModel: LoginDataViewModel by viewModels()
+    var progressDialog: AlertDialog? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val saveName = view.findViewById<Button>(R.id.saveName)
         val nameEt = view.findViewById<EditText>(R.id.nameEt)
+        progressDialog = SpotsDialog.Builder()
+                .setContext(requireContext())
+                .setMessage("Please Wait...")
+                .setCancelable(false)
+                .setTheme(R.style.CustomProgressDialogTheme)
+                .build()
+
         saveName.setOnClickListener {
             val name = nameEt.text.toString()
             if (name.isEmpty()) return@setOnClickListener
@@ -47,6 +57,7 @@ class NameFragment : Fragment(R.layout.fragment_name) {
             it?.let {
                 when (it.status) {
                     SUCCESS -> {
+                        progressDialog?.dismiss()
                         it.data?.let { data ->
                             if (data.user_info == null) {
                                 Toast.makeText(
@@ -60,10 +71,12 @@ class NameFragment : Fragment(R.layout.fragment_name) {
                         }
                     }
                     ERROR -> {
+                        progressDialog?.dismiss()
                         Log.e("TAG", "onViewCreated: ,,,${it.message}")
                         Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                     }
                     LOADING -> {
+                        progressDialog?.show()
                     }
                 }
             }
@@ -79,4 +92,8 @@ class NameFragment : Fragment(R.layout.fragment_name) {
         GoTo.goToMainActivity(requireActivity())
     }
 
+    override fun onDestroy() {
+        progressDialog= null
+        super.onDestroy()
+    }
 }

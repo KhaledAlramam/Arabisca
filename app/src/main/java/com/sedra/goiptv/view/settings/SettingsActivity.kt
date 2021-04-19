@@ -1,6 +1,7 @@
 package com.sedra.goiptv.view.settings
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,12 +9,14 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.jakewharton.processphoenix.ProcessPhoenix
 import com.sedra.goiptv.R
 import com.sedra.goiptv.data.model.Section
 import com.sedra.goiptv.data.model.UserInfo
 import com.sedra.goiptv.databinding.ActivitySettingsBinding
 import com.sedra.goiptv.utils.*
 import com.sedra.goiptv.view.sections.SectionsAdapter
+import com.sedra.goiptv.view.starting.StartingActivity
 import dagger.hilt.android.AndroidEntryPoint
 import dmax.dialog.SpotsDialog
 import java.util.*
@@ -45,6 +48,13 @@ class SettingsActivity : AppCompatActivity() {
             try {
                 expiry = getFormattedExpiryDate(userInfo.exp_date?.toLong())
             }catch (e:Exception){}
+            logout.setOnClickListener {
+                preferences.edit().clear().apply()
+                val intent = Intent(this@SettingsActivity, StartingActivity::class.java)
+
+                startActivity(intent)
+                finish()
+            }
         }
         getSections()
     }
