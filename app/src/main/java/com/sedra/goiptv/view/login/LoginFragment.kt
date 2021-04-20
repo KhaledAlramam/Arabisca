@@ -40,7 +40,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         super.onViewCreated(view, savedInstanceState)
         val loginButton: Button = view.findViewById(R.id.loginButton)
         val codeEt: EditText = view.findViewById(R.id.codeEt)
-        val macAdd = getMacAddress()
+        val macAdd = "getMacAddress()"
         progressDialog = SpotsDialog.Builder()
                 .setContext(requireContext())
                 .setMessage("Please Wait...")

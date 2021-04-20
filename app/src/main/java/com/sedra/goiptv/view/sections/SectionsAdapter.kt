@@ -1,8 +1,11 @@
 package com.sedra.goiptv.view.sections
 
 import android.app.Dialog
+import android.app.UiModeManager
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,6 +14,7 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -41,6 +45,9 @@ class SectionsAdapter(
         val context = holder.binding.root.context
         val currentSection = list[position]
         val itemBinding = holder.binding as ListItemMainCategoriesBinding
+        if (!checkTv(context)){
+            itemBinding.guideline7.setGuidelinePercent(.35f)
+        }
         holder.binding.root.translationX= (-80f * position)
         holder.binding.root.setOnFocusChangeListener { v, hasFocus ->
             if (hasFocus){
@@ -112,5 +119,17 @@ class SectionsAdapter(
         val window = myDialog.window
         window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
+    private fun checkTv(context: Context): Boolean {
+        var isAndroidTv = false
+        if ((context.getSystemService(AppCompatActivity.UI_MODE_SERVICE) as UiModeManager).currentModeType == Configuration.UI_MODE_TYPE_TELEVISION) {
+            isAndroidTv = true
+        } else if (context.packageManager!!
+                        .hasSystemFeature(PackageManager.FEATURE_TELEVISION) || context.packageManager!!
+                        .hasSystemFeature(PackageManager.FEATURE_LEANBACK)
+        ) {
+            isAndroidTv = true
+        }
 
+        return isAndroidTv
+    }
 }

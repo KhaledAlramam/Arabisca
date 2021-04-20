@@ -1,7 +1,10 @@
 package com.sedra.goiptv.view.sections
 
 import android.app.AlertDialog
+import android.app.UiModeManager
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -91,5 +94,6 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         binding = null
     }
+
 
 }

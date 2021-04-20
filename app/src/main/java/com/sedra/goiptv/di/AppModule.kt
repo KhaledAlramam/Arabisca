@@ -43,7 +43,6 @@ object AppModule {
 
     @IptvRetrofit
     @Provides
-    @Singleton
     fun provideTvRetrofit(preferences: SharedPreferences): Retrofit {
         val link = "http://${preferences.getString(PREF_URL,"")}:${preferences.getString(PREF_PORT,"")}/"
         val interceptor = HttpLoggingInterceptor()
@@ -64,7 +63,6 @@ object AppModule {
 
     @IptvApiService
     @Provides
-    @Singleton
     fun provideTvApi(@IptvRetrofit retrofit: Retrofit): ApiService =
             retrofit.create(ApiService::class.java)
 
@@ -77,7 +75,6 @@ object AppModule {
 
 
     @Provides
-    @Singleton
     fun getParent(sharedPreferences: SharedPreferences): UserInfo {
         val obj = sharedPreferences.getString(PREF_PARENT_USER, "defValue")
         return if (obj == "defValue") {
