@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Base64
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import androidx.activity.viewModels
@@ -248,6 +249,10 @@ class PlayChannelsNewActivity : AppCompatActivity() {
                 nowWatchingTitle.text = decodedString
                 textView16.isVisible = true
                 textView17.isVisible = true
+                nowWatchingTitle.setOnClickListener {
+
+                    playTimeShift(epgItem)
+                }
             }
         } else {
             binding?.apply {
@@ -301,8 +306,23 @@ class PlayChannelsNewActivity : AppCompatActivity() {
 
     private fun playLiveStream(id: Int?) {
         val url = "http://${preferences.getString(PREF_URL, "")}:${preferences.getString(PREF_PORT, "")}/"
+        Log.e("TAG", "playLiveStream:${url}${userInfo.username}/${userInfo.password}/${id} ", )
         val mediaItem = MediaItem.Builder().apply {
             setUri("${url}${userInfo.username}/${userInfo.password}/${id}")
+        }.build()
+
+        player?.setMediaItem(mediaItem)
+        player?.playWhenReady = playWhenReady
+        player?.seekTo(currentWindow, playbackPosition)
+        player?.prepare()
+    }
+
+    private fun playTimeShift(epg: EpgListings) {
+        val url = "http://${preferences.getString(PREF_URL, "")}:${preferences.getString(PREF_PORT, "")}/"
+
+        val mediaItem = MediaItem.Builder().apply {
+//            setUri("${url}${userInfo.username}/${userInfo.password}/${id}")
+            setUri("http://ui-tv.se:2095/streaming/timeshift.php?username=00531832836&password=00531832836&stream=16&start=2021-04-12:00-21&duration=60")
         }.build()
 
         player?.setMediaItem(mediaItem)

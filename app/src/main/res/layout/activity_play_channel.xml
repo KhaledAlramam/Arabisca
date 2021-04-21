@@ -145,6 +145,9 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginBottom="8dp"
                 android:textSize="18sp"
+                android:focusable="true"
+                android:clickable="true"
+                android:background="@drawable/selector_black"
                 app:layout_constraintBottom_toTopOf="@+id/nowWatchingTime"
                 app:layout_constraintStart_toEndOf="@+id/channelImg" />
 
