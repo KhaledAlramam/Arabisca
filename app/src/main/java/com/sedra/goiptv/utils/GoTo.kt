@@ -6,8 +6,9 @@ import android.content.Intent
 import com.sedra.goiptv.data.model.Category
 import com.sedra.goiptv.view.channels.PlayChannelsNewActivity
 import com.sedra.goiptv.view.customsection.CustomSectionActivity
-import com.sedra.goiptv.view.movie.MovieDetailsActivity
+import com.sedra.goiptv.view.customsection.PlayCustomChannelsActivity
 import com.sedra.goiptv.view.department.DepartmentActivity
+import com.sedra.goiptv.view.movie.MovieDetailsActivity
 import com.sedra.goiptv.view.movie.PlayMovieActivity
 import com.sedra.goiptv.view.sections.MainActivity
 import com.sedra.goiptv.view.series.SeriesDetailsForTv
@@ -31,20 +32,29 @@ object GoTo{
         i.putExtra(EXTRA_TYPE_NAME, name)
         context.startActivity(i)
     }
-    fun goToPlayChannelActivity(context: Context){
+
+    fun goToPlayChannelActivity(context: Context) {
         val i = Intent(context, PlayChannelsNewActivity::class.java)
         i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
         context.startActivity(i)
     }
 
-    fun goToCustomSectionActivity(context: Context, id: Int, name: String){
+    fun goToPlayCustomChannelActivity(context: Context, id: Int) {
+        val i = Intent(context, PlayCustomChannelsActivity::class.java)
+        i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+        i.putExtra(EXTRA_TYPE_ID, id)
+        context.startActivity(i)
+    }
+
+    fun goToCustomSectionActivity(context: Context, id: Int, name: String) {
         val i = Intent(context, CustomSectionActivity::class.java)
         i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
         i.putExtra(EXTRA_TYPE_ID, id)
         i.putExtra(EXTRA_TYPE_NAME, name)
         context.startActivity(i)
     }
-    fun goToMovieDetails(context: Context, id: Int){
+
+    fun goToMovieDetails(context: Context, id: Int) {
         val i = Intent(context, MovieDetailsActivity::class.java)
         i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
         i.putExtra(MOVIE_ID_PARAMETER, id)

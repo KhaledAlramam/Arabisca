@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.Animation
@@ -82,12 +81,20 @@ class SectionsAdapter(
 
     private fun handleNavigation(context: Context, currentSection: Section) {
         if (currentSection.id < 0)
-            if (currentSection.id == DepartmentActivity.CHANNELS_ID){
+            if (currentSection.id == DepartmentActivity.CHANNELS_ID) {
                 GoTo.goToPlayChannelActivity(context)
-            }else
+            } else
                 GoTo.goToDepartmentActivity(context, currentSection.id, currentSection.name)
-        else
-            GoTo.goToCustomSectionActivity(context, currentSection.id, currentSection.name)
+        else {
+            when (currentSection.type) {
+                MOVIE_TYPE -> {
+                    GoTo.goToCustomSectionActivity(context, currentSection.id, currentSection.name)
+                }
+                LIVE_TYPE -> {
+                    GoTo.goToPlayCustomChannelActivity(context, currentSection.id)
+                }
+            }
+        }
     }
 
     override fun getItemCount(): Int = list.size
@@ -131,5 +138,10 @@ class SectionsAdapter(
         }
 
         return isAndroidTv
+    }
+
+    companion object {
+        const val MOVIE_TYPE = "movie"
+        const val LIVE_TYPE = "live"
     }
 }

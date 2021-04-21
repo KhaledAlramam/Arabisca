@@ -2,8 +2,6 @@ package com.sedra.goiptv.view.channels
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.sedra.goiptv.R
 import com.sedra.goiptv.data.model.Category
@@ -25,7 +23,7 @@ class ChannelsCategoryAdapter(
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val context = holder.binding.root.context
         val itemBinding = holder.binding as AdapterChannelCategoryBinding
-        itemBinding.category = categoryList[position]
+        itemBinding.category = categoryList[position].category_name
         itemBinding.root.setOnClickListener {
             clickListener.onClick(itemBinding.root, categoryList[position])
         }

@@ -5,7 +5,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Section(
-    val id: Int,
-    val image: String,
-    val name: String
+        val id: Int,
+        val image: String,
+        val name: String,
+        val type: String? = ""
 ): Parcelable
