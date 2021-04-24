@@ -9,35 +9,27 @@ import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
 @HiltViewModel
-class SubSectionsViewModel @Inject constructor(
+class CustomSeriesViewModel @Inject constructor(
         private val repository: BaseRepository
-): ViewModel() {
+) : ViewModel() {
 
 
-    fun getSubSections(id: Int) = liveData(Dispatchers.IO) {
+    fun getSeriesSeasons(id: Int) = liveData(Dispatchers.IO) {
         emit(Resource.loading(data = null))
         try {
-            emit(Resource.success(data = repository.getSubSections(id)))
+            emit(Resource.success(data = repository.getSeriesSeasons(id)))
         } catch (exception: Exception) {
             emit(Resource.error(data = null, message = exception.localizedMessage ?: "حدث خطأ ما"))
         }
     }
 
-    fun getSeriesFromSubSections(id: Int) = liveData(Dispatchers.IO) {
+    fun getSeasonItems(id: Int) = liveData(Dispatchers.IO) {
         emit(Resource.loading(data = null))
         try {
-            emit(Resource.success(data = repository.getSeriesFromSubSections(id)))
+            emit(Resource.success(data = repository.getSeasonItems(id)))
         } catch (exception: Exception) {
             emit(Resource.error(data = null, message = exception.localizedMessage ?: "حدث خطأ ما"))
         }
     }
 
-    fun getItems(id: Int) = liveData(Dispatchers.IO) {
-        emit(Resource.loading(data = null))
-        try {
-            emit(Resource.success(data = repository.getItems(id)))
-        } catch (exception: Exception) {
-            emit(Resource.error(data = null, message = exception.localizedMessage ?: "حدث خطأ ما"))
-        }
-    }
 }

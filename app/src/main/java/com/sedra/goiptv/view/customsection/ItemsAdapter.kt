@@ -1,6 +1,5 @@
 package com.sedra.goiptv.view.customsection
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.Animation
@@ -12,9 +11,9 @@ import com.bumptech.glide.Glide
 import com.sedra.goiptv.R
 import com.sedra.goiptv.data.model.CustomItem
 import com.sedra.goiptv.databinding.ListItemMovieSeriesBinding
-import com.sedra.goiptv.utils.EXTRA_ITEM
+import com.sedra.goiptv.utils.PositionOnClick
 
-class ItemsAdapter : ListAdapter<CustomItem, CustomViewHolder>(Companion) {
+class ItemsAdapter(val listener: PositionOnClick) : ListAdapter<CustomItem, CustomViewHolder>(Companion) {
 
     companion object : DiffUtil.ItemCallback<CustomItem>() {
         override fun areItemsTheSame(oldItem: CustomItem, newItem: CustomItem): Boolean {
@@ -58,9 +57,7 @@ class ItemsAdapter : ListAdapter<CustomItem, CustomViewHolder>(Companion) {
                     itemBinding.root.context.getString(R.string.space))
         }
         itemBinding.root.setOnClickListener {
-            val intent = Intent(it.context, PlayItemActivity::class.java)
-            intent.putExtra(EXTRA_ITEM, currentMovie)
-            it.context.startActivity(intent)
+            listener.onClick(it, position)
         }
     }
 }

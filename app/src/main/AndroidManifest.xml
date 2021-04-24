@@ -77,7 +77,18 @@
             android:name=".view.customsection.PlayItemActivity"
             android:configChanges="orientation"
             android:screenOrientation="landscape" />
-        <activity android:name=".view.customsection.PlayCustomChannelsActivity" />
+        <activity
+            android:name=".view.customsection.PlayCustomChannelsActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".view.customsection.CustomSeriesActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".view.customsection.CustomSeriesDetailsActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

@@ -1,6 +1,5 @@
 package com.sedra.goiptv.data.remote
 
-import com.google.android.exoplayer2.extractor.ts.SectionReader
 import com.sedra.goiptv.data.model.*
 import com.sedra.goiptv.data.model.series_models.SeriesDetailsResponse
 import retrofit2.http.*
@@ -30,6 +29,24 @@ interface ApiService {
     suspend fun getSubSections(
             @Path("id") id: Int
     ): SubSectionsResponse
+
+
+    @GET("/gotv/public/api/series/subsection/{id}}")
+    suspend fun getSeriesFromSubSections(
+            @Path("id") id: Int
+    ): ItemsResponse
+
+
+    @GET("/gotv/public/api/items/season/{id}}")
+    suspend fun getSeasonItems(
+            @Path("id") id: Int
+    ): ItemsResponse
+
+
+    @GET("/gotv/public/api/seasons/series/{id}}")
+    suspend fun getSeriesSeasons(
+            @Path("id") id: Int
+    ): ItemsResponse
 
     @GET("/gotv/public/api/items/subsection/{id}}")
     suspend fun getItems(

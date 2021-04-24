@@ -10,17 +10,28 @@ class BaseRepository @Inject constructor(
     ) {
 
     suspend fun getAccounts(code: String, macAdd: String) =
-        service.getAccounts(code, macAdd)
+            service.getAccounts(code, macAdd)
 
     suspend fun getSubSections(id: Int) =
-        service.getSubSections(id)
+            service.getSubSections(id)
+
+    suspend fun getSeriesFromSubSections(id: Int) =
+            service.getSeriesFromSubSections(id)
+
+
+    suspend fun getSeasonItems(id: Int) =
+            service.getSeasonItems(id)
+
+
+    suspend fun getSeriesSeasons(id: Int) =
+            service.getSeriesSeasons(id)
 
 
     suspend fun getItems(id: Int) =
-        service.getItems(id)
+            service.getItems(id)
 
     suspend fun getSections() =
-        service.getSections()
+            service.getSections()
 
 
     suspend fun getSettings() =

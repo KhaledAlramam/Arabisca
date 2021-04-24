@@ -6,6 +6,8 @@ import android.content.Intent
 import com.sedra.goiptv.data.model.Category
 import com.sedra.goiptv.view.channels.PlayChannelsNewActivity
 import com.sedra.goiptv.view.customsection.CustomSectionActivity
+import com.sedra.goiptv.view.customsection.CustomSeriesActivity
+import com.sedra.goiptv.view.customsection.CustomSeriesDetailsActivity
 import com.sedra.goiptv.view.customsection.PlayCustomChannelsActivity
 import com.sedra.goiptv.view.department.DepartmentActivity
 import com.sedra.goiptv.view.movie.MovieDetailsActivity
@@ -54,13 +56,28 @@ object GoTo{
         context.startActivity(i)
     }
 
+    fun goToCustomSeriesActivity(context: Context, id: Int) {
+        val i = Intent(context, CustomSeriesActivity::class.java)
+        i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+        i.putExtra(EXTRA_TYPE_ID, id)
+        context.startActivity(i)
+    }
+
+    fun goToCustomSeriesDetailsActivity(context: Context, id: Int) {
+        val i = Intent(context, CustomSeriesDetailsActivity::class.java)
+        i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+        i.putExtra(SERIES_ID_PARAMETER, id)
+        context.startActivity(i)
+    }
+
     fun goToMovieDetails(context: Context, id: Int) {
         val i = Intent(context, MovieDetailsActivity::class.java)
         i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
         i.putExtra(MOVIE_ID_PARAMETER, id)
         context.startActivity(i)
     }
-    fun playMovieActivity(context: Context, id: Int, containerExtension: String?){
+
+    fun playMovieActivity(context: Context, id: Int, containerExtension: String?) {
         val i = Intent(context, PlayMovieActivity::class.java)
         i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
         i.putExtra(STREAM_ID_INTENT_EXTRA, id)
@@ -68,7 +85,7 @@ object GoTo{
         context.startActivity(i)
     }
 
-    fun playChannel(context: Context, id: Int, streamIcon: String, catList: ArrayList<Category>){
+    fun playChannel(context: Context, id: Int, streamIcon: String, catList: ArrayList<Category>) {
         val i = Intent(context, PlayChannelsNewActivity::class.java)
 //        i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
         i.putExtra(STREAM_ID_INTENT_EXTRA, id)

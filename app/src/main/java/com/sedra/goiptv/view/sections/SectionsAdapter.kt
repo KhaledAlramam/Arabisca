@@ -90,6 +90,9 @@ class SectionsAdapter(
                 MOVIE_TYPE -> {
                     GoTo.goToCustomSectionActivity(context, currentSection.id, currentSection.name)
                 }
+                SERIES_TYPE -> {
+                    GoTo.goToCustomSeriesActivity(context, currentSection.id)
+                }
                 LIVE_TYPE -> {
                     GoTo.goToPlayCustomChannelActivity(context, currentSection.id)
                 }
@@ -143,5 +146,6 @@ class SectionsAdapter(
     companion object {
         const val MOVIE_TYPE = "movie"
         const val LIVE_TYPE = "live"
+        const val SERIES_TYPE = "series"
     }
 }
