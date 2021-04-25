@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,8 +36,14 @@ class CustomSeriesDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_series_details_for_tv)
         fetchSeriesDetails()
-        binding.back.setOnClickListener {
-            finish()
+        binding.apply {
+            back.setOnClickListener {
+                finish()
+            }
+            ratingBar.isVisible = false
+            seriesCover.isVisible = false
+            seriesDetailsNameTv.text = intent.getStringExtra(SERIES_NAME)
+
         }
     }
 
@@ -48,9 +55,9 @@ class CustomSeriesDetailsActivity : AppCompatActivity() {
             when (it.status) {
                 Status.SUCCESS -> {
                     it?.let { resource ->
-                        Glide.with(this)
-                                .load(resource.data!!.data[0].image)
-                                .into(binding!!.seriesCover)
+//                        Glide.with(this)
+//                                .load(resource.data!!.data[0].image)
+//                                .into(binding!!.seriesCover)
                         updateUI(resource.data!!)
                     }
 
@@ -78,9 +85,9 @@ class CustomSeriesDetailsActivity : AppCompatActivity() {
         adapter = SeasonAdapterOnTv(
                 seasons, object : SeasonOnClick {
             override fun onClick(view: View, season: Season) {
-                Glide.with(this@CustomSeriesDetailsActivity)
-                        .load(season.cover)
-                        .into(binding.seriesCover)
+//                Glide.with(this@CustomSeriesDetailsActivity)
+//                        .load(season.cover)
+//                        .into(binding.seriesCover)
                 fetchSeasonEpisodes(season.id ?: 0)
             }
         }

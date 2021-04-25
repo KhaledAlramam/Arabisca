@@ -105,6 +105,7 @@ class SeriesDetailsForTv : AppCompatActivity() {
                 Status.SUCCESS -> {
                     it?.let { resource ->
                         binding!!.seriesData = resource.data?.info
+                        binding.seriesDetailsNameTv.text = resource.data?.info?.name
                         Glide.with(this)
                             .load(resource.data?.info?.cover)
                             .into(binding!!.seriesCover)

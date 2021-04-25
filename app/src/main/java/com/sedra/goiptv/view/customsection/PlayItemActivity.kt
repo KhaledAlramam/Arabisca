@@ -119,7 +119,7 @@ class PlayItemActivity : AppCompatActivity() {
                 .build()
         }
         _binding?.videoView?.player = player
-        Log.e("TAG", "initializePlayer: ${item.id}")
+        Log.e("TAG", "initializePlayer: ${item.video}")
 
         val mediaItem =
             MediaItem.Builder().apply {

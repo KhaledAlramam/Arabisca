@@ -15,6 +15,7 @@ const val EXTRA_TYPE_ID = "type_id"
 const val EXTRA_SECTION_ID = "sectionId"
 const val EXTRA_TYPE_NAME = "type_name"
 const val EXTRA_ITEM = "item"
+const val SERIES_NAME = "series_name"
 
 const val GET_MOVIES_CATEGORIES_ACTION = "get_vod_categories"
 const val GET_SERIES_CATEGORIES_ACTION = "get_series_categories"

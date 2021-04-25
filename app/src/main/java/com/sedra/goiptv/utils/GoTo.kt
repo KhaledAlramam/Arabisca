@@ -63,10 +63,11 @@ object GoTo{
         context.startActivity(i)
     }
 
-    fun goToCustomSeriesDetailsActivity(context: Context, id: Int) {
+    fun goToCustomSeriesDetailsActivity(context: Context, id: Int, name: String) {
         val i = Intent(context, CustomSeriesDetailsActivity::class.java)
         i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
         i.putExtra(SERIES_ID_PARAMETER, id)
+        i.putExtra(SERIES_NAME, name)
         context.startActivity(i)
     }
 

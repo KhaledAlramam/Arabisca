@@ -27,7 +27,11 @@ class CustomSeriesActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_department)
         itemsAdapter = ItemsAdapter(object : PositionOnClick {
             override fun onClick(view: View, position: Int) {
-                GoTo.goToCustomSeriesDetailsActivity(this@CustomSeriesActivity, itemsAdapter.currentList[position].id)
+                GoTo.goToCustomSeriesDetailsActivity(
+                    this@CustomSeriesActivity,
+                    itemsAdapter.currentList[position].id,
+                    itemsAdapter.currentList[position].name,
+                )
             }
         })
         getSubSections()
