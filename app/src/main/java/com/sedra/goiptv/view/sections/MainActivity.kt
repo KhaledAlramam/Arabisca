@@ -1,15 +1,12 @@
 package com.sedra.goiptv.view.sections
 
 import android.app.AlertDialog
-import android.app.UiModeManager
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
-import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sedra.goiptv.R
@@ -41,14 +38,43 @@ class MainActivity : AppCompatActivity() {
                 .build()
         binding?.apply {
             userName = preferences.getString(PREF_NAME, "User")
-            val txt = "${preferences.getString(PREF_BANNER, "No Text")}                              ${preferences.getString(com.sedra.goiptv.utils.PREF_BANNER, "No Text")}"
+            val txt = "${
+                preferences.getString(
+                    PREF_BANNER,
+                    "No Text"
+                )
+            }                              ${
+                preferences.getString(
+                    com.sedra.goiptv.utils.PREF_BANNER,
+                    "No Text"
+                )
+            }"
             textView3.text = txt
             textView3.isSelected = true
             goToSetting.setOnClickListener {
                 GoTo.goToSettings(this@MainActivity)
             }
+            goToSetting.setOnFocusChangeListener { v, hasFocus ->
+                if (hasFocus) {
+                    goToSetting.setColorFilter(
+                        ContextCompat.getColor(
+                            this@MainActivity,
+                            R.color.mainDark
+                        ), android.graphics.PorterDuff.Mode.MULTIPLY
+                    );
+                } else {
+                    goToSetting.setColorFilter(
+                        ContextCompat.getColor(
+                            this@MainActivity,
+                            R.color.white
+                        ), android.graphics.PorterDuff.Mode.MULTIPLY
+                    )
+                }
+            }
+
         }
-        Log.e("TAG", "onCreate: ${preferences.getString(PREF_PARENT_USER, "")}" )
+        Log.e("TAG", "onCreate: ${preferences.getString(PREF_PARENT_USER, "")}")
+
         getSections()
     }
 
