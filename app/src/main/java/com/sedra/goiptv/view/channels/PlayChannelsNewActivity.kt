@@ -1,7 +1,6 @@
 package com.sedra.goiptv.view.channels
 
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Base64
@@ -9,6 +8,7 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,8 +23,6 @@ import com.sedra.goiptv.databinding.ActivityPlayChannelBinding
 import com.sedra.goiptv.utils.*
 import com.sedra.goiptv.view.department.ChannelAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Exception
-import java.text.FieldPosition
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -61,9 +59,9 @@ class PlayChannelsNewActivity : AppCompatActivity() {
         initTimers()
         channelsAdapter = ChannelAdapter(this,
                 object : ChannelOnClick {
-                    override fun onClick(view: View, liveStream: LiveStream, position: Int) {
-                        binding!!.group.isVisible = false
-                        binding!!.ChannelInPlayerRv.isVisible = false
+                    override fun onClick(view: View, clicked: Boolean, liveStream: LiveStream, position: Int) {
+                        binding!!.group.isVisible = !clicked
+                        binding!!.ChannelInPlayerRv.isVisible = !clicked
                         handleChannelChoosed(liveStream, position)
                     }
                 })

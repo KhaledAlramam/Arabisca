@@ -1,19 +1,15 @@
 package com.sedra.goiptv.view.department
 
 import android.app.Activity
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.bumptech.glide.Glide
 import com.sedra.goiptv.R
 import com.sedra.goiptv.data.model.LiveStream
 import com.sedra.goiptv.databinding.AdapterChannelItemBinding
-import com.sedra.goiptv.databinding.ListItemMovieSeriesBinding
-import com.sedra.goiptv.utils.*
-import com.sedra.goiptv.view.channels.PlayChannelsNewActivity
+import com.sedra.goiptv.utils.ChannelOnClick
 
 class ChannelAdapter(
         val activity: Activity,
@@ -53,13 +49,14 @@ class ChannelAdapter(
         itemBinding.root.setOnFocusChangeListener { v, hasFocus ->
             if (hasFocus){
                 itemBinding.channelName.setTextColor(context.resources.getColor(R.color.white))
+                listener.onClick(v, false, currentChannel, position)
             }else{
                 itemBinding.channelName.setTextColor(context.resources.getColor(R.color.mainDark))
             }
         }
 
         itemBinding.root.setOnClickListener { v ->
-            listener.onClick(v, currentChannel, position)
+            listener.onClick(v, true, currentChannel, position)
         }
     }
 }
