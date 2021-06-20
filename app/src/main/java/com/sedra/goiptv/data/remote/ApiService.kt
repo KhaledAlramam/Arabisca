@@ -7,7 +7,7 @@ import retrofit2.http.*
 interface ApiService {
 
     companion object{
-        const val BASE_URL = "http://codespanel.com/"
+        const val BASE_URL = "http://iptv-pro.xyz/"
     }
 
     @POST("/gotv/public/api/auth/login")
