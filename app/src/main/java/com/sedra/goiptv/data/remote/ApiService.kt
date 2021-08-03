@@ -7,48 +7,49 @@ import retrofit2.http.*
 interface ApiService {
 
     companion object{
-        const val BASE_URL = "http://iptv-pro.xyz/"
+        const val BASE_URL = "http://mahmoude28.sg-host.com/"
     }
 
-    @POST("/gotv/public/api/auth/login")
+    @POST("/go/public/api/auth/login")
+    @Headers("Accept: application/json")
     @FormUrlEncoded
     suspend fun getAccounts(
             @Field("code") code: String,
             @Field("mac_address") macAdd: String
     ): GetAccountsResponse
 
-    @GET("/gotv/public/api/sections")
+    @GET("/go/public/api/sections")
     suspend fun getSections(): SectionsResponse
 
 
-    @GET("/gotv/public/api/settings")
+    @GET("/go/public/api/settings")
     suspend fun getSettings(): SettingsResponse
 
 
-    @GET("/gotv/public/api/subsections/section/{id}}")
+    @GET("/go/public/api/subsections/section/{id}}")
     suspend fun getSubSections(
             @Path("id") id: Int
     ): SubSectionsResponse
 
 
-    @GET("/gotv/public/api/series/subsection/{id}}")
+    @GET("/go/public/api/series/subsection/{id}}")
     suspend fun getSeriesFromSubSections(
             @Path("id") id: Int
     ): ItemsResponse
 
 
-    @GET("/gotv/public/api/items/season/{id}}")
+    @GET("/go/public/api/items/season/{id}}")
     suspend fun getSeasonItems(
             @Path("id") id: Int
     ): ItemsResponse
 
 
-    @GET("/gotv/public/api/seasons/series/{id}}")
+    @GET("/go/public/api/seasons/series/{id}}")
     suspend fun getSeriesSeasons(
             @Path("id") id: Int
     ): ItemsResponse
 
-    @GET("/gotv/public/api/items/subsection/{id}}")
+    @GET("/go/public/api/items/subsection/{id}}")
     suspend fun getItems(
             @Path("id") id: Int
     ): ItemsResponse

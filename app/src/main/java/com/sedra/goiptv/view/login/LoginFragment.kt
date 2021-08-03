@@ -14,10 +14,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
 import com.sedra.goiptv.R
 import com.sedra.goiptv.data.model.Account
-import com.sedra.goiptv.data.model.LoginResponse
 import com.sedra.goiptv.utils.*
 import com.sedra.goiptv.utils.Status.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,6 +30,7 @@ import javax.inject.Inject
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
     val viewModel: AuthViewModel by viewModels()
+
     @Inject
     lateinit var preferences: SharedPreferences
     var progressDialog: AlertDialog? = null
@@ -42,11 +41,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         val codeEt: EditText = view.findViewById(R.id.codeEt)
         val macAdd = getMacAddress()
         progressDialog = SpotsDialog.Builder()
-                .setContext(requireContext())
-                .setMessage("Please Wait...")
-                .setCancelable(false)
-                .setTheme(R.style.CustomProgressDialogTheme)
-                .build()
+            .setContext(requireContext())
+            .setMessage("Please Wait...")
+            .setCancelable(false)
+            .setTheme(R.style.CustomProgressDialogTheme)
+            .build()
 
         loginButton.setOnClickListener {
             val code = codeEt.text.toString()
@@ -55,17 +54,18 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     }
 
     private fun getAccounts(code: String, macAdd: String) {
-        viewModel.getAccounts(code, macAdd).observe(viewLifecycleOwner){
+        viewModel.getAccounts(code, macAdd).observe(viewLifecycleOwner) {
             it?.let { resource ->
-                when(resource.status){
+                when (resource.status) {
                     SUCCESS -> {
                         progressDialog?.dismiss()
                         if (resource.data == null) {
                         } else {
-                            if (resource.data.data==null){
-                                Toast.makeText(context, resource.data.message, Toast.LENGTH_SHORT).show()
+                            if (resource.data.data == null) {
+                                Toast.makeText(context, resource.data.message, Toast.LENGTH_SHORT)
+                                    .show()
 
-                            }else{
+                            } else {
                                 val editor = preferences.edit()
                                 editor.putString(PREF_CODE, code)
                                 editor.putString(PREF_MAC, macAdd)
@@ -95,7 +95,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             setCanceledOnTouchOutside(true)
         }
         val accountsRv = myDialog.findViewById<RecyclerView>(R.id.accountRv)
-        val accountsAdapter= AccountsAdapter(accounts, object : PositionOnClick {
+        val accountsAdapter = AccountsAdapter(accounts, object : PositionOnClick {
             override fun onClick(view: View, position: Int) {
                 myDialog.dismiss()
                 saveLogin(accounts[position])
@@ -114,7 +114,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private fun saveLogin(account: Account) {
         val editor = preferences.edit()
         val wholeUrl = account.server.let {
-            it.replace("http://","")
+            it.replace("http://", "")
         }
         val link = wholeUrl.split(":")[0]
         val port = wholeUrl.split(":")[1].split("/")[0]
@@ -128,26 +128,41 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     fun getMacAddress(): String {
         try {
-            val networkInterfaceList: List<NetworkInterface> = Collections.list(NetworkInterface.getNetworkInterfaces())
+            val networkInterfaceList: List<NetworkInterface> =
+                Collections.list(NetworkInterface.getNetworkInterfaces())
             var stringMac = ""
             for (networkInterface in networkInterfaceList) {
-                if (networkInterface.name.equals("wlon0", true));
-                run {
-                    for (i in networkInterface.hardwareAddress.indices) {
-                        var stringMacByte = Integer.toHexString(networkInterface.hardwareAddress[i].and(0xFF))
+//                if (networkInterface.name.equals("wlon0", true));
+//                run {
+//                    for (i in networkInterface.hardwareAddress.indices) {
+//                        var stringMacByte = Integer.toHexString(networkInterface.hardwareAddress[i].and(0xFF))
+//                        if (stringMacByte.length == 1) {
+//                            stringMacByte = "0$stringMacByte"
+//                        }
+//                        stringMac = stringMac + stringMacByte.toUpperCase() + ":"
+//                    }
+//                }
+//                break
+                if (networkInterface.name.equals("wlon0", true)) {
+                    for (element in networkInterface.hardwareAddress) {
+                        var stringMacByte =
+                            Integer.toHexString(element and 0xFF)
                         if (stringMacByte.length == 1) {
                             stringMacByte = "0$stringMacByte"
                         }
                         stringMac = stringMac + stringMacByte.toUpperCase() + ":"
                     }
+                    break
                 }
-                break
+            }
+            if (stringMac.isEmpty()){
+                return "N/A"
             }
             return stringMac
-        } catch (e: SocketException) {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
-        return "0"
+        return "N/A"
     }
 
     override fun onDestroy() {

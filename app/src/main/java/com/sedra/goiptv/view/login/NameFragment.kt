@@ -11,10 +11,7 @@ import androidx.fragment.app.viewModels
 import com.google.gson.Gson
 import com.sedra.goiptv.R
 import com.sedra.goiptv.data.model.UserInfo
-import com.sedra.goiptv.utils.GoTo
-import com.sedra.goiptv.utils.PREF_PARENT_USER
-import com.sedra.goiptv.utils.PREF_PASSWORD
-import com.sedra.goiptv.utils.PREF_USER_NAME
+import com.sedra.goiptv.utils.*
 import com.sedra.goiptv.utils.Status.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -60,14 +57,15 @@ class NameFragment : Fragment(R.layout.fragment_name) {
                     SUCCESS -> {
                         progressDialog?.dismiss()
                         it.data?.let { data ->
-                            if (data.user_info == null) {
+                            if (data.server_info == null) {
                                 Toast.makeText(
                                         context,
-                                        "اسم المستخدم أو كلمة السر خاطئة",
+                                        "الحساب خاطئ او غير مفعل",
                                         Toast.LENGTH_SHORT
                                 ).show()
+                                requireActivity().onBackPressed()
                             } else {
-                                saveUser(data.user_info)
+                                saveUser(data.user_info!!)
                             }
                         }
                     }
@@ -85,10 +83,12 @@ class NameFragment : Fragment(R.layout.fragment_name) {
     }
 
     private fun saveUser(userInfo: UserInfo) {
+
         val gson = Gson()
         val hashMapString = gson.toJson(userInfo)
         val editor = preferences.edit()
         editor.putString(PREF_PARENT_USER, hashMapString)
+        editor.putString(PREF_NAME, "User")
         editor.apply()
         GoTo.goToMainActivity(requireActivity())
     }

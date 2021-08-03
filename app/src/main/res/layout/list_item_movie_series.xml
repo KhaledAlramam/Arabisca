@@ -13,7 +13,9 @@
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
         android:clickable="true"
-        android:focusable="true">
+        android:focusable="true"
+        android:padding="1dp"
+        android:background="@drawable/selector_white_border">
 
         <ImageView
             android:id="@+id/imageView8"

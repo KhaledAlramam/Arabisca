@@ -1,5 +1,6 @@
 package com.sedra.goiptv.view.department
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.sedra.goiptv.data.DataRepository
@@ -27,6 +28,7 @@ class CategoryViewModel @Inject constructor(
     fun getMoviesCategories() = liveData(Dispatchers.IO) {
         emit(Resource.loading(data = null))
         try {
+            Log.e("TAG",  userInfo.toString())
             emit(Resource.success(data = repository.getMoviesCategories(userInfo.username, userInfo.password)))
         } catch (exception: Exception) {
             emit(Resource.error(data = null, message = exception.localizedMessage ?: "حدث خطأ ما"))
