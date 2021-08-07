@@ -30,6 +30,7 @@ class AccountsAdapter(
             binding.root.setOnClickListener {
                 listener.onClick(it, position)
             }
+            textView26.text = list[position].name
         }
     }
 
