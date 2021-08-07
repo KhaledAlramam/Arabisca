@@ -22,4 +22,14 @@ class SettingsViewModel @Inject constructor(
         }
 
     }
+
+    fun getVersions() = liveData(Dispatchers.IO) {
+        emit(Resource.loading(data = null))
+        try {
+            emit(Resource.success(data = repository.getVersions()))
+        } catch (exception: Exception) {
+            emit(Resource.error(data = null, message = exception.localizedMessage ?: "حدث خطأ ما"))
+        }
+
+    }
 }

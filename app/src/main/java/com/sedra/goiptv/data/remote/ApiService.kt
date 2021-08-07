@@ -21,6 +21,9 @@ interface ApiService {
     @GET("/go/public/api/sections")
     suspend fun getSections(): SectionsResponse
 
+    @GET("/go/public/api/versions")
+    suspend fun getVersions(): VersionsResponse
+
 
     @GET("/go/public/api/settings")
     suspend fun getSettings(): SettingsResponse

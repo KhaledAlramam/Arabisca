@@ -17,6 +17,10 @@ class DataRepository @Inject constructor(
             service.getSections()
 
 
+    suspend fun getVersions() =
+            service.getVersions()
+
+
     suspend fun getAllMovies(userName: String?, password: String?) =
             iptvApiService.getMovies(userName, password, GET_MOVIES_ACTION)
 
