@@ -17,5 +17,6 @@
     <color name="half_black">#141414</color>
     <color name="year_color">#495099</color>
     <color name="dim_background">#2b2f4e</color>
+    <color name="new_bk">#800080</color>
 
 </resources>

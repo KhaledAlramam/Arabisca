@@ -32,11 +32,9 @@ class ChannelsCategoryAdapter(
                 itemBinding.channelCategoryTv.setTextColor(context.resources.getColor(R.color.white))
             }else{
                 itemBinding.channelCategoryTv.setTextColor(context.resources.getColor(R.color.mainDark))
-
             }
+            clickListener.onClick(itemBinding.root, categoryList[position])
         }
-
-
     }
 
     override fun getItemCount(): Int = categoryList.size
