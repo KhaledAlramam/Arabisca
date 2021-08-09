@@ -28,8 +28,8 @@ import com.sedra.goiptv.view.series.CustomViewHolder
 class CustomViewHolder(val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root)
 
 class SectionsAdapter(
-        val preferences: SharedPreferences,
-        val list: List<Section>
+    val preferences: SharedPreferences,
+    val list: List<Section>
 ) : RecyclerView.Adapter<CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
@@ -44,16 +44,16 @@ class SectionsAdapter(
         val context = holder.binding.root.context
         val currentSection = list[position]
         val itemBinding = holder.binding as ListItemMainCategoriesBinding
-        if (!checkTv(context)){
+        if (!checkTv(context)) {
             itemBinding.guideline7.setGuidelinePercent(.35f)
         }
-        holder.binding.root.translationX= (-80f * position)
+        holder.binding.root.translationX = (-80f * position)
         holder.binding.root.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus){
+            if (hasFocus) {
                 val anim: Animation = AnimationUtils.loadAnimation(context, R.anim.transition_up)
                 holder.binding.root.startAnimation(anim)
                 anim.fillAfter = true
-            }else{
+            } else {
                 val anim: Animation = AnimationUtils.loadAnimation(context, R.anim.transition_down)
                 holder.binding.root.startAnimation(anim)
                 anim.fillAfter = true
@@ -61,13 +61,13 @@ class SectionsAdapter(
         }
 
         Glide.with(context)
-                .load(currentSection.image)
-                .into(itemBinding.obliqueImage)
+            .load(currentSection.image)
+            .into(itemBinding.obliqueImage)
         itemBinding.textView6.text = currentSection.name
         itemBinding.root.setOnClickListener {
-            if (hasPassword(currentSection)){
+            if (hasPassword(currentSection)) {
                 showPasswordDialog(currentSection, context)
-            }else{
+            } else {
                 handleNavigation(context, currentSection)
             }
         }
@@ -75,16 +75,21 @@ class SectionsAdapter(
     }
 
     private fun hasPassword(currentSection: Section): Boolean {
-        val password = preferences.getString(currentSection.id.toString(),"")
+        val password = preferences.getString(currentSection.id.toString(), "")
         return !password.isNullOrEmpty()
     }
 
     private fun handleNavigation(context: Context, currentSection: Section) {
         if (currentSection.id < 0)
-            if (currentSection.id == DepartmentActivity.CHANNELS_ID) {
-                GoTo.goToPlayChannelActivity(context)
-            } else
-                GoTo.goToDepartmentActivity(context, currentSection.id, currentSection.name)
+            when (currentSection.id) {
+                DepartmentActivity.CHANNELS_ID -> {
+                    GoTo.goToPlayChannelActivity(context)
+                }
+                DepartmentActivity.RADIO_ID -> {
+                    GoTo.goToRadioActivity(context)
+                }
+                else -> GoTo.goToDepartmentActivity(context, currentSection.id, currentSection.name)
+            }
         else {
             when (currentSection.type) {
                 MOVIE_TYPE -> {
@@ -103,24 +108,24 @@ class SectionsAdapter(
     override fun getItemCount(): Int = list.size
 
 
-    private fun showPasswordDialog(currentSection: Section, context: Context){
+    private fun showPasswordDialog(currentSection: Section, context: Context) {
         val myDialog = Dialog(context)
         myDialog.apply {
             setContentView(R.layout.dialog_section_password)
             setCancelable(true)
             setCanceledOnTouchOutside(true)
         }
-        val password = preferences.getString(currentSection.id.toString(),"")
+        val password = preferences.getString(currentSection.id.toString(), "")
         val confirmPassword = myDialog.findViewById<Button>(R.id.confirmPassword)
         val cancel = myDialog.findViewById<Button>(R.id.cancel)
         val sectionPassword = myDialog.findViewById<EditText>(R.id.sectionPassword)
         confirmPassword.setOnClickListener {
-                if (sectionPassword.text.toString() == password){
-                    myDialog.dismiss()
-                    handleNavigation(context, currentSection)
-                }else{
-                    Toast.makeText(context, "Wrong Password", Toast.LENGTH_SHORT).show()
-                }
+            if (sectionPassword.text.toString() == password) {
+                myDialog.dismiss()
+                handleNavigation(context, currentSection)
+            } else {
+                Toast.makeText(context, "Wrong Password", Toast.LENGTH_SHORT).show()
+            }
         }
         cancel.setOnClickListener {
             myDialog.dismiss()
@@ -129,13 +134,14 @@ class SectionsAdapter(
         val window = myDialog.window
         window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
+
     private fun checkTv(context: Context): Boolean {
         var isAndroidTv = false
         if ((context.getSystemService(AppCompatActivity.UI_MODE_SERVICE) as UiModeManager).currentModeType == Configuration.UI_MODE_TYPE_TELEVISION) {
             isAndroidTv = true
         } else if (context.packageManager!!
-                        .hasSystemFeature(PackageManager.FEATURE_TELEVISION) || context.packageManager!!
-                        .hasSystemFeature(PackageManager.FEATURE_LEANBACK)
+                .hasSystemFeature(PackageManager.FEATURE_TELEVISION) || context.packageManager!!
+                .hasSystemFeature(PackageManager.FEATURE_LEANBACK)
         ) {
             isAndroidTv = true
         }

@@ -105,6 +105,7 @@ class MainActivity : AppCompatActivity() {
                 Section(-3, "", getString(R.string.channels)),
                 Section(-1, "https://www.logomoose.com/wp-content/uploads/2016/01/GoMovies.jpg", getString(R.string.movies)),
                 Section(-2, "", getString(R.string.series)),
+                Section(-4, "", getString(R.string.radio)),
         ) + sections
         val sectionsAdapter = SectionsAdapter(preferences, fixedList)
         binding!!.sectionsRv.apply {

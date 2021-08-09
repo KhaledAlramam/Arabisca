@@ -207,6 +207,7 @@ class DepartmentActivity : AppCompatActivity() {
         const val MOVIES_ID = -1
         const val SERIES_ID = -2
         const val CHANNELS_ID = -3
+        const val RADIO_ID = -4
     }
 
     private fun checkTv(): Boolean {

@@ -12,6 +12,7 @@ import com.sedra.goiptv.view.customsection.PlayCustomChannelsActivity
 import com.sedra.goiptv.view.department.DepartmentActivity
 import com.sedra.goiptv.view.movie.MovieDetailsActivity
 import com.sedra.goiptv.view.movie.PlayMovieActivity
+import com.sedra.goiptv.view.radio.RadioActivity
 import com.sedra.goiptv.view.sections.MainActivity
 import com.sedra.goiptv.view.series.SeriesDetailsForTv
 import com.sedra.goiptv.view.settings.SettingsActivity
@@ -37,6 +38,11 @@ object GoTo{
 
     fun goToPlayChannelActivity(context: Context) {
         val i = Intent(context, PlayChannelsNewActivity::class.java)
+        i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+        context.startActivity(i)
+    }
+    fun goToRadioActivity(context: Context) {
+        val i = Intent(context, RadioActivity::class.java)
         i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
         context.startActivity(i)
     }

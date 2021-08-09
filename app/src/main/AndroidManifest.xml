@@ -23,7 +23,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GoIPTV"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.settings.SettingsActivity"
+        <activity android:name=".view.radio.RadioActivity"/>
+        <activity
+            android:name=".view.settings.SettingsActivity"
             android:configChanges="orientation"
             android:screenOrientation="landscape" />
         <activity
