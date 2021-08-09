@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -39,7 +40,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         super.onViewCreated(view, savedInstanceState)
         val loginButton: Button = view.findViewById(R.id.loginButton)
         val codeEt: EditText = view.findViewById(R.id.codeEt)
+        val macAddressTv: TextView = view.findViewById(R.id.macAddressTv)
         val macAdd = getMacAddress()
+        macAddressTv.text = getMacAddress()
         progressDialog = SpotsDialog.Builder()
             .setContext(requireContext())
             .setMessage("Please Wait...")
@@ -70,7 +73,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                                 editor.putString(PREF_CODE, code)
                                 editor.putString(PREF_MAC, macAdd)
                                 editor.apply()
-                                showAccountPicker(resource.data.data!!)
+                                showAccountPicker(resource.data.data)
 
                             }
                         }
@@ -150,7 +153,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                         if (stringMacByte.length == 1) {
                             stringMacByte = "0$stringMacByte"
                         }
-                        stringMac = stringMac + stringMacByte.toUpperCase() + ":"
+                        stringMac = stringMac + stringMacByte.uppercase(Locale.getDefault()) + ":"
                     }
                     break
                 }
