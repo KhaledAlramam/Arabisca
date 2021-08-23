@@ -11,15 +11,20 @@ import com.sedra.goiptv.utils.getRadioStations
 
 
 class RadioActivity : AppCompatActivity() {
+
+    val adapter = RadioAdapter()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_radio)
-        val adapter = RadioAdapter().also {
-            it.submitList(getRadioStations())
-        }
+        adapter.submitList(getRadioStations())
         val rv = findViewById<RecyclerView>(R.id.radioRv)
         rv.adapter = adapter
         rv.setHasFixedSize(true)
+    }
 
+    override fun onDestroy() {
+        adapter.onDestroy()
+        super.onDestroy()
     }
 }

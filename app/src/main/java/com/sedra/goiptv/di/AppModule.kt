@@ -1,4 +1,4 @@
-    package com.sedra.goiptv.di
+package com.sedra.goiptv.di
 
 import android.app.Application
 import android.content.SharedPreferences
@@ -25,7 +25,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
 
     @BaseRetrofit
     @Provides

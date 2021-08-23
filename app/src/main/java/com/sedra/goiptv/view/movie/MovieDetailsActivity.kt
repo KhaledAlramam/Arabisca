@@ -12,6 +12,9 @@ import com.sedra.goiptv.utils.GoTo
 import com.sedra.goiptv.utils.MOVIE_ID_PARAMETER
 import com.sedra.goiptv.utils.Status.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.ceil
+import kotlin.math.pow
+import kotlin.math.roundToLong
 
 @AndroidEntryPoint
 class MovieDetailsActivity : AppCompatActivity() {
@@ -24,6 +27,18 @@ class MovieDetailsActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_details)
         val id = intent.getIntExtra(MOVIE_ID_PARAMETER, 0)
         getMovieDetails(id)
+    }
+
+    fun findNb(m: Long): Long {
+        // your code
+        var sum: Long = 0
+        var counter: Float =1.0f
+        while(sum<=m){
+            sum += counter.pow(3).toLong()
+            if(sum == m) return counter.roundToLong()
+            counter++
+        }
+        return (-1).toLong()
     }
 
     private fun getMovieDetails(id: Int) {

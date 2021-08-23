@@ -44,7 +44,10 @@ class RadioAdapter : ListAdapter<String, CustomViewHolder>(Companion) {
         itemBinding.apply {
             web.settings.javaScriptEnabled = true
             web.settings.mixedContentMode = WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE
-            web.loadData(currentRadioStation, "text/html", null);
+            web.loadData(currentRadioStation, "text/html", null)
         }
+    }
+    fun onDestroy(){
+
     }
 }

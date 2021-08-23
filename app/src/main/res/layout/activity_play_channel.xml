@@ -74,7 +74,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/gradient_shadow"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -144,10 +144,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginBottom="8dp"
-                android:textSize="18sp"
-                android:focusable="true"
-                android:clickable="true"
                 android:background="@drawable/selector_black"
+                android:clickable="true"
+                android:focusable="true"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toTopOf="@+id/nowWatchingTime"
                 app:layout_constraintStart_toEndOf="@+id/channelImg" />
 
