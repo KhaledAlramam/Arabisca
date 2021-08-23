@@ -24,7 +24,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class PlayCustomChannelsActivity : AppCompatActivity() {
 
-    private var binding: ActivityPlayChannelBinding? = null
+    lateinit var binding: ActivityPlayChannelBinding
     val viewModel: SubSectionsViewModel by viewModels()
     private var player: SimpleExoPlayer? = null
     private var playWhenReady = true
@@ -51,26 +51,21 @@ class PlayCustomChannelsActivity : AppCompatActivity() {
     }
 
     private fun setupUI() {
+        binding.epgConstraintLayout.root.isVisible = false
         itemsAdapter = CustomChannelAdapter(this, object : PositionOnClick {
             override fun onClick(view: View, position: Int) {
-                binding!!.group.isVisible = false
-                binding!!.ChannelInPlayerRv.isVisible = false
+                binding.group.isVisible = false
+                binding.ChannelInPlayerRv.isVisible = false
                 handleChannelChoosed(itemsAdapter.currentList[position], position)
             }
         })
-        binding?.apply {
+        binding.apply {
             playerParent.setOnClickListener {
                 if (group.visibility == View.VISIBLE) {
                     hideChannelList()
                 } else {
                     showChannelList()
                 }
-            }
-            upChannel.setOnClickListener {
-                increaseChannel()
-            }
-            downChannel.setOnClickListener {
-                decreaseChannel()
             }
         }
         getSubSections()
@@ -95,23 +90,23 @@ class PlayCustomChannelsActivity : AppCompatActivity() {
     }
 
     private fun handleChannelChoosed(liveStream: CustomItem, position: Int) {
-        binding?.playedChannelName?.text = liveStream.name
+        binding.epgConstraintLayout.playedChannelName.text = liveStream.name
         currentPosition = position
-        binding?.channelNumber?.text = "${position + 1}"
+        binding.epgConstraintLayout.channelNumber.text = "${position + 1}"
         currentStreamId = liveStream.id
         playLiveStream(liveStream)
     }
 
     private fun hideChannelList() {
-        binding?.apply {
+        binding.apply {
             group.isVisible = false
             ChannelInPlayerRv.isVisible = false
         }
     }
 
     private fun showChannelList() {
-        binding?.apply {
-            epgConstraintLayout.isVisible = false
+        binding.apply {
+            epgConstraintLayout.root.isVisible = false
             group.isVisible = true
             ChannelInPlayerRv.isVisible = true
         }
@@ -155,7 +150,7 @@ class PlayCustomChannelsActivity : AppCompatActivity() {
                     .setTrackSelector(trackSelector)
                     .build()
         }
-        binding?.videoView?.player = player
+        binding.videoView.player = player
 
     }
 
@@ -182,7 +177,7 @@ class PlayCustomChannelsActivity : AppCompatActivity() {
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (!binding!!.ChannelInPlayerRv.isVisible) {
+        if (!binding.ChannelInPlayerRv.isVisible) {
             when (keyCode) {
                 KeyEvent.KEYCODE_DPAD_UP -> {
                     increaseChannel()
@@ -208,16 +203,12 @@ class PlayCustomChannelsActivity : AppCompatActivity() {
 
 
     override fun onBackPressed() {
-        if (binding!!.channelCategoryInPlayer.isVisible)
+        if (binding.channelCategoryInPlayer.isVisible)
             hideChannelList()
         else
             super.onBackPressed()
     }
 
-    override fun onDestroy() {
-        binding = null
-        super.onDestroy()
-    }
 
     private fun getSubSections() {
         viewModel.getSubSections(intent.getIntExtra(EXTRA_TYPE_ID, 0)).observe(this) {
@@ -266,7 +257,7 @@ class PlayCustomChannelsActivity : AppCompatActivity() {
         val departmentTitleAdapter = CustomLiveTitleAdapter(response.data, object : OnDepartmentClicked {
             override fun onClick(view: View, position: Int) {
                 val id = response.data[position].id
-                binding!!.ChannelInPlayerRv.isVisible = true
+                binding.ChannelInPlayerRv.isVisible = true
                 if (itemsHashMap.keys.contains(id)) {
                     showItems(itemsHashMap[id]!!)
                 } else {
@@ -274,12 +265,12 @@ class PlayCustomChannelsActivity : AppCompatActivity() {
                 }
             }
         })
-        binding?.channelCategoryInPlayer?.apply {
+        binding.channelCategoryInPlayer.apply {
             adapter = departmentTitleAdapter
             layoutManager = LinearLayoutManager(this@PlayCustomChannelsActivity, LinearLayoutManager.HORIZONTAL, false)
             setHasFixedSize(true)
         }
-        binding?.ChannelInPlayerRv?.apply {
+        binding.ChannelInPlayerRv.apply {
             adapter = itemsAdapter
             layoutManager = GridLayoutManager(this@PlayCustomChannelsActivity, 2, LinearLayoutManager.HORIZONTAL, false)
         }
