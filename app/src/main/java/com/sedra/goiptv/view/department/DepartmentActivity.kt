@@ -3,6 +3,7 @@ package com.sedra.goiptv.view.department
 import android.app.AlertDialog
 import android.app.UiModeManager
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,7 @@ import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.sedra.goiptv.R
 import com.sedra.goiptv.data.model.*
 import com.sedra.goiptv.databinding.ActivityDepartmentBinding
@@ -20,12 +22,13 @@ import com.sedra.goiptv.utils.Status.*
 import com.sedra.goiptv.view.channels.PlayChannelsNewActivity
 import dagger.hilt.android.AndroidEntryPoint
 import dmax.dialog.SpotsDialog
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class DepartmentActivity : AppCompatActivity() {
 
     private val viewModel: CategoryViewModel by viewModels()
-    var binding: ActivityDepartmentBinding? = null
+    lateinit var binding: ActivityDepartmentBinding
     private val moviesList = ArrayList<Movie>()
     private val seriesList = ArrayList<Series>()
     private val channelList = ArrayList<LiveStream>()
@@ -33,6 +36,8 @@ class DepartmentActivity : AppCompatActivity() {
     private val gridAdapter = MovieAdapter()
     private val gridSeriesAdapter = SeriesAdapter()
     var progressDialog: AlertDialog? = null
+    @Inject
+    lateinit var preferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,14 +49,22 @@ class DepartmentActivity : AppCompatActivity() {
                 .setCancelable(false)
                 .setTheme(R.style.CustomProgressDialogTheme)
                 .build()
+        val imageLink =  preferences.getString(
+            PREF_APP_IMG,
+            ""
+        )
+        Glide.with(this)
+            .load(imageLink)
+            .into(binding.imageView12)
+
         when (intent.getIntExtra(EXTRA_TYPE_ID, 0)) {
             MOVIES_ID -> {
                 getMoviesData()
-                binding?.categoryName = getString(R.string.movies_)
+                binding.categoryName = getString(R.string.movies_)
             }
             SERIES_ID -> {
                 getSeriesData()
-                binding?.categoryName = getString(R.string.series_)
+                binding.categoryName = getString(R.string.series_)
 
             }else -> {
                 finish()
@@ -115,12 +128,12 @@ class DepartmentActivity : AppCompatActivity() {
                 gridSeriesAdapter.submitList(categories[position].series)
             }
         })
-        binding?.departmentTitleRv?.apply {
+        binding.departmentTitleRv.apply {
             adapter = departmentTitleAdapter
             layoutManager = LinearLayoutManager(this@DepartmentActivity, LinearLayoutManager.HORIZONTAL, false)
             setHasFixedSize(true)
         }
-        binding?.itemsRv?.apply {
+        binding.itemsRv.apply {
             adapter = gridSeriesAdapter
             layoutManager = if (checkTv()) {
                 GridLayoutManager(this@DepartmentActivity, 2, LinearLayoutManager.HORIZONTAL, false)
@@ -187,12 +200,12 @@ class DepartmentActivity : AppCompatActivity() {
                 gridAdapter.submitList(categories[position].movies)
             }
         })
-        binding?.departmentTitleRv?.apply {
+        binding.departmentTitleRv.apply {
             adapter = departmentTitleAdapter
             layoutManager = LinearLayoutManager(this@DepartmentActivity, LinearLayoutManager.HORIZONTAL, false)
             setHasFixedSize(true)
         }
-        binding?.itemsRv?.apply {
+        binding.itemsRv.apply {
             adapter = gridAdapter
             layoutManager = if (checkTv()) {
                 GridLayoutManager(this@DepartmentActivity, 2, LinearLayoutManager.HORIZONTAL, false)
@@ -224,8 +237,4 @@ class DepartmentActivity : AppCompatActivity() {
         return isAndroidTv
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        binding = null
-    }
 }

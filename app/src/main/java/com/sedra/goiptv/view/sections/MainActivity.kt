@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.sedra.goiptv.R
 import com.sedra.goiptv.data.model.Section
 import com.sedra.goiptv.databinding.ActivityMainBinding
@@ -49,6 +50,13 @@ class MainActivity : AppCompatActivity() {
                     "No Text"
                 )
             }"
+            val imageLink =  preferences.getString(
+                PREF_APP_IMG,
+                ""
+            )
+            Glide.with(this@MainActivity)
+                .load(imageLink)
+                .into(imageView11)
             textView3.text = txt
             textView3.isSelected = true
             goToSetting.setOnClickListener {

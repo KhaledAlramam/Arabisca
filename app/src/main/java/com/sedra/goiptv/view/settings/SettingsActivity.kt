@@ -2,11 +2,12 @@ package com.sedra.goiptv.view.settings
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Intent
-import android.content.SharedPreferences
+import android.app.DownloadManager
+import android.content.*
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -23,8 +24,10 @@ import com.sedra.goiptv.utils.*
 import com.sedra.goiptv.view.starting.StartingActivity
 import dagger.hilt.android.AndroidEntryPoint
 import dmax.dialog.SpotsDialog
+import java.io.File
 import java.util.*
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class SettingsActivity : AppCompatActivity() {
@@ -36,7 +39,12 @@ class SettingsActivity : AppCompatActivity() {
     @Inject
     lateinit var userInfo: UserInfo
     var progressDialog: AlertDialog? = null
-
+    var onComplete: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(ctxt: Context, intent: Intent) {
+            // your code
+            val file = File(Environment.DIRECTORY_DOWNLOADS, "GoApk.apk")
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_settings)
@@ -55,7 +63,6 @@ class SettingsActivity : AppCompatActivity() {
             logout.setOnClickListener {
                 preferences.edit().clear().apply()
                 val intent = Intent(this@SettingsActivity, StartingActivity::class.java)
-
                 startActivity(intent)
                 finish()
             }
@@ -72,7 +79,8 @@ class SettingsActivity : AppCompatActivity() {
                         progressDialog?.dismiss()
                         resource.data?.let { res ->
                             binding.showAllVersions.setOnClickListener{
-                                showVersionPicker(res.items)
+//                                showVersionPicker(res.items)
+                                downloadFile()
                             }
                         }
                     }
@@ -155,6 +163,28 @@ class SettingsActivity : AppCompatActivity() {
         startActivity(i)
     }
 
+    fun downloadFile(){
+        registerReceiver(onComplete, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+        val manager =  getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        val uri = Uri.parse("https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf");
+        val request = DownloadManager.Request(uri)
+        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "GoApk.apk");
+        request.setTitle("Now OTT")
+            .setDescription("Downloading App")
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
+        val reference = manager.enqueue(request)
+    }
+
+    fun installApp(path: String){
+        val promptInstall = Intent(Intent.ACTION_VIEW)
+            .setDataAndType(
+                Uri.parse("file:///path/to/your.apk"),
+                "application/vnd.android.package-archive"
+            )
+        startActivity(promptInstall)
+    }
+
     fun getFormattedExpiryDate(date:Long?): String {
         if (date == null) return ""
         val calendar = Calendar.getInstance()
@@ -164,5 +194,10 @@ class SettingsActivity : AppCompatActivity() {
                     Calendar.YEAR
             )
         }"
+    }
+
+    override fun onDestroy() {
+        unregisterReceiver(onComplete)
+        super.onDestroy()
     }
 }
