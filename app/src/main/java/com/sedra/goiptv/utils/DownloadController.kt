@@ -66,7 +66,7 @@ class DownloadController(private val context: Context, var url: String) {
                     install.data = contentUri
                     context.startActivity(install)
                     context.unregisterReceiver(this)
-                    // finish()
+//                    finish()
                 } else {
                     val install = Intent(Intent.ACTION_VIEW)
                     install.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
