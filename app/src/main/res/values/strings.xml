@@ -20,5 +20,8 @@
     <string name="series_">Series></string>
     <string name="channels_">Channels></string>
     <string name="radio">Radio</string>
+    <string name="title_file_download">Updating  Go</string>
+    <string name="downloading">Downloading</string>
+    <string name="storage_access_required">Access required</string>
 
 </resources>

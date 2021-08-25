@@ -46,7 +46,12 @@ class MainActivity : AppCompatActivity() {
                 )
             }                              ${
                 preferences.getString(
-                    com.sedra.goiptv.utils.PREF_BANNER,
+                    PREF_BANNER,
+                    "No Text"
+                )
+            }                              ${
+                preferences.getString(
+                    PREF_BANNER,
                     "No Text"
                 )
             }"
