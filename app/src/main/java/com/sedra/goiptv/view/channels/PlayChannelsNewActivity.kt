@@ -61,9 +61,12 @@ class PlayChannelsNewActivity : AppCompatActivity() {
         channelsAdapter = ChannelAdapter(this,
                 object : ChannelOnClick {
                     override fun onClick(view: View, clicked: Boolean, liveStream: LiveStream, position: Int) {
-                        binding.group.isVisible = !clicked
-                        binding.ChannelInPlayerRv.isVisible = !clicked
-                        handleChannelChoosed(liveStream, position)
+                        binding.apply {
+                            epgConstraintLayout.root.isVisible = !clicked
+                            group.isVisible = !clicked
+                            ChannelInPlayerRv.isVisible = !clicked
+                        }
+                        if(!clicked) handleChannelChoosed(liveStream, position)
                     }
                 })
         categoryAdapter = ChannelsCategoryAdapter(

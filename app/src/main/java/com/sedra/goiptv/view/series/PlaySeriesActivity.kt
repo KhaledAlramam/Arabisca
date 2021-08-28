@@ -46,26 +46,26 @@ class PlaySeriesActivity : AppCompatActivity() {
 
     private fun setupUI() {
         binding.apply {
-            fitScreen.setOnClickListener {
-                if (originalSize) {
-                    videoView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FILL
-                    fitScreen.text = "استعادة"
-                } else {
-                    videoView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
-                    fitScreen.text = "شاشة كاملة"
-                }
-                originalSize = !originalSize
-            }
-            closePlayer.setOnClickListener {
-                finish()
-            }
-            videoView.setOnClickListener {
-                if (group.visibility == View.VISIBLE) {
-                    group.visibility = View.GONE
-                } else {
-                    group.visibility = View.VISIBLE
-                }
-            }
+//            fitScreen.setOnClickListener {
+//                if (originalSize) {
+//                    videoView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FILL
+//                    fitScreen.text = "استعادة"
+//                } else {
+//                    videoView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
+//                    fitScreen.text = "شاشة كاملة"
+//                }
+//                originalSize = !originalSize
+//            }
+//            closePlayer.setOnClickListener {
+//                finish()
+//            }
+//            videoView.setOnClickListener {
+//                if (group.visibility == View.VISIBLE) {
+//                    group.visibility = View.GONE
+//                } else {
+//                    group.visibility = View.VISIBLE
+//                }
+//            }
 
         }
     }
@@ -125,7 +125,7 @@ class PlaySeriesActivity : AppCompatActivity() {
                 if (intent.getStringExtra(STREAM_EXT).isNullOrEmpty()) {
             MediaItem.Builder().apply {
                 setUri(
-                        "${url}series/${userInfo?.username}/${userInfo?.password}/${
+                        "${url}series/${userInfo.username}/${userInfo.password}/${
                             intent.getStringExtra(STREAM_ID_INTENT_EXTRA)
                         }"
                 )
@@ -133,7 +133,7 @@ class PlaySeriesActivity : AppCompatActivity() {
         } else {
             MediaItem.Builder().apply {
                 setUri(
-                        "${url}series/${userInfo?.username}/${userInfo?.password}/${
+                        "${url}series/${userInfo.username}/${userInfo.password}/${
                             intent.getStringExtra(STREAM_ID_INTENT_EXTRA)
                         }.${
                             intent.getStringExtra(STREAM_EXT)

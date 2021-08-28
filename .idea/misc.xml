@@ -4,14 +4,15 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/layout/activity_department.xml" value="0.12037037037037036" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_movie_details.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_play_channel.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_play_video.xml" value="0.1" />
         <entry key="app/src/main/res/layout/adapter_channel_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_name.xml" value="0.10555555555555556" />
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/include_channel_info.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/include_channel_info.xml" value="0.25" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1109375" />
         <entry key="app/src/main/res/xml/filepaths.xml" value="0.1" />
       </map>

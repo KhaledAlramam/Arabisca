@@ -56,9 +56,9 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/upNextTitle"
             app:layout_constraintStart_toEndOf="@+id/playedChannelName"
-            app:layout_constraintTop_toBottomOf="@+id/nowWatchingTitle" />
+            app:layout_constraintTop_toTopOf="@+id/upNextTitle" />
 
         <TextView
             android:id="@+id/nowWatchingTime"
@@ -67,7 +67,7 @@
             android:layout_marginStart="8dp"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/playedChannelName"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/nowWatchingTitle" />
 
         <TextView
             android:id="@+id/channelNumber"
@@ -95,12 +95,21 @@
 
         <TextView
             android:id="@+id/playedChannelName"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:maxLines="2"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline10"
             app:layout_constraintStart_toEndOf="@+id/channelNumber"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.15" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

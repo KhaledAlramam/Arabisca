@@ -46,26 +46,26 @@ class PlayMovieActivity : AppCompatActivity() {
 
     private fun setupUI() {
         binding.apply {
-            fitScreen.setOnClickListener {
-                if (originalSize) {
-                    videoView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FILL
-                    fitScreen.text = "Restore"
-                } else {
-                    videoView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
-                    fitScreen.text = "Full Screen"
-                }
-                originalSize = !originalSize
-            }
-            closePlayer.setOnClickListener {
-                finish()
-            }
-            videoView.setOnClickListener {
-                if (group.visibility == View.VISIBLE) {
-                    group.visibility = View.GONE
-                } else {
-                    group.visibility = View.VISIBLE
-                }
-            }
+//            fitScreen.setOnClickListener {
+//                if (originalSize) {
+//                    videoView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FILL
+//                    fitScreen.text = "Restore"
+//                } else {
+//                    videoView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
+//                    fitScreen.text = "Full Screen"
+//                }
+//                originalSize = !originalSize
+//            }
+//            closePlayer.setOnClickListener {
+//                finish()
+//            }
+//            videoView.setOnClickListener {
+//                if (group.visibility == View.VISIBLE) {
+//                    group.visibility = View.GONE
+//                } else {
+//                    group.visibility = View.VISIBLE
+//                }
+//            }
         }
     }
 

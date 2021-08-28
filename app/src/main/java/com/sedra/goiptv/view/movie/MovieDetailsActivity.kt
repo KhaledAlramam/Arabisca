@@ -1,5 +1,6 @@
 package com.sedra.goiptv.view.movie
 
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -10,8 +11,10 @@ import com.sedra.goiptv.data.model.MovieDetailsResponse
 import com.sedra.goiptv.databinding.ActivityMovieDetailsBinding
 import com.sedra.goiptv.utils.GoTo
 import com.sedra.goiptv.utils.MOVIE_ID_PARAMETER
+import com.sedra.goiptv.utils.PREF_APP_IMG
 import com.sedra.goiptv.utils.Status.*
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlin.math.ceil
 import kotlin.math.pow
 import kotlin.math.roundToLong
@@ -20,12 +23,22 @@ import kotlin.math.roundToLong
 class MovieDetailsActivity : AppCompatActivity() {
 
     private val viewModel by viewModels<MoviesViewModel>()
-    var binding: ActivityMovieDetailsBinding? = null
+    lateinit var binding: ActivityMovieDetailsBinding
+    @Inject
+    lateinit var preferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_details)
         val id = intent.getIntExtra(MOVIE_ID_PARAMETER, 0)
+        val imageLink =  preferences.getString(
+            PREF_APP_IMG,
+            ""
+        )
+        Glide.with(this@MovieDetailsActivity)
+            .load(imageLink)
+            .into(binding.imageView13)
+
         getMovieDetails(id)
     }
 
@@ -62,7 +75,7 @@ class MovieDetailsActivity : AppCompatActivity() {
     }
 
     private fun updateUi(movieDetailsResponse: MovieDetailsResponse) {
-        binding?.apply {
+        binding.apply {
             Glide.with(this@MovieDetailsActivity)
                     .load(movieDetailsResponse.info.movie_image)
                     .into(movieDetailsImage)
