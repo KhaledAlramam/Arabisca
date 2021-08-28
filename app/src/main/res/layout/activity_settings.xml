@@ -121,25 +121,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
                 android:background="@drawable/selector_button"
                 android:focusable="true"
                 android:text="Logout"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/showAllVersions"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/selector_button"
-                android:focusable="true"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:text="Download Other versions"
-                app:layout_constraintStart_toStartOf="@+id/textView19"
-                app:layout_constraintTop_toBottomOf="@+id/textView22" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

@@ -30,5 +30,6 @@
     <string name="play">Play</string>
     <string name="about">About</string>
     <string name="play_now">Play Now</string>
+    <string name="storage_permission_denied">Storage Needed</string>
 
 </resources>
