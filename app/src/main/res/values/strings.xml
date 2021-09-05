@@ -31,5 +31,9 @@
     <string name="about">About</string>
     <string name="play_now">Play Now</string>
     <string name="storage_permission_denied">Storage Needed</string>
+    <string name="loading">Loading</string>
+    <string name="live_tv">Live Tv</string>
+    <string name="now_updating_n_please_wait">Now updating</string>
+    <string name="update_media_content">Updating media content</string>
 
 </resources>

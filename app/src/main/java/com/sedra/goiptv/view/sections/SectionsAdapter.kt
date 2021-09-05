@@ -63,6 +63,10 @@ class SectionsAdapter(
         Glide.with(context)
             .load(currentSection.image)
             .into(itemBinding.obliqueImage)
+        if (currentSection.resourceId != null)
+            Glide.with(context)
+                .load(currentSection.resourceId)
+                .into(itemBinding.obliqueImage)
         itemBinding.textView6.text = currentSection.name
         itemBinding.root.setOnClickListener {
             if (hasPassword(currentSection)) {
@@ -85,8 +89,11 @@ class SectionsAdapter(
                 DepartmentActivity.CHANNELS_ID -> {
                     GoTo.goToPlayChannelActivity(context)
                 }
-                DepartmentActivity.RADIO_ID -> {
-                    GoTo.goToRadioActivity(context)
+                DepartmentActivity.SETTING_ID -> {
+                    GoTo.goToSettings(context)
+                }
+                DepartmentActivity.CATCH_UP_ID -> {
+                    GoTo.catchUp(context)
                 }
                 else -> GoTo.goToDepartmentActivity(context, currentSection.id, currentSection.name)
             }

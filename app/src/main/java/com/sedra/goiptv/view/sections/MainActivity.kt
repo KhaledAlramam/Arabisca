@@ -32,11 +32,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         progressDialog = SpotsDialog.Builder()
-                .setContext(this)
-                .setMessage("Please Wait...")
-                .setCancelable(false)
-                .setTheme(R.style.CustomProgressDialogTheme)
-                .build()
+            .setContext(this)
+            .setMessage("Please Wait...")
+            .setCancelable(false)
+            .setTheme(R.style.CustomProgressDialogTheme)
+            .build()
         binding?.apply {
             userName = preferences.getString(PREF_NAME, "User")
             val txt = "${
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                     "No Text"
                 )
             }"
-            val imageLink =  preferences.getString(
+            val imageLink = preferences.getString(
                 PREF_APP_IMG,
                 ""
             )
@@ -64,30 +64,7 @@ class MainActivity : AppCompatActivity() {
                 .into(imageView11)
             textView3.text = txt
             textView3.isSelected = true
-            goToSetting.setOnClickListener {
-                GoTo.goToSettings(this@MainActivity)
-            }
-            goToSetting.setOnFocusChangeListener { v, hasFocus ->
-                if (hasFocus) {
-                    goToSetting.setColorFilter(
-                        ContextCompat.getColor(
-                            this@MainActivity,
-                            R.color.mainDark
-                        ), android.graphics.PorterDuff.Mode.MULTIPLY
-                    );
-                } else {
-                    goToSetting.setColorFilter(
-                        ContextCompat.getColor(
-                            this@MainActivity,
-                            R.color.white
-                        ), android.graphics.PorterDuff.Mode.MULTIPLY
-                    )
-                }
-            }
-
         }
-        Log.e("TAG", "onCreate: ${preferences.getString(PREF_PARENT_USER, "")}")
-
         getSections()
     }
 
@@ -115,15 +92,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun showSections(sections: List<Section>) {
         val fixedList = listOf(
-                Section(-3, "", getString(R.string.channels)),
-                Section(-1, "https://www.logomoose.com/wp-content/uploads/2016/01/GoMovies.jpg", getString(R.string.movies)),
-                Section(-2, "", getString(R.string.series)),
-                Section(-4, "", getString(R.string.radio)),
-        ) + sections
+            Section(-3, "", getString(R.string.channels), resourceId = R.drawable.go_live),
+            Section(-1, "", getString(R.string.movies), resourceId = R.drawable.go_movies),
+            Section(-2, "", getString(R.string.series), resourceId = R.drawable.go_series),
+            Section(-5, "", getString(R.string.catch_up), resourceId = R.drawable.time_small)
+        )+ sections + Section(-4, "", getString(R.string.setting))
+
         val sectionsAdapter = SectionsAdapter(preferences, fixedList)
         binding!!.sectionsRv.apply {
             adapter = sectionsAdapter
-            layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
             setHasFixedSize(true)
         }
 

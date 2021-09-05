@@ -3,6 +3,7 @@ package com.sedra.goiptv.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import com.sedra.goiptv.CatchUpActivity
 import com.sedra.goiptv.data.model.Category
 import com.sedra.goiptv.view.channels.PlayChannelsNewActivity
 import com.sedra.goiptv.view.customsection.CustomSectionActivity
@@ -23,10 +24,16 @@ object GoTo{
         i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         activity.startActivity(i)
     }
-    fun goToSettings(activity: Activity){
+    fun goToSettings(activity: Context){
         val i = Intent(activity, SettingsActivity::class.java)
         i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
         activity.startActivity(i)
+    }
+
+    fun catchUp(context: Context){
+        val i = Intent(context, CatchUpActivity::class.java)
+        i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+        context.startActivity(i)
     }
     fun goToDepartmentActivity(context: Context, id: Int, name: String){
         val i = Intent(context, DepartmentActivity::class.java)

@@ -16,4 +16,18 @@
         <item name="DialogSpotCount">4</item>
     </style>
 
+    <style name="linear_layout_style">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/shape_btn</item>
+        <item name="android:backgroundTint">@color/black</item>
+    </style>
+
+
 </resources>
