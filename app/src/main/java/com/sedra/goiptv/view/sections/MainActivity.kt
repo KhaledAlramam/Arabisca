@@ -64,6 +64,27 @@ class MainActivity : AppCompatActivity() {
                 .into(imageView11)
             textView3.text = txt
             textView3.isSelected = true
+            goToSetting.setOnClickListener {
+                GoTo.goToSettings(this@MainActivity)
+            }
+            goToSetting.setOnFocusChangeListener { v, hasFocus ->
+                if (hasFocus) {
+                    goToSetting.setColorFilter(
+                        ContextCompat.getColor(
+                            this@MainActivity,
+                            R.color.mainDark
+                        ), android.graphics.PorterDuff.Mode.MULTIPLY
+                    );
+                } else {
+                    goToSetting.setColorFilter(
+                        ContextCompat.getColor(
+                            this@MainActivity,
+                            R.color.white
+                        ), android.graphics.PorterDuff.Mode.MULTIPLY
+                    )
+                }
+            }
+
         }
         getSections()
     }
@@ -96,7 +117,8 @@ class MainActivity : AppCompatActivity() {
             Section(-1, "", getString(R.string.movies), resourceId = R.drawable.go_movies),
             Section(-2, "", getString(R.string.series), resourceId = R.drawable.go_series),
             Section(-5, "", getString(R.string.catch_up), resourceId = R.drawable.time_small)
-        )+ sections + Section(-4, "", getString(R.string.setting))
+        ) + sections
+//        + Section(-4, "", getString(R.string.setting))
 
         val sectionsAdapter = SectionsAdapter(preferences, fixedList)
         binding!!.sectionsRv.apply {

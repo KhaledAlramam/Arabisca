@@ -4,13 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/shape_btn.xml" value="0.15" />
-        <entry key="app/src/main/res/layout/activity_catch_up.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_catch_up.xml" value="0.19879518072289157" />
         <entry key="app/src/main/res/layout/activity_department.xml" value="0.12037037037037036" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1757188498402556" />
         <entry key="app/src/main/res/layout/activity_movie_details.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_play_channel.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_play_video.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.19641025641025642" />
+        <entry key="app/src/main/res/layout/activity_update_content.xml" value="0.1" />
         <entry key="app/src/main/res/layout/adapter_channel_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_main_categories.xml" value="0.1" />

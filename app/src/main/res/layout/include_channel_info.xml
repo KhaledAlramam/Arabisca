@@ -44,6 +44,8 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:textSize="18sp"
+            android:ellipsize="end"
+            android:maxLines="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/channelImg"
             app:layout_constraintStart_toEndOf="@+id/upNextTime"
@@ -89,6 +91,8 @@
             android:layout_marginEnd="16dp"
             android:background="@drawable/selector_black"
             android:textSize="18sp"
+            android:ellipsize="end"
+            android:maxLines="1"
             app:layout_constraintEnd_toStartOf="@+id/channelImg"
             app:layout_constraintStart_toEndOf="@+id/nowWatchingTime"
             app:layout_constraintTop_toTopOf="parent" />

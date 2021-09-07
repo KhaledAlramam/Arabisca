@@ -14,12 +14,18 @@ interface ApiService {
     @Headers("Accept: application/json")
     @FormUrlEncoded
     suspend fun getAccounts(
-            @Field("code") code: String,
-            @Field("mac_address") macAdd: String
+        @Field("code") code: String,
+        @Field("mac_address") macAdd: String
     ): GetAccountsResponse
 
     @GET("/go/public/api/sections")
     suspend fun getSections(): SectionsResponse
+
+
+    @GET("/go/public/api/check-client/{id}")
+    suspend fun checkAccount(
+        @Path("id") id: Int
+    ): ClientCheckResponse
 
     @GET("/go/public/api/versions")
     suspend fun getVersions(): VersionsResponse

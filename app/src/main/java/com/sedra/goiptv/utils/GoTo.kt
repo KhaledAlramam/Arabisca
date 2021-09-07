@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import com.sedra.goiptv.CatchUpActivity
+import com.sedra.goiptv.UpdateContentActivity
 import com.sedra.goiptv.data.model.Category
 import com.sedra.goiptv.view.channels.PlayChannelsNewActivity
 import com.sedra.goiptv.view.customsection.CustomSectionActivity
@@ -18,19 +19,26 @@ import com.sedra.goiptv.view.sections.MainActivity
 import com.sedra.goiptv.view.series.SeriesDetailsForTv
 import com.sedra.goiptv.view.settings.SettingsActivity
 
-object GoTo{
-    fun goToMainActivity(activity: Activity){
+object GoTo {
+    fun goToMainActivity(activity: Activity) {
         val i = Intent(activity, MainActivity::class.java)
         i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         activity.startActivity(i)
     }
-    fun goToSettings(activity: Context){
+
+    fun goToUpdateContent(activity: Activity) {
+        val i = Intent(activity, UpdateContentActivity::class.java)
+        i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        activity.startActivity(i)
+    }
+
+    fun goToSettings(activity: Context) {
         val i = Intent(activity, SettingsActivity::class.java)
         i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
         activity.startActivity(i)
     }
 
-    fun catchUp(context: Context){
+    fun catchUp(context: Context) {
         val i = Intent(context, CatchUpActivity::class.java)
         i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
         context.startActivity(i)

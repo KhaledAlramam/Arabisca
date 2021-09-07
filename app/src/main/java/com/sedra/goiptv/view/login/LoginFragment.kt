@@ -23,7 +23,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import dmax.dialog.SpotsDialog
 import okhttp3.internal.and
 import java.net.NetworkInterface
-import java.net.SocketException
 import java.util.*
 import javax.inject.Inject
 
@@ -73,7 +72,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                                 editor.putString(PREF_CODE, code)
                                 editor.putString(PREF_MAC, macAdd)
                                 editor.apply()
-                                showAccountPicker(resource.data.data)
+                                if (resource.data.data.size > 1) {
+                                    showAccountPicker(resource.data.data)
+                                } else {
+                                    saveLogin(resource.data.data[0])
+                                }
 
                             }
                         }
@@ -123,6 +126,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         val port = wholeUrl.split(":")[1].split("/")[0]
         editor.putString(PREF_URL, link)
         editor.putString(PREF_PORT, port)
+        editor.putInt(PREF_ACCOUNT_ID, account.id)
         editor.putString(PREF_USER_NAME, account.username)
         editor.putString(PREF_PASSWORD, account.password)
         editor.apply()

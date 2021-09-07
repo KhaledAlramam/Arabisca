@@ -26,10 +26,13 @@
         android:theme="@style/Theme.GoIPTV"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".UpdateContentActivity"
+            android:exported="true" />
+        <activity
             android:name=".CatchUpActivity"
-            android:exported="true"
             android:configChanges="orientation"
-            android:screenOrientation="landscape"/>
+            android:exported="true"
+            android:screenOrientation="landscape" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

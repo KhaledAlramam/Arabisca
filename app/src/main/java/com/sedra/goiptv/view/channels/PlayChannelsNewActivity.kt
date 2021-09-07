@@ -62,9 +62,15 @@ class PlayChannelsNewActivity : AppCompatActivity() {
                 object : ChannelOnClick {
                     override fun onClick(view: View, clicked: Boolean, liveStream: LiveStream, position: Int) {
                         binding.apply {
-                            epgConstraintLayout.root.isVisible = !clicked
-                            group.isVisible = !clicked
-                            ChannelInPlayerRv.isVisible = !clicked
+//                            epgConstraintLayout.root.isVisible = !clicked
+//                            group.isVisible = !clicked
+//                            ChannelInPlayerRv.isVisible = !clicked
+                            if (clicked) {
+                                restartEpgViewTimer()
+//                                epgConstraintLayout.root.isVisible = !clicked
+                                group.isVisible = !clicked
+                                ChannelInPlayerRv.isVisible = !clicked
+                            }
                         }
                         if(!clicked) handleChannelChoosed(liveStream, position)
                     }
@@ -98,6 +104,7 @@ class PlayChannelsNewActivity : AppCompatActivity() {
         try {
             val live = channelsAdapter.currentList[currentPosition - 1]
             handleChannelChoosed(live, currentPosition - 1)
+            restartEpgViewTimer()
         } catch (e: Exception) {
 
         }
@@ -107,6 +114,7 @@ class PlayChannelsNewActivity : AppCompatActivity() {
         try {
             val live = channelsAdapter.currentList[currentPosition + 1]
             handleChannelChoosed(live, currentPosition + 1)
+            restartEpgViewTimer()
         } catch (e: Exception) {
 
         }
@@ -121,18 +129,21 @@ class PlayChannelsNewActivity : AppCompatActivity() {
         } else
             populateEpgAndDetermineVisibility(epgMap[liveStream.streamId!!], liveStream.streamIcon)
         currentStreamId = liveStream.streamId
-        playLiveStream(currentStreamId)
+        playLiveStream(liveStream)
     }
 
     private fun initTimers() {
-        epgCountDownTimer = object : CountDownTimer(5000, 1000) {
+        epgCountDownTimer = object : CountDownTimer(4000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
             }
 
             override fun onFinish() {
-                binding.epgConstraintLayout.apply {
-                    root.isVisible = false
+                binding.apply {
+                    epgConstraintLayout.root.isVisible = false
+                    group.isVisible = false
+                    ChannelInPlayerRv.isVisible = false
                 }
+
             }
         }
     }
@@ -214,7 +225,7 @@ class PlayChannelsNewActivity : AppCompatActivity() {
     }
 
     private fun populateEpgAndDetermineVisibility(epgList: List<EpgListings>?, streamIcon: String?) {
-        restartEpgViewTimer()
+//        restartEpgViewTimer()
         binding.epgConstraintLayout.apply {
             upNextTime.text = ""
             upNextTitle.text = ""
@@ -294,11 +305,15 @@ class PlayChannelsNewActivity : AppCompatActivity() {
 
     }
 
-    private fun playLiveStream(id: Int?) {
-        val url = "http://${preferences.getString(PREF_URL, "")}:${preferences.getString(PREF_PORT, "")}/"
-        Log.e("TAG", "playLiveStream:${url}${userInfo.username}/${userInfo.password}/${id} ", )
+    private fun playLiveStream(liveStream: LiveStream) {
+        val url =
+            "http://${preferences.getString(PREF_URL, "")}:${preferences.getString(PREF_PORT, "")}/"
+        Log.e(
+            "TAG",
+            "playLiveStream:${url}${userInfo.username}/${userInfo.password}/${liveStream.streamId} ",
+        )
         val mediaItem = MediaItem.Builder().apply {
-            setUri("${url}${userInfo.username}/${userInfo.password}/${id}")
+            setUri("${url}${userInfo.username}/${userInfo.password}/${liveStream.streamId}")
         }.build()
 
         player?.setMediaItem(mediaItem)

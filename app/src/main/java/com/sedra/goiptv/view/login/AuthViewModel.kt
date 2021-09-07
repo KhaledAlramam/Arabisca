@@ -23,6 +23,16 @@ class AuthViewModel @Inject constructor(
 
     }
 
+    fun checkAccount(id: Int) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(data = null))
+        try {
+            emit(Resource.success(data = repository.checkAccount(id)))
+        } catch (exception: Exception) {
+            emit(Resource.error(data = null, message = "Mac Or Code are wrong"))
+        }
+
+    }
+
     fun getSetting() = liveData(Dispatchers.IO) {
         emit(Resource.loading(data = null))
         try {
