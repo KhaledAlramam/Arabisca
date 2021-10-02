@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.bumptech.glide.Glide
 import com.sedra.goiptv.R
 import com.sedra.goiptv.data.model.CustomItem
 import com.sedra.goiptv.databinding.AdapterChannelItemBinding
@@ -36,10 +35,6 @@ class CustomChannelAdapter(
         val context = holder.binding.root.context
         val currentChannel = getItem(position)
         val itemBinding = holder.binding as AdapterChannelItemBinding
-        Glide.with(holder.itemView)
-                .load(currentChannel.image)
-                .placeholder(R.drawable.logo)
-                .into(itemBinding.channelIcon)
         itemBinding.apply {
             channelName.text = currentChannel.name?.replace(itemBinding.root.context.getString(R.string.dashed),
                     itemBinding.root.context.getString(R.string.space))?.replace(itemBinding.root.context.getString(R.string.under_score),

@@ -80,7 +80,10 @@ class PlayChannelsNewActivity : AppCompatActivity() {
                 catList,
                 object : CategoryOnClick {
                     override fun onClick(view: View, category: Category) {
-                        channelsAdapter.submitList(channelList.filter { it.categoryId == category.category_id })
+                        if (category.category_id == "-1")
+                            channelsAdapter.submitList(channelList)
+                        else
+                            channelsAdapter.submitList(channelList.filter { it.categoryId == category.category_id })
                         binding.ChannelInPlayerRv.isVisible = true
                     }
                 })
@@ -172,6 +175,11 @@ class PlayChannelsNewActivity : AppCompatActivity() {
                     Status.SUCCESS -> {
                         if (resource.data != null) {
                             catList.clear()
+                            catList.add(Category(
+                                    "-1",
+                                    "All Channels",
+                                    0
+                            ))
                             catList.addAll(resource.data)
                             setupUI()
                         }
@@ -197,7 +205,7 @@ class PlayChannelsNewActivity : AppCompatActivity() {
                         }
                     }
                     Status.ERROR -> {
-
+                        Log.e("TAG", "fetchChannels: ${resource.message}")
                     }
                     Status.LOADING -> {
 

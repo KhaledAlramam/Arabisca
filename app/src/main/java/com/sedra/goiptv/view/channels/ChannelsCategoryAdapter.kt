@@ -3,7 +3,6 @@ package com.sedra.goiptv.view.channels
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.sedra.goiptv.R
 import com.sedra.goiptv.data.model.Category
 import com.sedra.goiptv.databinding.AdapterChannelCategoryBinding
 import com.sedra.goiptv.utils.CategoryOnClick
@@ -27,14 +26,14 @@ class ChannelsCategoryAdapter(
         itemBinding.root.setOnClickListener {
             clickListener.onClick(itemBinding.root, categoryList[position])
         }
-        holder.binding.root.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus){
-                itemBinding.channelCategoryTv.setTextColor(context.resources.getColor(R.color.white))
-            }else{
-                itemBinding.channelCategoryTv.setTextColor(context.resources.getColor(R.color.mainDark))
-            }
-            clickListener.onClick(itemBinding.root, categoryList[position])
-        }
+//        holder.binding.root.setOnFocusChangeListener { v, hasFocus ->
+//            if (hasFocus){
+//                itemBinding.channelCategoryTv.setTextColor(context.resources.getColor(R.color.white))
+//            }else{
+//                itemBinding.channelCategoryTv.setTextColor(context.resources.getColor(R.color.mainDark))
+//            }
+//            clickListener.onClick(itemBinding.root, categoryList[position])
+//        }
     }
 
     override fun getItemCount(): Int = categoryList.size

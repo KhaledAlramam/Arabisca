@@ -30,4 +30,8 @@
     </style>
 
 
+    <style name="ShapeAppearanceOverlay.App.SelectedCornerRadius" parent="">
+        <item name="cornerSize">8dp</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+    </style>
 </resources>
