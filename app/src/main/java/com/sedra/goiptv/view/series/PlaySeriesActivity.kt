@@ -2,7 +2,6 @@ package com.sedra.goiptv.view.series
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.android.exoplayer2.MediaItem
@@ -12,7 +11,6 @@ import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.util.Util
 import com.sedra.goiptv.R
 import com.sedra.goiptv.data.model.UserInfo
-import com.sedra.goiptv.data.remote.ApiService.Companion.BASE_URL
 import com.sedra.goiptv.databinding.ActivityPlayVideoBinding
 import com.sedra.goiptv.utils.PREF_PORT
 import com.sedra.goiptv.utils.PREF_URL
@@ -46,6 +44,8 @@ class PlaySeriesActivity : AppCompatActivity() {
 
     private fun setupUI() {
         binding.apply {
+            videoView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FILL
+
 //            fitScreen.setOnClickListener {
 //                if (originalSize) {
 //                    videoView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FILL

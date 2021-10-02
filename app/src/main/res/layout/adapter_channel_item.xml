@@ -13,65 +13,40 @@
         android:layout_margin="@dimen/sPadding"
         android:clickable="true"
         android:focusable="true"
+        android:alpha=".5"
         android:background="@drawable/selector_dark_transparent">
 
         <TextView
             android:id="@+id/channelName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:gravity="center"
             android:maxLines="2"
             android:minLines="2"
-            android:ellipsize="end"
             android:paddingTop="4dp"
             android:paddingBottom="4dp"
-            android:textSize="@dimen/sText"
             android:textColor="@color/mainDark"
+            android:textSize="@dimen/sText"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/constraintLayout"
+            app:layout_constraintStart_toEndOf="@+id/channelNumberList"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Channel nameChannel nameChannel nameChannel nameChannel name" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
+        <TextView
+            android:id="@+id/channelNumberList"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:background="@drawable/round_corners_8"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/channelName"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/channelName">
-
-            <ImageView
-                android:id="@+id/channelIcon"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginEnd="8dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/logo"
-                android:layout_margin="4dp"
-                app:layout_constraintDimensionRatio="2:1"
-                app:layout_constraintBottom_toBottomOf="@+id/channelNumberList"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/channelNumberList"
-                app:layout_constraintTop_toTopOf="@+id/channelNumberList" />
-
-            <TextView
-                android:id="@+id/channelNumberList"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                tools:text="00"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="00" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

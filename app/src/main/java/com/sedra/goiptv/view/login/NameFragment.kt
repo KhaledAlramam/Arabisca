@@ -90,7 +90,7 @@ class NameFragment : Fragment(R.layout.fragment_name) {
         editor.putString(PREF_PARENT_USER, hashMapString)
         editor.putString(PREF_NAME, "User")
         editor.apply()
-        GoTo.goToUpdateContent(requireActivity())
+        GoTo.goToMainActivity(requireActivity())
     }
 
     override fun onDestroy() {

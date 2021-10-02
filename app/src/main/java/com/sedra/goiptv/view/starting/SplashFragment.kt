@@ -128,7 +128,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     private fun decideNav(exist: Boolean) {
         if (exist) {
-            GoTo.goToUpdateContent(requireActivity())
+            GoTo.goToMainActivity(requireActivity())
         } else {
             findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
         }

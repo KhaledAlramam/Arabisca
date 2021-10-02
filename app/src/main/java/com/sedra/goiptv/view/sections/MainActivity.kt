@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.jakewharton.processphoenix.ProcessPhoenix
 import com.sedra.goiptv.R
 import com.sedra.goiptv.data.model.Section
 import com.sedra.goiptv.databinding.ActivityMainBinding
@@ -38,30 +39,33 @@ class MainActivity : AppCompatActivity() {
             .setTheme(R.style.CustomProgressDialogTheme)
             .build()
         binding?.apply {
+            restartApp.setOnClickListener {
+                ProcessPhoenix.triggerRebirth(this@MainActivity);
+            }
             userName = preferences.getString(PREF_NAME, "User")
             val txt = "${
                 preferences.getString(
-                    PREF_BANNER,
-                    "No Text"
+                        PREF_BANNER,
+                        "No Text"
                 )
             }                              ${
                 preferences.getString(
-                    PREF_BANNER,
-                    "No Text"
+                        PREF_BANNER,
+                        "No Text"
                 )
             }                              ${
                 preferences.getString(
-                    PREF_BANNER,
-                    "No Text"
+                        PREF_BANNER,
+                        "No Text"
                 )
             }"
             val imageLink = preferences.getString(
-                PREF_APP_IMG,
-                ""
+                    PREF_APP_IMG,
+                    ""
             )
             Glide.with(this@MainActivity)
-                .load(imageLink)
-                .into(imageView11)
+                    .load(imageLink)
+                    .into(imageView11)
             textView3.text = txt
             textView3.isSelected = true
             goToSetting.setOnClickListener {
@@ -70,17 +74,17 @@ class MainActivity : AppCompatActivity() {
             goToSetting.setOnFocusChangeListener { v, hasFocus ->
                 if (hasFocus) {
                     goToSetting.setColorFilter(
-                        ContextCompat.getColor(
-                            this@MainActivity,
-                            R.color.mainDark
-                        ), android.graphics.PorterDuff.Mode.MULTIPLY
+                            ContextCompat.getColor(
+                                    this@MainActivity,
+                                    R.color.mainDark
+                            ), android.graphics.PorterDuff.Mode.MULTIPLY
                     );
                 } else {
                     goToSetting.setColorFilter(
-                        ContextCompat.getColor(
-                            this@MainActivity,
-                            R.color.white
-                        ), android.graphics.PorterDuff.Mode.MULTIPLY
+                            ContextCompat.getColor(
+                                    this@MainActivity,
+                                    R.color.white
+                            ), android.graphics.PorterDuff.Mode.MULTIPLY
                     )
                 }
             }

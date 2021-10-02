@@ -3,7 +3,6 @@ package com.sedra.goiptv.view.movie
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.android.exoplayer2.MediaItem
@@ -46,6 +45,8 @@ class PlayMovieActivity : AppCompatActivity() {
 
     private fun setupUI() {
         binding.apply {
+            videoView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FILL
+
 //            fitScreen.setOnClickListener {
 //                if (originalSize) {
 //                    videoView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FILL

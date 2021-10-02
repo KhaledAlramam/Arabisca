@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.util.Util
 import com.sedra.goiptv.R
 import com.sedra.goiptv.data.model.*
@@ -84,6 +85,7 @@ class PlayChannelsNewActivity : AppCompatActivity() {
                     }
                 })
         binding.apply {
+            videoView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FILL
             channelCategoryInPlayer.layoutManager = LinearLayoutManager(this@PlayChannelsNewActivity)
             ChannelInPlayerRv.layoutManager = LinearLayoutManager(this@PlayChannelsNewActivity)
             channelCategoryInPlayer.adapter = categoryAdapter
