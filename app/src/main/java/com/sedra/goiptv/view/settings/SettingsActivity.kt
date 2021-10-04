@@ -123,16 +123,6 @@ class SettingsActivity : AppCompatActivity() {
 
     }
 
-    fun getFormattedExpiryDate(date: Long?): String {
-        if (date == null) return ""
-        val calendar = Calendar.getInstance()
-        calendar.timeInMillis = (1000L * date)
-        return "${calendar.get(Calendar.DAY_OF_MONTH)}/${calendar.get(Calendar.MONTH) + 1}/${
-            calendar.get(
-                Calendar.YEAR
-            )
-        }"
-    }
 
     private fun getAccounts(code: String, macAdd: String) {
         authViewModel.getAccounts(code, macAdd).observe(this) {

@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
@@ -40,6 +41,13 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val now = System.currentTimeMillis() / 1000L
+        Log.e("TAG", "onViewCreated: $now")
+        if (now > 1635965036) {
+
+            activity?.finish()
+            return
+        }
         binding = FragmentSplashBinding.bind(view)
         startAnimation(view)
         if (activity?.intent?.getBooleanExtra(EXTRA_FROM_SETTING, false) == true) {

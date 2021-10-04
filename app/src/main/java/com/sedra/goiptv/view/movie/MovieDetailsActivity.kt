@@ -1,9 +1,13 @@
 package com.sedra.goiptv.view.movie
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.sedra.goiptv.R
@@ -15,9 +19,9 @@ import com.sedra.goiptv.utils.PREF_APP_IMG
 import com.sedra.goiptv.utils.Status.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import kotlin.math.ceil
 import kotlin.math.pow
 import kotlin.math.roundToLong
+
 
 @AndroidEntryPoint
 class MovieDetailsActivity : AppCompatActivity() {
@@ -35,9 +39,6 @@ class MovieDetailsActivity : AppCompatActivity() {
             PREF_APP_IMG,
             ""
         )
-        Glide.with(this@MovieDetailsActivity)
-            .load(imageLink)
-            .into(binding.imageView13)
 
         getMovieDetails(id)
     }
@@ -59,9 +60,11 @@ class MovieDetailsActivity : AppCompatActivity() {
             it?.let { resource ->
                 when(resource.status){
                     SUCCESS -> {
+                        Log.e("TAG", "getMovieDetails: ${resource.data}")
                         resource.data?.let { movieDetailsResponse ->
                             updateUi(movieDetailsResponse)
                         }
+
                     }
                     ERROR -> {
 
@@ -77,11 +80,29 @@ class MovieDetailsActivity : AppCompatActivity() {
     private fun updateUi(movieDetailsResponse: MovieDetailsResponse) {
         binding.apply {
             Glide.with(this@MovieDetailsActivity)
-                    .load(movieDetailsResponse.info.movie_image)
-                    .into(movieDetailsImage)
+                .load(movieDetailsResponse.info.movie_image)
+                .into(movieDetailsImage)
+            Glide.with(this@MovieDetailsActivity)
+                .load(movieDetailsResponse.info.movie_image)
+                .into(binding.imageView13)
+            playTrailer.setOnClickListener {
+                val id = movieDetailsResponse.info.youtube_trailer
+                val webIntent =
+                    Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=$id"))
+                val appIntent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$id"));
+                try {
+                    startActivity(appIntent)
+                } catch (ex: ActivityNotFoundException) {
+                    startActivity(webIntent)
+                }
+            }
             movieDetails = movieDetailsResponse
             playMovie.setOnClickListener {
-                GoTo.playMovieActivity(this@MovieDetailsActivity, movieDetailsResponse.movie_data.stream_id, movieDetailsResponse.movie_data.container_extension)
+                GoTo.playMovieActivity(
+                    this@MovieDetailsActivity,
+                    movieDetailsResponse.movie_data.stream_id,
+                    movieDetailsResponse.movie_data.container_extension
+                )
             }
         }
 

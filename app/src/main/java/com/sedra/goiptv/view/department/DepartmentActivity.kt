@@ -2,14 +2,17 @@ package com.sedra.goiptv.view.department
 
 import android.app.AlertDialog
 import android.app.UiModeManager
-import android.content.Intent
+import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,7 +22,6 @@ import com.sedra.goiptv.data.model.*
 import com.sedra.goiptv.databinding.ActivityDepartmentBinding
 import com.sedra.goiptv.utils.*
 import com.sedra.goiptv.utils.Status.*
-import com.sedra.goiptv.view.channels.PlayChannelsNewActivity
 import dagger.hilt.android.AndroidEntryPoint
 import dmax.dialog.SpotsDialog
 import javax.inject.Inject
@@ -31,7 +33,6 @@ class DepartmentActivity : AppCompatActivity() {
     lateinit var binding: ActivityDepartmentBinding
     private val moviesList = ArrayList<Movie>()
     private val seriesList = ArrayList<Series>()
-    private val channelList = ArrayList<LiveStream>()
     private val catList = ArrayList<Category>()
     private val gridAdapter = MovieAdapter()
     private val gridSeriesAdapter = SeriesAdapter()
@@ -60,6 +61,7 @@ class DepartmentActivity : AppCompatActivity() {
         when (intent.getIntExtra(EXTRA_TYPE_ID, 0)) {
             MOVIES_ID -> {
                 getMoviesData()
+
                 binding.categoryName = getString(R.string.movies_)
             }
             SERIES_ID -> {
@@ -118,19 +120,20 @@ class DepartmentActivity : AppCompatActivity() {
     private fun manipulateSeriesData(categories: List<Category>, list: List<Series>) {
         seriesList.clear()
         seriesList.addAll(list)
+        catList.add(Category("-1", "All Series", -1, series = seriesList))
         categories.forEach { loopedCategory ->
             loopedCategory.series = list
-                    .filter { series -> series.category_id == loopedCategory.category_id }
+                .filter { series -> series.category_id == loopedCategory.category_id }
             catList.add(loopedCategory)
         }
-        val departmentTitleAdapter = DepartmentTitleAdapter(categories, object : OnDepartmentClicked {
+        val departmentTitleAdapter = DepartmentTitleAdapter(catList, object : OnDepartmentClicked {
             override fun onClick(view: View, position: Int) {
-                gridSeriesAdapter.submitList(categories[position].series)
+                gridSeriesAdapter.submitList(catList[position].series)
             }
         })
         binding.departmentTitleRv.apply {
             adapter = departmentTitleAdapter
-            layoutManager = LinearLayoutManager(this@DepartmentActivity, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(this@DepartmentActivity)
             setHasFixedSize(true)
         }
         binding.itemsRv.apply {
@@ -141,7 +144,23 @@ class DepartmentActivity : AppCompatActivity() {
                 GridLayoutManager(this@DepartmentActivity, 2, LinearLayoutManager.HORIZONTAL, false)
             }
         }
-        gridSeriesAdapter.submitList(categories[0].series)
+        gridSeriesAdapter.submitList(catList[0].series)
+        binding.departmentSearch.addTextChangedListener { query ->
+            gridSeriesAdapter.submitList(catList.firstOrNull()?.series?.filter {
+                it.name.contains(
+                    query.toString(),
+                    true
+                )
+            })
+        }
+        val view = this.currentFocus
+        if (view != null) {
+            val imm: InputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+        binding.departmentTitleRv.smoothScrollToPosition(0)
+        departmentTitleAdapter.notifyItemChanged(0);
     }
 
     private fun getMoviesData() {
@@ -154,6 +173,7 @@ class DepartmentActivity : AppCompatActivity() {
                             getAllMovies(resource.data)
                     }
                     ERROR -> {
+                        Log.e("TAG", "getMoviesData: ${resource.message}")
                         progressDialog?.dismiss()
                     }
                     LOADING -> {
@@ -174,6 +194,7 @@ class DepartmentActivity : AppCompatActivity() {
                             manipulateData(categories, resource.data)
                     }
                     ERROR -> {
+                        Log.e("TAG", "getMoviesData: ${resource.message}")
                         progressDialog?.dismiss()
 
                     }
@@ -190,19 +211,21 @@ class DepartmentActivity : AppCompatActivity() {
     private fun manipulateData(categories: List<Category>, data: List<Movie>) {
         moviesList.clear()
         moviesList.addAll(data)
+        catList.add(Category("-1", "All Movies", -1, data))
         categories.forEach { loopedCategory ->
             loopedCategory.movies = data
-                    .filter { movie -> movie.category_id == loopedCategory.category_id }
+                .filter { movie -> movie.category_id == loopedCategory.category_id }
             catList.add(loopedCategory)
         }
-        val departmentTitleAdapter = DepartmentTitleAdapter(categories, object : OnDepartmentClicked {
+        val departmentTitleAdapter = DepartmentTitleAdapter(catList, object : OnDepartmentClicked {
             override fun onClick(view: View, position: Int) {
-                gridAdapter.submitList(categories[position].movies)
+                Log.e("TAG", "onClick:${catList[position].movies} ")
+                gridAdapter.submitList(catList[position].movies)
             }
         })
         binding.departmentTitleRv.apply {
             adapter = departmentTitleAdapter
-            layoutManager = LinearLayoutManager(this@DepartmentActivity, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(this@DepartmentActivity)
             setHasFixedSize(true)
         }
         binding.itemsRv.apply {
@@ -213,7 +236,33 @@ class DepartmentActivity : AppCompatActivity() {
                 GridLayoutManager(this@DepartmentActivity, 2, LinearLayoutManager.HORIZONTAL, false)
             }
         }
-        gridAdapter.submitList(categories[0].movies)
+        gridAdapter.submitList(catList[0].movies)
+        binding.departmentSearch.addTextChangedListener { query ->
+            if (query.toString().isBlank()) {
+                gridAdapter.submitList(catList.firstOrNull()?.movies?.filter {
+                    it.name.contains(
+                        query.toString(),
+                        true
+                    )
+                })
+                return@addTextChangedListener
+            }
+            gridAdapter.submitList(catList.firstOrNull()?.movies?.filter {
+                it.name.contains(
+                    query.toString(),
+                    true
+                )
+            })
+        }
+        val view = this.currentFocus
+        if (view != null) {
+            val imm: InputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+        binding.departmentTitleRv.smoothScrollToPosition(0)
+        departmentTitleAdapter.notifyItemChanged(0);
+
     }
 
     companion object {

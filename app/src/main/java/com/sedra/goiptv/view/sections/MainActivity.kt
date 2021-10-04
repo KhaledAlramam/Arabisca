@@ -11,8 +11,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.jakewharton.processphoenix.ProcessPhoenix
+import com.rommansabbir.networkx.core.NetworkXCore
+import com.rommansabbir.networkx.dialog.NoInternetDialog
 import com.sedra.goiptv.R
 import com.sedra.goiptv.data.model.Section
+import com.sedra.goiptv.data.model.UserInfo
 import com.sedra.goiptv.databinding.ActivityMainBinding
 import com.sedra.goiptv.utils.*
 import com.sedra.goiptv.utils.Status.*
@@ -22,16 +25,49 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    var binding: ActivityMainBinding? = null
+
+    lateinit var binding: ActivityMainBinding
 
     @Inject
     lateinit var preferences: SharedPreferences
     private val viewModel by viewModels<MainViewModel>()
     var progressDialog: AlertDialog? = null
 
+    @Inject
+    lateinit var userInfo: UserInfo
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        NetworkXCore.getNetworkX().isInternetConnectedLiveData().observe(this) {
+            when (it) {
+                true -> {
+                    /**
+                     * Do your stuff here when internet is connected
+                     */
+                }
+                else -> {
+                    NoInternetDialog
+                        .Companion
+                        .Builder()
+                        // Provide activity reference
+                        .withActivity(this)
+                        // Provide custom title
+                        .withTitle("No internet!")
+                        // Provide custom mesage
+                        .withMessage("Your device is not connected to the internet!")
+                        // Register for callback
+                        .withActionCallback {
+                            // User clicked `Retry` button
+                        }
+                        .build()
+                        .show()
+
+                }
+            }
+        }
+
+
         progressDialog = SpotsDialog.Builder()
             .setContext(this)
             .setMessage("Please Wait...")
@@ -81,16 +117,20 @@ class MainActivity : AppCompatActivity() {
                     );
                 } else {
                     goToSetting.setColorFilter(
-                            ContextCompat.getColor(
-                                    this@MainActivity,
-                                    R.color.white
-                            ), android.graphics.PorterDuff.Mode.MULTIPLY
+                        ContextCompat.getColor(
+                            this@MainActivity,
+                            R.color.white
+                        ), android.graphics.PorterDuff.Mode.MULTIPLY
                     )
                 }
             }
 
         }
         getSections()
+        try {
+            binding.imageView7.text = getFormattedExpiryDate(userInfo.exp_date?.toLong())
+        } catch (e: Exception) {
+        }
     }
 
     private fun getSections() {
@@ -137,7 +177,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        binding = null
+        NetworkXCore.getNetworkX().cancelObservation()
     }
 
 

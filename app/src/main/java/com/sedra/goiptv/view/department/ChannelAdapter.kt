@@ -3,6 +3,7 @@ package com.sedra.goiptv.view.department
 import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.sedra.goiptv.R
@@ -43,10 +44,10 @@ class ChannelAdapter(
         }
         itemBinding.root.setOnFocusChangeListener { v, hasFocus ->
             if (hasFocus){
-                itemBinding.channelName.setTextColor(context.resources.getColor(R.color.white))
+                itemBinding.imageView15.isVisible = true
                 listener.onClick(v, false, currentChannel, position)
             }else{
-                itemBinding.channelName.setTextColor(context.resources.getColor(R.color.mainDark))
+                itemBinding.imageView15.isVisible = false
             }
         }
 

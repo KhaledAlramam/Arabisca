@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/departmentName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lines="1"
         android:textSize="12sp"
@@ -17,5 +17,5 @@
         android:paddingBottom="8dp"
         android:focusable="true"
         android:clickable="true"
-        android:background="@drawable/selector_black" />
+        android:background="@drawable/selector_white_border" />
 </layout>

@@ -5,13 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.sedra.goiptv.R
 import com.sedra.goiptv.data.model.Category
-import com.sedra.goiptv.data.model.Section
 import com.sedra.goiptv.databinding.ListItemDepartmentBinding
-import com.sedra.goiptv.databinding.ListItemMainCategoriesBinding
-import com.sedra.goiptv.utils.GoTo
 
 class CustomViewHolder(val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -38,7 +34,7 @@ class DepartmentTitleAdapter(
             holder.itemView.setBackgroundResource(R.drawable.round_corners_8_white)
             itemBinding.departmentName.setTextColor(context.resources.getColor(R.color.mainDark))
         }else{
-            holder.itemView.setBackgroundResource(R.drawable.selector_black)
+            holder.itemView.setBackgroundResource(R.drawable.selector_white_border)
             itemBinding.departmentName.setTextColor(context.resources.getColor(R.color.white))
         }
         holder.itemView.setOnClickListener {

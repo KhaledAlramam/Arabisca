@@ -4,6 +4,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.material.snackbar.Snackbar
+import java.util.*
 
 fun AppCompatActivity.checkSelfPermissionCompat(permission: String) =
     ActivityCompat.checkSelfPermission(this, permission)
@@ -41,4 +42,15 @@ fun View.showSnackbar(
             action(this)
         }.show()
     }
+}
+
+fun getFormattedExpiryDate(date: Long?): String {
+    if (date == null) return ""
+    val calendar = Calendar.getInstance()
+    calendar.timeInMillis = (1000L * date)
+    return "${calendar.get(Calendar.DAY_OF_MONTH)}/${calendar.get(Calendar.MONTH) + 1}/${
+        calendar.get(
+            Calendar.YEAR
+        )
+    }"
 }

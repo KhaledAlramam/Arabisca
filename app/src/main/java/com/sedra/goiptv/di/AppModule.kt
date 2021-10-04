@@ -18,6 +18,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
@@ -32,26 +33,33 @@ object AppModule {
     fun provideRetrofit(): Retrofit {
         val interceptor = HttpLoggingInterceptor()
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-        val client: OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
+        val client: OkHttpClient = OkHttpClient.Builder()
+            .readTimeout(60, TimeUnit.SECONDS)
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .addInterceptor(interceptor).build()
         return Retrofit.Builder()
-                .baseUrl(ApiService.BASE_URL)
-                .client(client)
-                .addConverterFactory(MoshiConverterFactory.create())
-                .build()
+            .baseUrl(ApiService.BASE_URL)
+            .client(client)
+            .addConverterFactory(MoshiConverterFactory.create())
+            .build()
     }
 
     @IptvRetrofit
     @Provides
     fun provideTvRetrofit(preferences: SharedPreferences): Retrofit {
-        val link = "http://${preferences.getString(PREF_URL,"")}:${preferences.getString(PREF_PORT,"")}/"
+        val link =
+            "http://${preferences.getString(PREF_URL, "")}:${preferences.getString(PREF_PORT, "")}/"
         val interceptor = HttpLoggingInterceptor()
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-        val client: OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
+        val client: OkHttpClient = OkHttpClient.Builder()
+            .readTimeout(60, TimeUnit.SECONDS)
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .addInterceptor(interceptor).build()
         return Retrofit.Builder()
-                .baseUrl(link)
-                .client(client)
-                .addConverterFactory(MoshiConverterFactory.create())
-                .build()
+            .baseUrl(link)
+            .client(client)
+            .addConverterFactory(MoshiConverterFactory.create())
+            .build()
     }
 
     @BaseApiService

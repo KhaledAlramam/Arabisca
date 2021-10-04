@@ -29,7 +29,7 @@
             app:layout_constraintStart_toStartOf="@+id/channelCategoryTv"
             app:layout_constraintTop_toTopOf="@+id/channelCategoryTv"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.SelectedCornerRadius"
-            app:srcCompat="@drawable/bk" />
+            app:srcCompat="@color/teal_700" />
 
         <TextView
             android:id="@+id/channelCategoryTv"

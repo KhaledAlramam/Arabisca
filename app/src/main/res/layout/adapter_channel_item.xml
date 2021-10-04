@@ -13,8 +13,20 @@
         android:layout_margin="@dimen/sPadding"
         android:clickable="true"
         android:focusable="true"
-        android:alpha=".5"
-        android:background="@drawable/selector_dark_transparent">
+        android:background="@drawable/selector_white_border">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imageView15"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha=".6"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.SelectedCornerRadius"
+            app:srcCompat="@color/teal_700" />
 
         <TextView
             android:id="@+id/channelName"
