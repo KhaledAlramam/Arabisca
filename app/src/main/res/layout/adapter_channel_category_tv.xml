@@ -22,20 +22,20 @@
             android:id="@+id/imageView15"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:alpha=".6"
+            android:alpha=".9"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="@+id/channelCategoryTv"
             app:layout_constraintEnd_toEndOf="@+id/channelCategoryTv"
             app:layout_constraintStart_toStartOf="@+id/channelCategoryTv"
             app:layout_constraintTop_toTopOf="@+id/channelCategoryTv"
-            app:srcCompat="@drawable/bk" />
+            app:srcCompat="@color/channel_back" />
 
         <TextView
             android:id="@+id/channelCategoryTv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:maxLines="2"
+            android:maxLines="1"
             android:text="@{category.category_name}"
             android:textSize="@dimen/mText"
             android:textColor="@color/white"

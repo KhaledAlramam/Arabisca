@@ -13,6 +13,8 @@ class ChannelsCategoryAdapter(
     private val clickListener: CategoryOnClick
 ) : RecyclerView.Adapter<CustomViewHolder>() {
 
+    var selectedItemIndex = 0
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = AdapterChannelCategoryBinding.inflate(inflater, parent, false)
@@ -24,16 +26,22 @@ class ChannelsCategoryAdapter(
         val itemBinding = holder.binding as AdapterChannelCategoryBinding
         itemBinding.category = categoryList[position].category_name
         itemBinding.root.setOnClickListener {
+            selectedItemIndex = position
             clickListener.onClick(itemBinding.root, categoryList[position])
+            notifyDataSetChanged()
         }
-//        holder.binding.root.setOnFocusChangeListener { v, hasFocus ->
-//            if (hasFocus){
-//                itemBinding.channelCategoryTv.setTextColor(context.resources.getColor(R.color.white))
-//            }else{
-//                itemBinding.channelCategoryTv.setTextColor(context.resources.getColor(R.color.mainDark))
-//            }
-//            clickListener.onClick(itemBinding.root, categoryList[position])
-//        }
+        if (selectedItemIndex == position) {
+            itemBinding.imageView15.alpha = 0.9f
+        } else {
+            holder.binding.root.setOnFocusChangeListener { v, hasFocus ->
+                if (hasFocus) {
+                    itemBinding.imageView15.alpha = 0.9f
+                } else {
+                    itemBinding.imageView15.alpha = 0.4f
+                }
+            }
+
+        }
     }
 
     override fun getItemCount(): Int = categoryList.size

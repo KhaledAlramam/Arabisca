@@ -358,26 +358,28 @@ class PlayChannelsNewActivity : AppCompatActivity() {
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (!binding.ChannelInPlayerRv.isVisible){
-            when (keyCode) {
-                KeyEvent.KEYCODE_DPAD_UP -> {
-                    increaseChannel()
-                }
-                KeyEvent.KEYCODE_DPAD_DOWN -> {
-                    decreaseChannel()
-                }
-                KeyEvent.KEYCODE_CHANNEL_UP -> {
-                    increaseChannel()
-                }
-                KeyEvent.KEYCODE_CHANNEL_DOWN -> {
-                    decreaseChannel()
-                }
-                else ->{
-                    if (keyCode != KeyEvent.KEYCODE_BACK)
-                        showChannelList()
-                }
-            }
-        }
+//        if (!binding.ChannelInPlayerRv.isVisible){
+//            when (keyCode) {
+//                KeyEvent.KEYCODE_DPAD_UP -> {
+//                    increaseChannel()
+//                }
+//                KeyEvent.KEYCODE_DPAD_DOWN -> {
+//                    decreaseChannel()
+//                }
+//                KeyEvent.KEYCODE_CHANNEL_UP -> {
+//                    increaseChannel()
+//                }
+//                KeyEvent.KEYCODE_CHANNEL_DOWN -> {
+//                    decreaseChannel()
+//                }
+//                else ->{
+//                    if (keyCode != KeyEvent.KEYCODE_BACK)
+//                        showChannelList()
+//                }
+//            }
+//        }
+        if (!binding.ChannelInPlayerRv.isVisible && keyCode != KeyEvent.KEYCODE_BACK)
+            showChannelList()
 
         return super.onKeyDown(keyCode, event)
     }

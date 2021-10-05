@@ -43,12 +43,7 @@ class ChannelAdapter(
             channelNumberList.text = "${position+1}"
         }
         itemBinding.root.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus){
-                itemBinding.imageView15.isVisible = true
-                listener.onClick(v, false, currentChannel, position)
-            }else{
-                itemBinding.imageView15.isVisible = false
-            }
+            itemBinding.imageView15.isVisible = hasFocus
         }
 
         itemBinding.root.setOnClickListener { v ->
