@@ -159,6 +159,7 @@ class DepartmentActivity : AppCompatActivity() {
                 getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
+        binding.departmentTitleRv.requestFocus()
         binding.departmentTitleRv.smoothScrollToPosition(0)
         departmentTitleAdapter.notifyItemChanged(0);
     }
@@ -260,6 +261,7 @@ class DepartmentActivity : AppCompatActivity() {
                 getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
+        binding.departmentTitleRv.requestFocus()
         binding.departmentTitleRv.smoothScrollToPosition(0)
         departmentTitleAdapter.notifyItemChanged(0);
 

@@ -43,11 +43,13 @@ class PlayChannelsNewActivity : AppCompatActivity() {
     lateinit var preferences: SharedPreferences
     val channelList = ArrayList<LiveStream>()
     private var epgCountDownTimer: CountDownTimer? = null
+    private var channelSwitch: CountDownTimer? = null
     private val epgMap = HashMap<Int, List<EpgListings>>()
     lateinit var categoryAdapter: ChannelsCategoryAdapter
     lateinit var channelsAdapter: ChannelAdapter
     private val catList = ArrayList<Category>()
     private var currentPosition = -1
+    var currentEnteredNumber = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -147,6 +149,31 @@ class PlayChannelsNewActivity : AppCompatActivity() {
                     epgConstraintLayout.root.isVisible = false
                     group.isVisible = false
                     ChannelInPlayerRv.isVisible = false
+                }
+
+            }
+        }
+        initChannelSwitchTimer()
+    }
+
+    private fun initChannelSwitchTimer() {
+        channelSwitch = object : CountDownTimer(3000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+            }
+
+            override fun onFinish() {
+                binding.apply {
+                    channelSwitchTv.isVisible = false
+                    currentEnteredNumber = ""
+                    try {
+                        handleChannelChoosed(
+                            channelList[currentEnteredNumber.toInt()],
+                            currentEnteredNumber.toInt() + 1
+                        )
+                        channelSwitch = null
+                    } catch (e: Exception) {
+
+                    }
                 }
 
             }
@@ -378,8 +405,19 @@ class PlayChannelsNewActivity : AppCompatActivity() {
 //                }
 //            }
 //        }
-        if (!binding.ChannelInPlayerRv.isVisible && keyCode != KeyEvent.KEYCODE_BACK)
+        if (!binding.ChannelInPlayerRv.isVisible && keyCode != KeyEvent.KEYCODE_BACK) {
             showChannelList()
+        }
+        if (keyCode >= KeyEvent.KEYCODE_0 && keyCode <= KeyEvent.KEYCODE_9) {
+            binding.channelSwitchTv.isVisible = true
+            currentEnteredNumber += keyCode
+            binding.channelSwitchTv.text = currentEnteredNumber
+            if (channelSwitch == null) {
+                initChannelSwitchTimer()
+                channelSwitch?.start()
+            }
+
+        }
 
         return super.onKeyDown(keyCode, event)
     }
@@ -402,6 +440,8 @@ class PlayChannelsNewActivity : AppCompatActivity() {
     override fun onDestroy() {
         epgCountDownTimer?.cancel()
         epgCountDownTimer = null
+        channelSwitch?.cancel()
+        channelSwitch = null
         super.onDestroy()
     }
 }

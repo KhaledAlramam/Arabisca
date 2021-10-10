@@ -51,8 +51,8 @@
             android:id="@+id/ChannelInPlayerRv"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:alpha="0.9"
-            android:background="@color/etBack"
+            android:alpha="0.6"
+            android:background="@color/black"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline6"
@@ -205,15 +205,28 @@
 
 <!--            <ImageView-->
 <!--                android:id="@+id/channelImg"-->
-<!--                android:layout_width="32dp"-->
-<!--                android:layout_height="32dp"-->
-<!--                android:layout_marginStart="16dp"-->
-<!--                android:adjustViewBounds="true"-->
-<!--                app:layout_constraintBottom_toTopOf="@+id/downChannel"-->
-<!--                app:layout_constraintStart_toEndOf="@+id/downChannel"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/playedChannelName"-->
-<!--                tools:srcCompat="@tools:sample/avatars" />-->
-<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+        <!--                android:layout_width="32dp"-->
+        <!--                android:layout_height="32dp"-->
+        <!--                android:layout_marginStart="16dp"-->
+        <!--                android:adjustViewBounds="true"-->
+        <!--                app:layout_constraintBottom_toTopOf="@+id/downChannel"-->
+        <!--                app:layout_constraintStart_toEndOf="@+id/downChannel"-->
+        <!--                app:layout_constraintTop_toBottomOf="@+id/playedChannelName"-->
+        <!--                tools:srcCompat="@tools:sample/avatars" />-->
+        <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+        <TextView
+            android:id="@+id/channelSwitchTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:background="@color/black"
+            android:minEms="6"
+            android:padding="8dp"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/group"

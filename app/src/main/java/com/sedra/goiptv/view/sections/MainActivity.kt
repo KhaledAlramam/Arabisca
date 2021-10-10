@@ -74,15 +74,15 @@ class MainActivity : AppCompatActivity() {
             .setCancelable(false)
             .setTheme(R.style.CustomProgressDialogTheme)
             .build()
-        binding?.apply {
+        binding.apply {
             restartApp.setOnClickListener {
-                ProcessPhoenix.triggerRebirth(this@MainActivity);
+                ProcessPhoenix.triggerRebirth(this@MainActivity)
             }
             userName = preferences.getString(PREF_NAME, "User")
             val txt = "${
                 preferences.getString(
-                        PREF_BANNER,
-                        "No Text"
+                    PREF_BANNER,
+                    "No Text"
                 )
             }                              ${
                 preferences.getString(
@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity() {
                                     this@MainActivity,
                                     R.color.mainDark
                             ), android.graphics.PorterDuff.Mode.MULTIPLY
-                    );
+                    )
                 } else {
                     goToSetting.setColorFilter(
                         ContextCompat.getColor(
@@ -128,7 +128,8 @@ class MainActivity : AppCompatActivity() {
         }
         getSections()
         try {
-            binding.imageView7.text = getFormattedExpiryDate(userInfo.exp_date?.toLong())
+            binding.imageView7.text =
+                "Expire On: ${getFormattedExpiryDate(userInfo.exp_date?.toLong())}"
         } catch (e: Exception) {
         }
     }
@@ -161,11 +162,11 @@ class MainActivity : AppCompatActivity() {
             Section(-1, "", getString(R.string.movies), resourceId = R.drawable.go_movies),
             Section(-2, "", getString(R.string.series), resourceId = R.drawable.go_series),
             Section(-5, "", getString(R.string.catch_up), resourceId = R.drawable.time_small)
-        ) + sections
+        ) + sections.reversed()
 //        + Section(-4, "", getString(R.string.setting))
 
         val sectionsAdapter = SectionsAdapter(preferences, fixedList)
-        binding!!.sectionsRv.apply {
+        binding.sectionsRv.apply {
             adapter = sectionsAdapter
             layoutManager =
                 LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)

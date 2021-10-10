@@ -16,6 +16,8 @@ class ChannelAdapter(
         val listener: ChannelOnClick,
 ) : ListAdapter<LiveStream, CustomViewHolder>(Companion) {
 
+    var selectedItemIndex = 0
+
     companion object : DiffUtil.ItemCallback<LiveStream>() {
         override fun areItemsTheSame(oldItem: LiveStream, newItem: LiveStream): Boolean {
             return oldItem === newItem
@@ -37,17 +39,30 @@ class ChannelAdapter(
         val currentChannel = getItem(position)
         val itemBinding = holder.binding as AdapterChannelItemBinding
         itemBinding.apply {
-            channelName.text = currentChannel.name?.replace(itemBinding.root.context.getString(R.string.dashed),
-                    itemBinding.root.context.getString(R.string.space))?.replace(itemBinding.root.context.getString(R.string.under_score),
-                    itemBinding.root.context.getString(R.string.space))
-            channelNumberList.text = "${position+1}"
+            channelName.text = currentChannel.name?.replace(
+                itemBinding.root.context.getString(R.string.dashed),
+                itemBinding.root.context.getString(R.string.space)
+            )?.replace(
+                itemBinding.root.context.getString(R.string.under_score),
+                itemBinding.root.context.getString(R.string.space)
+            )
+            channelNumberList.text = "${position + 1}"
         }
         itemBinding.root.setOnFocusChangeListener { v, hasFocus ->
-            itemBinding.imageView15.isVisible = hasFocus
+        }
+        if (selectedItemIndex == position) {
+            itemBinding.imageView15.isVisible = true
+        } else {
+            holder.binding.root.setOnFocusChangeListener { v, hasFocus ->
+                itemBinding.imageView15.isVisible = hasFocus
+            }
+
         }
 
         itemBinding.root.setOnClickListener { v ->
+            selectedItemIndex = position
             listener.onClick(v, true, currentChannel, position)
+            notifyDataSetChanged()
         }
     }
 }
