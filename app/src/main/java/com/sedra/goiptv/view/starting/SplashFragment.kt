@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.sedra.goiptv.BuildConfig
@@ -22,6 +23,8 @@ import com.sedra.goiptv.databinding.FragmentSplashBinding
 import com.sedra.goiptv.utils.*
 import com.sedra.goiptv.view.login.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -106,11 +109,20 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
     }
 
     private fun performNav() {
-        if (preferences.getString(PREF_NAME, "").isNullOrEmpty()) {
-            findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
-        } else {
-            checkAccount(preferences.getInt(PREF_ACCOUNT_ID, 0))
+        lifecycleScope.launch {
+            delay(8000)
+            if (preferences.getString(PREF_NAME, "").isNullOrEmpty()) {
+                findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
+            } else {
+                checkAccount(preferences.getInt(PREF_ACCOUNT_ID, 0))
+            }
+
         }
+//        if (preferences.getString(PREF_NAME, "").isNullOrEmpty()) {
+//            findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
+//        } else {
+//            checkAccount(preferences.getInt(PREF_ACCOUNT_ID, 0))
+//        }
     }
 
     private fun checkAccount(id: Int) {

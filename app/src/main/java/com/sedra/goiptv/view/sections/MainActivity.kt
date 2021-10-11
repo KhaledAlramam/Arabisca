@@ -125,11 +125,29 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
+            restartApp.setOnFocusChangeListener { v, hasFocus ->
+                if (hasFocus) {
+                    restartApp.setColorFilter(
+                        ContextCompat.getColor(
+                            this@MainActivity,
+                            R.color.mainDark
+                        ), android.graphics.PorterDuff.Mode.MULTIPLY
+                    )
+                } else {
+                    restartApp.setColorFilter(
+                        ContextCompat.getColor(
+                            this@MainActivity,
+                            R.color.white
+                        ), android.graphics.PorterDuff.Mode.MULTIPLY
+                    )
+                }
+            }
+
         }
         getSections()
         try {
             binding.imageView7.text =
-                "Expire On: ${getFormattedExpiryDate(userInfo.exp_date?.toLong())}"
+                "Expire On: \n${getFormattedExpiryDate(userInfo.exp_date?.toLong())}"
         } catch (e: Exception) {
         }
     }

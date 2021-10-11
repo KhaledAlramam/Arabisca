@@ -84,8 +84,7 @@
             android:background="@drawable/marquee_back_helf_round"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
+            android:layout_marginEnd="8dp"
             android:marqueeRepeatLimit="marquee_forever"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
@@ -93,8 +92,9 @@
             android:singleLine="true"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:focusable="false"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageView7"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="Your long text goes here. You can also change it programmaticallyYour long text goes here. You can also change it programmaticallyYour long text goes here. You can also change it programmatically" />
 
@@ -107,9 +107,9 @@
             android:background="@drawable/selector_white"
             android:clickable="true"
             android:focusable="true"
-            app:layout_constraintBottom_toBottomOf="@+id/restartApp"
+            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/restartApp"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_settings" />
 
 
@@ -117,11 +117,14 @@
             android:id="@+id/imageView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
             android:adjustViewBounds="true"
             android:padding="8dp"
-            app:layout_constraintStart_toStartOf="@+id/textView"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            android:layout_marginHorizontal="16dp"
+            android:textAlignment="viewStart"
+            app:layout_constraintBottom_toBottomOf="@+id/textView3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView3"
+            tools:text="asdasdasdas" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/sectionsRv"
@@ -137,20 +140,18 @@
             tools:listitem="@layout/list_item_main_categories"
             tools:orientation="horizontal" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <ImageView
             android:id="@+id/restartApp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/black_bk_selector"
-            android:drawableStart="@drawable/ic_refresh"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/selector_white"
             android:drawablePadding="8dp"
             android:focusable="true"
-            android:text="Reload"
-            android:paddingHorizontal="8dp"
+            android:src="@drawable/refresh"
             app:layout_constraintBottom_toBottomOf="@+id/imageView4"
-            app:layout_constraintEnd_toStartOf="@+id/goToSetting"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="@+id/goToSetting"
+            app:layout_constraintTop_toBottomOf="@+id/goToSetting"
+            app:tint="@color/white" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
