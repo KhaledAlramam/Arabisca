@@ -38,6 +38,9 @@ class ChannelAdapter(
         val context = holder.binding.root.context
         val currentChannel = getItem(position)
         val itemBinding = holder.binding as AdapterChannelItemBinding
+        if (position == selectedItemIndex) {
+            itemBinding.root.requestFocus()
+        }
         itemBinding.apply {
             channelName.text = currentChannel.name?.replace(
                 itemBinding.root.context.getString(R.string.dashed),

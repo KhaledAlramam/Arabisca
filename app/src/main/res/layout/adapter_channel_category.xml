@@ -38,6 +38,7 @@
             android:padding="8dp"
             android:text="@{category}"
             android:textColor="@color/white"
+            android:maxLines="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

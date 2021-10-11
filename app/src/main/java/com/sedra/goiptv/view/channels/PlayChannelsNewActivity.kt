@@ -86,6 +86,7 @@ class PlayChannelsNewActivity : AppCompatActivity() {
                             channelsAdapter.submitList(channelList)
                         else
                             channelsAdapter.submitList(channelList.filter { it.categoryId == category.category_id })
+                        binding.ChannelInPlayerRv.scrollToPosition(0)
                         binding.ChannelInPlayerRv.isVisible = true
                     }
                 })
@@ -385,26 +386,26 @@ class PlayChannelsNewActivity : AppCompatActivity() {
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-//        if (!binding.ChannelInPlayerRv.isVisible){
-//            when (keyCode) {
-//                KeyEvent.KEYCODE_DPAD_UP -> {
-//                    increaseChannel()
-//                }
-//                KeyEvent.KEYCODE_DPAD_DOWN -> {
-//                    decreaseChannel()
-//                }
-//                KeyEvent.KEYCODE_CHANNEL_UP -> {
-//                    increaseChannel()
-//                }
-//                KeyEvent.KEYCODE_CHANNEL_DOWN -> {
-//                    decreaseChannel()
-//                }
-//                else ->{
-//                    if (keyCode != KeyEvent.KEYCODE_BACK)
-//                        showChannelList()
-//                }
-//            }
-//        }
+        if (!binding.ChannelInPlayerRv.isVisible) {
+            when (keyCode) {
+                KeyEvent.KEYCODE_DPAD_UP -> {
+                    increaseChannel()
+                }
+                KeyEvent.KEYCODE_DPAD_DOWN -> {
+                    decreaseChannel()
+                }
+                KeyEvent.KEYCODE_CHANNEL_UP -> {
+                    increaseChannel()
+                }
+                KeyEvent.KEYCODE_CHANNEL_DOWN -> {
+                    decreaseChannel()
+                }
+                else -> {
+                    if (keyCode != KeyEvent.KEYCODE_BACK)
+                        showChannelList()
+                }
+            }
+        }
         if (!binding.ChannelInPlayerRv.isVisible && keyCode != KeyEvent.KEYCODE_BACK) {
             showChannelList()
         }
