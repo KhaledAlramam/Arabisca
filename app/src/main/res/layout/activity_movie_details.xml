@@ -139,7 +139,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
             android:minHeight="48dp"
-            android:background="@drawable/selector_white_border"
+            android:background="@drawable/black_bk_selector"
             android:text="@string/play_now"
             android:focusable="true"
             android:paddingHorizontal="32dp"
@@ -156,7 +156,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
-            android:background="@drawable/selector_white_border"
+            android:background="@drawable/black_bk_selector"
             android:focusable="true"
             android:minHeight="48dp"
             android:paddingHorizontal="32dp"
@@ -166,7 +166,6 @@
             app:layout_constraintEnd_toStartOf="@+id/playMovie"
             app:layout_constraintStart_toEndOf="@+id/cardView">
 
-            <requestFocus />
         </androidx.appcompat.widget.AppCompatButton>
 
         <androidx.constraintlayout.widget.Guideline

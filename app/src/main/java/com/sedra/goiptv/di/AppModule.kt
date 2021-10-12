@@ -57,7 +57,7 @@ object AppModule {
             .addInterceptor(interceptor).build()
         return Retrofit.Builder()
             .baseUrl(link)
-//            .client(client)
+            .client(client)
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
     }

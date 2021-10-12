@@ -128,6 +128,7 @@ class DepartmentActivity : AppCompatActivity() {
         }
         val departmentTitleAdapter = DepartmentTitleAdapter(catList, object : OnDepartmentClicked {
             override fun onClick(view: View, position: Int) {
+                gridSeriesAdapter.submitList(emptyList())
                 gridSeriesAdapter.submitList(catList[position].series)
             }
         })
@@ -221,6 +222,7 @@ class DepartmentActivity : AppCompatActivity() {
         val departmentTitleAdapter = DepartmentTitleAdapter(catList, object : OnDepartmentClicked {
             override fun onClick(view: View, position: Int) {
                 Log.e("TAG", "onClick:${catList[position].movies} ")
+                gridAdapter.submitList(emptyList())
                 gridAdapter.submitList(catList[position].movies)
             }
         })
