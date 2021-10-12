@@ -116,11 +116,15 @@
         <TextView
             android:id="@+id/imageView7"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:adjustViewBounds="true"
             android:padding="8dp"
+            android:background="@drawable/marquee_back_round"
             android:layout_marginHorizontal="16dp"
+            android:backgroundTint="@color/white"
             android:textAlignment="viewStart"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="@+id/textView3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView3"
@@ -150,8 +154,7 @@
             android:src="@drawable/refresh"
             app:layout_constraintBottom_toBottomOf="@+id/imageView4"
             app:layout_constraintEnd_toEndOf="@+id/goToSetting"
-            app:layout_constraintTop_toBottomOf="@+id/goToSetting"
-            app:tint="@color/white" />
+            app:layout_constraintTop_toBottomOf="@+id/goToSetting" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

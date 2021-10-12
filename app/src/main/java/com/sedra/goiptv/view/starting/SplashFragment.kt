@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.sedra.goiptv.BuildConfig
 import com.sedra.goiptv.R
@@ -47,11 +48,11 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         val now = System.currentTimeMillis() / 1000L
         Log.e("TAG", "onViewCreated: $now")
         if (now > 1635965036) {
-
             activity?.finish()
             return
         }
         binding = FragmentSplashBinding.bind(view)
+        Glide.with(view).load(R.drawable.start).into(binding!!.imageView)
         startAnimation(view)
         if (activity?.intent?.getBooleanExtra(EXTRA_FROM_SETTING, false) == true) {
             findNavController().navigate(R.id.action_splashFragment_to_nameFragment)

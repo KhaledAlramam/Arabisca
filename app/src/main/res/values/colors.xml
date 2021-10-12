@@ -12,6 +12,7 @@
     <color name="etBack">#c1c2cb</color>
     <color name="duskYellow">#FFD400</color>
     <color name="marquee_bk">#80C1C2CB</color>
+    <color name="marquee_bk2">#C1C2CB</color>
     <color name="black_transparent">#80000000</color>
     <color name="black_full_transparent">#00000000</color>
     <color name="half_black">#141414</color>

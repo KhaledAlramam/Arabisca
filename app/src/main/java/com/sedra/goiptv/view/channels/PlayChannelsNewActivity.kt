@@ -75,7 +75,8 @@ class PlayChannelsNewActivity : AppCompatActivity() {
                                 ChannelInPlayerRv.isVisible = !clicked
                             }
                         }
-                        if(!clicked) handleChannelChoosed(liveStream, position)
+//                        if(!clicked)
+                        handleChannelChoosed(liveStream, position)
                     }
                 })
         categoryAdapter = ChannelsCategoryAdapter(
@@ -92,8 +93,28 @@ class PlayChannelsNewActivity : AppCompatActivity() {
                 })
         binding.apply {
             videoView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FILL
-            channelCategoryInPlayer.layoutManager = LinearLayoutManager(this@PlayChannelsNewActivity)
-            ChannelInPlayerRv.layoutManager = LinearLayoutManager(this@PlayChannelsNewActivity)
+            channelCategoryInPlayer.layoutManager =
+                LinearLayoutManager(this@PlayChannelsNewActivity)
+            ChannelInPlayerRv.layoutManager = object : LinearLayoutManager(
+                this@PlayChannelsNewActivity,
+                LinearLayoutManager.VERTICAL,
+                false
+            ) {
+                override fun onInterceptFocusSearch(focused: View, direction: Int): View? {
+                    if (direction == View.FOCUS_DOWN) {
+                        val pos = getPosition(focused)
+                        if (pos == itemCount - 1)
+                            return focused
+                    }
+                    if (direction == View.FOCUS_UP) {
+                        val pos = getPosition(focused)
+                        if (pos == 0)
+                            return focused
+                    }
+                    return super.onInterceptFocusSearch(focused, direction)
+                }
+            }
+
             channelCategoryInPlayer.adapter = categoryAdapter
             ChannelInPlayerRv.adapter = channelsAdapter
             playerParent.setOnClickListener {
