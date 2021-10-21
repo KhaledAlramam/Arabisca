@@ -9,20 +9,31 @@
         <entry key="..\:/Projects/Go/app/src/main/res/drawable/marquee_back_round.xml" value="0.2703125" />
         <entry key="..\:/Projects/Go/app/src/main/res/drawable/round_corners_8.xml" value="0.2703125" />
         <entry key="..\:/Projects/Go/app/src/main/res/drawable/round_selected_stroke_button.xml" value="0.2703125" />
+        <entry key="..\:/Projects/Go/app/src/main/res/drawable/selector_button.xml" value="0.2703125" />
         <entry key="..\:/Projects/Go/app/src/main/res/drawable/selector_white_border.xml" value="0.2564814814814815" />
+        <entry key="..\:/Projects/Go/app/src/main/res/drawable/shape_item_border_white_8.xml" value="0.2703125" />
         <entry key="..\:/Projects/Go/app/src/main/res/layout/activity_department.xml" value="0.264" />
         <entry key="..\:/Projects/Go/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Projects/Go/app/src/main/res/layout/activity_movie_details.xml" value="0.13020833333333334" />
         <entry key="..\:/Projects/Go/app/src/main/res/layout/activity_play_channel.xml" value="0.12360688956433637" />
+        <entry key="..\:/Projects/Go/app/src/main/res/layout/activity_play_video.xml" value="0.18568840579710144" />
+        <entry key="..\:/Projects/Go/app/src/main/res/layout/activity_series_details.xml" value="0.19746376811594202" />
+        <entry key="..\:/Projects/Go/app/src/main/res/layout/activity_series_details_for_tv.xml" value="0.18070652173913043" />
         <entry key="..\:/Projects/Go/app/src/main/res/layout/activity_settings.xml" value="0.264" />
         <entry key="..\:/Projects/Go/app/src/main/res/layout/adapter_channel_category.xml" value="0.12360688956433637" />
-        <entry key="..\:/Projects/Go/app/src/main/res/layout/adapter_channel_category_tv.xml" value="0.12360688956433637" />
+        <entry key="..\:/Projects/Go/app/src/main/res/layout/adapter_channel_category_tv.xml" value="0.2" />
         <entry key="..\:/Projects/Go/app/src/main/res/layout/adapter_channel_item.xml" value="0.264" />
+        <entry key="..\:/Projects/Go/app/src/main/res/layout/adapter_episode_item.xml" value="0.19157608695652173" />
+        <entry key="..\:/Projects/Go/app/src/main/res/layout/custom_playback_control.xml" value="0.19746376811594202" />
+        <entry key="..\:/Projects/Go/app/src/main/res/layout/dialog_play_trailer.xml" value="0.18568840579710144" />
+        <entry key="..\:/Projects/Go/app/src/main/res/layout/dialog_select_server.xml" value="0.19157608695652173" />
         <entry key="..\:/Projects/Go/app/src/main/res/layout/fragment_login.xml" value="0.12360688956433637" />
         <entry key="..\:/Projects/Go/app/src/main/res/layout/fragment_splash.xml" value="0.213768115942029" />
         <entry key="..\:/Projects/Go/app/src/main/res/layout/include_channel_info.xml" value="0.21875" />
+        <entry key="..\:/Projects/Go/app/src/main/res/layout/list_item_account_select.xml" value="0.17753623188405798" />
         <entry key="..\:/Projects/Go/app/src/main/res/layout/list_item_department.xml" value="0.2463768115942029" />
         <entry key="..\:/Projects/Go/app/src/main/res/layout/list_item_main_categories.xml" value="0.12360688956433637" />
+        <entry key="..\:/Projects/Go/app/src/main/res/layout/list_item_movie_series.xml" value="0.19746376811594202" />
         <entry key="..\:/Projects/Go/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.14635416666666667" />
       </map>
     </option>

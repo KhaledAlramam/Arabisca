@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity() {
             restartApp.setOnClickListener {
                 ProcessPhoenix.triggerRebirth(this@MainActivity)
             }
-            userName = preferences.getString(PREF_NAME, "User")
+            userName = userInfo.username ?: "User"
             val txt = "${
                 preferences.getString(
                     PREF_BANNER,
@@ -189,8 +189,8 @@ class MainActivity : AppCompatActivity() {
             layoutManager =
                 LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
             setHasFixedSize(true)
+            scrollToPosition(0)
         }
-
     }
 
 

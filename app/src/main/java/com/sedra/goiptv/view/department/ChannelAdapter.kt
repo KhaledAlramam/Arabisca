@@ -52,6 +52,9 @@ class ChannelAdapter(
             channelNumberList.text = "${position + 1}"
         }
         itemBinding.root.setOnFocusChangeListener { v, hasFocus ->
+            selectedItemIndex = position
+            listener.onClick(v, true, currentChannel, position)
+            notifyDataSetChanged()
         }
         if (selectedItemIndex == position) {
             itemBinding.imageView15.isVisible = true
@@ -68,4 +71,10 @@ class ChannelAdapter(
             notifyDataSetChanged()
         }
     }
+
+    override fun submitList(list: MutableList<LiveStream>?) {
+        super.submitList(list)
+        selectedItemIndex = 0
+    }
+
 }

@@ -1,9 +1,6 @@
 package com.sedra.goiptv.view.movie
 
-import android.content.ActivityNotFoundException
-import android.content.Intent
 import android.content.SharedPreferences
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -17,6 +14,7 @@ import com.sedra.goiptv.utils.GoTo
 import com.sedra.goiptv.utils.MOVIE_ID_PARAMETER
 import com.sedra.goiptv.utils.PREF_APP_IMG
 import com.sedra.goiptv.utils.Status.*
+import com.sedra.goiptv.utils.TrailerDialog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlin.math.pow
@@ -87,14 +85,15 @@ class MovieDetailsActivity : AppCompatActivity() {
                 .into(binding.imageView13)
             playTrailer.setOnClickListener {
                 val id = movieDetailsResponse.info.youtube_trailer
-                val webIntent =
-                    Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=$id"))
-                val appIntent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$id"));
-                try {
-                    startActivity(appIntent)
-                } catch (ex: ActivityNotFoundException) {
-                    startActivity(webIntent)
-                }
+//                val webIntent =
+//                    Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=$id"))
+//                val appIntent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$id"));
+//                try {
+//                    startActivity(appIntent)
+//                } catch (ex: ActivityNotFoundException) {
+//                    startActivity(webIntent)
+//                }
+                TrailerDialog(id, this@MovieDetailsActivity).show()
             }
             movieDetails = movieDetailsResponse
             playMovie.setOnClickListener {

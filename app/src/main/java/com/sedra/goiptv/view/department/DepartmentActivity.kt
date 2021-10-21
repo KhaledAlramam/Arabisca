@@ -120,7 +120,7 @@ class DepartmentActivity : AppCompatActivity() {
     private fun manipulateSeriesData(categories: List<Category>, list: List<Series>) {
         seriesList.clear()
         seriesList.addAll(list)
-        catList.add(Category("-1", "All Series", -1, series = seriesList))
+//        catList.add(Category("-1", "All Series", -1, series = seriesList))
         categories.forEach { loopedCategory ->
             loopedCategory.series = list
                 .filter { series -> series.category_id == loopedCategory.category_id }
@@ -147,7 +147,7 @@ class DepartmentActivity : AppCompatActivity() {
         }
         gridSeriesAdapter.submitList(catList[0].series)
         binding.departmentSearch.addTextChangedListener { query ->
-            gridSeriesAdapter.submitList(catList.firstOrNull()?.series?.filter {
+            gridSeriesAdapter.submitList(seriesList.filter {
                 it.name.contains(
                     query.toString(),
                     true
@@ -162,7 +162,7 @@ class DepartmentActivity : AppCompatActivity() {
         }
         binding.departmentTitleRv.requestFocus()
         binding.departmentTitleRv.smoothScrollToPosition(0)
-        departmentTitleAdapter.notifyItemChanged(0);
+        departmentTitleAdapter.notifyItemChanged(0)
     }
 
     private fun getMoviesData() {
@@ -213,7 +213,7 @@ class DepartmentActivity : AppCompatActivity() {
     private fun manipulateData(categories: List<Category>, data: List<Movie>) {
         moviesList.clear()
         moviesList.addAll(data)
-        catList.add(Category("-1", "All Movies", -1, data))
+//        catList.add(Category("-1", "All Movies", -1, data))
         categories.forEach { loopedCategory ->
             loopedCategory.movies = data
                 .filter { movie -> movie.category_id == loopedCategory.category_id }
@@ -250,7 +250,7 @@ class DepartmentActivity : AppCompatActivity() {
                 })
                 return@addTextChangedListener
             }
-            gridAdapter.submitList(catList.firstOrNull()?.movies?.filter {
+            gridAdapter.submitList(moviesList.filter {
                 it.name.contains(
                     query.toString(),
                     true
@@ -265,7 +265,7 @@ class DepartmentActivity : AppCompatActivity() {
         }
         binding.departmentTitleRv.requestFocus()
         binding.departmentTitleRv.smoothScrollToPosition(0)
-        departmentTitleAdapter.notifyItemChanged(0);
+        departmentTitleAdapter.notifyItemChanged(0)
 
     }
 

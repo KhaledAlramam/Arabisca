@@ -3,6 +3,7 @@ package com.sedra.goiptv.view.movie
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.android.exoplayer2.MediaItem
@@ -23,8 +24,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class PlayMovieActivity : AppCompatActivity() {
 
-    var _binding: ActivityPlayVideoBinding? = null
-    val binding by lazy { _binding!! }
+    lateinit var binding: ActivityPlayVideoBinding
     var player: SimpleExoPlayer? = null
     private var playWhenReady = true
     private var currentWindow = 0
@@ -38,8 +38,8 @@ class PlayMovieActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = DataBindingUtil.setContentView(this, R.layout.activity_play_video)
-        url = preferences.getString(PREF_URL,"") ?: ""
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_play_video)
+        url = preferences.getString(PREF_URL, "") ?: ""
         setupUI()
     }
 
@@ -122,7 +122,7 @@ class PlayMovieActivity : AppCompatActivity() {
                     .setTrackSelector(trackSelector)
                     .build()
         }
-        _binding?.videoView?.player = player
+        binding?.videoView?.player = player
         Log.e("TAG", "initializePlayer: ${
             "${link}movie/${userInfo?.username}/${userInfo?.password}/${
                 intent.getIntExtra(STREAM_ID_INTENT_EXTRA, 0)
@@ -164,6 +164,11 @@ class PlayMovieActivity : AppCompatActivity() {
             player!!.release()
             player = null
         }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        binding.videoView.showController()
+        return super.onKeyDown(keyCode, event)
     }
 
 }

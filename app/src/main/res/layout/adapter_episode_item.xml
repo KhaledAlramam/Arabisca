@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/mPadding"
-        android:background="@drawable/selector_black"
+        android:background="@drawable/selector_white_border"
+        android:padding="2dp"
         android:clickable="true"
         android:focusable="true">
 

@@ -121,9 +121,9 @@
             android:padding="8dp"
             android:background="@drawable/back_white"
             android:layout_marginHorizontal="16dp"
-            android:textAlignment="viewStart"
+            android:textAlignment="center"
             android:gravity="center_vertical"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/textView3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView3"
@@ -141,7 +141,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView4"
             tools:listitem="@layout/list_item_main_categories"
-            tools:orientation="horizontal" />
+            tools:orientation="horizontal">
+
+            <requestFocus />
+        </androidx.recyclerview.widget.RecyclerView>
 
         <ImageView
             android:id="@+id/restartApp"

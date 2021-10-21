@@ -12,7 +12,6 @@ import com.sedra.goiptv.R
 import com.sedra.goiptv.data.model.Movie
 import com.sedra.goiptv.databinding.ListItemMovieSeriesBinding
 import com.sedra.goiptv.utils.MOVIE_ID_PARAMETER
-import com.sedra.goiptv.utils.STREAM_EXT
 import com.sedra.goiptv.view.movie.MovieDetailsActivity
 
 class MovieAdapter : ListAdapter<Movie, CustomViewHolder>(Companion) {
@@ -64,4 +63,5 @@ class MovieAdapter : ListAdapter<Movie, CustomViewHolder>(Companion) {
             it.context.startActivity(intent)
         }
     }
+
 }

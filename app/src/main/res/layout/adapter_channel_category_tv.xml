@@ -37,8 +37,10 @@
             android:padding="8dp"
             android:maxLines="1"
             android:text="@{category.category_name}"
-            android:textSize="@dimen/mText"
+            android:fontFamily="@font/mont_light"
             android:textColor="@color/white"
+
+            android:textSize="20sp"
             android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

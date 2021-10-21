@@ -83,6 +83,12 @@ class SectionsAdapter(
         return !password.isNullOrEmpty()
     }
 
+    override fun onViewAttachedToWindow(holder: CustomViewHolder) {
+        super.onViewAttachedToWindow(holder)
+        if (holder.adapterPosition == 0)
+            holder.binding.root.requestFocus()
+    }
+
     private fun handleNavigation(context: Context, currentSection: Section) {
         if (currentSection.id < 0)
             when (currentSection.id) {
