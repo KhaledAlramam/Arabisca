@@ -15,6 +15,7 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:fontFamily">@font/mont_medium</item>
+        <item name="fontFamily">@font/mont_light</item>
 
     </style>
 </resources>

@@ -2,14 +2,16 @@ package com.sedra.goiptv.view.department
 
 import android.app.AlertDialog
 import android.app.UiModeManager
-import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
@@ -37,6 +39,7 @@ class DepartmentActivity : AppCompatActivity() {
     private val gridAdapter = MovieAdapter()
     private val gridSeriesAdapter = SeriesAdapter()
     var progressDialog: AlertDialog? = null
+
     @Inject
     lateinit var preferences: SharedPreferences
 
@@ -45,15 +48,31 @@ class DepartmentActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_department)
         progressDialog = SpotsDialog.Builder()
-                .setContext(this)
-                .setMessage("Please Wait...")
-                .setCancelable(false)
-                .setTheme(R.style.CustomProgressDialogTheme)
-                .build()
-        val imageLink =  preferences.getString(
+            .setContext(this)
+            .setMessage("Please Wait...")
+            .setCancelable(false)
+            .setTheme(R.style.CustomProgressDialogTheme)
+            .build()
+        val imageLink = preferences.getString(
             PREF_APP_IMG,
             ""
         )
+        binding.departmentSearch.setOnEditorActionListener(object :
+            TextView.OnEditorActionListener {
+            override fun onEditorAction(p0: TextView?, actionId: Int, event: KeyEvent): Boolean {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH
+                    || actionId == EditorInfo.IME_ACTION_DONE
+                    || event.action == KeyEvent.ACTION_DOWN
+                    && event.keyCode == KeyEvent.KEYCODE_ENTER
+                ) {
+                    hideKeyboard()
+                    return true
+                }
+                // Return true if you have consumed the action, else false.
+                return false
+            }
+
+        })
         Glide.with(this)
             .load(imageLink)
             .into(binding.imageView12)
@@ -68,7 +87,8 @@ class DepartmentActivity : AppCompatActivity() {
                 getSeriesData()
                 binding.categoryName = getString(R.string.series_)
 
-            }else -> {
+            }
+            else -> {
                 finish()
             }
         }
@@ -154,12 +174,7 @@ class DepartmentActivity : AppCompatActivity() {
                 )
             })
         }
-        val view = this.currentFocus
-        if (view != null) {
-            val imm: InputMethodManager =
-                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(view.windowToken, 0)
-        }
+        hideKeyboard()
         binding.departmentTitleRv.requestFocus()
         binding.departmentTitleRv.smoothScrollToPosition(0)
         departmentTitleAdapter.notifyItemChanged(0)
@@ -257,16 +272,20 @@ class DepartmentActivity : AppCompatActivity() {
                 )
             })
         }
-        val view = this.currentFocus
-        if (view != null) {
-            val imm: InputMethodManager =
-                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(view.windowToken, 0)
-        }
+        hideKeyboard()
         binding.departmentTitleRv.requestFocus()
         binding.departmentTitleRv.smoothScrollToPosition(0)
         departmentTitleAdapter.notifyItemChanged(0)
 
+    }
+
+    private fun hideKeyboard() {
+        val view = this.currentFocus
+        if (view != null) {
+            val imm: InputMethodManager =
+                getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 
     companion object {
@@ -282,8 +301,8 @@ class DepartmentActivity : AppCompatActivity() {
         if ((getSystemService(UI_MODE_SERVICE) as UiModeManager).currentModeType == Configuration.UI_MODE_TYPE_TELEVISION) {
             isAndroidTv = true
         } else if (packageManager!!
-                        .hasSystemFeature(PackageManager.FEATURE_TELEVISION) || packageManager!!
-                        .hasSystemFeature(PackageManager.FEATURE_LEANBACK)
+                .hasSystemFeature(PackageManager.FEATURE_TELEVISION) || packageManager!!
+                .hasSystemFeature(PackageManager.FEATURE_LEANBACK)
         ) {
             isAndroidTv = true
         }

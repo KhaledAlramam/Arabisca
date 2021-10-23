@@ -6,8 +6,8 @@
 
     <WebView
         android:id="@+id/youtubeWebView"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_width="400dp"
+        android:layout_height="300dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:.5"
         app:layout_constraintEnd_toEndOf="parent"

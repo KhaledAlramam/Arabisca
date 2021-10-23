@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/sPadding"
-        android:background="@drawable/channels_selector"
+        android:background="@drawable/selector_white_border"
         android:clickable="true"
         android:focusable="true">
 

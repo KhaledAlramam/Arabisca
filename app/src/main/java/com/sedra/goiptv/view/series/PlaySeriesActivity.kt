@@ -2,6 +2,7 @@ package com.sedra.goiptv.view.series
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.android.exoplayer2.MediaItem
@@ -24,8 +25,7 @@ private const val TAG = "PlaySeriesActivity"
 @AndroidEntryPoint
 class PlaySeriesActivity : AppCompatActivity() {
 
-    var _binding: ActivityPlayVideoBinding? = null
-    val binding by lazy { _binding!! }
+    lateinit var binding: ActivityPlayVideoBinding
     var player: SimpleExoPlayer? = null
     private var playWhenReady = true
     private var currentWindow = 0
@@ -38,7 +38,7 @@ class PlaySeriesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = DataBindingUtil.setContentView(this, R.layout.activity_play_video)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_play_video)
         setupUI()
     }
 
@@ -159,8 +159,10 @@ class PlaySeriesActivity : AppCompatActivity() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        binding.videoView.showController()
+        return super.onKeyDown(keyCode, event)
     }
+
+
 }

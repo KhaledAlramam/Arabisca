@@ -18,7 +18,7 @@ class TrailerDialog(val trailerLink: String, context: Context) : Dialog(context)
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.dialog_play_trailer)
-        window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        window?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         val webView = findViewById<WebView>(R.id.youtubeWebView)
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(
@@ -28,6 +28,7 @@ class TrailerDialog(val trailerLink: String, context: Context) : Dialog(context)
                 return false
             }
         }
+        webView.requestFocus()
         val setting = webView.settings
         setting.javaScriptEnabled = true
         setting.loadWithOverviewMode = true
@@ -37,6 +38,7 @@ class TrailerDialog(val trailerLink: String, context: Context) : Dialog(context)
 
 
     override fun setOnDismissListener(listener: DialogInterface.OnDismissListener?) {
+        findViewById<WebView>(R.id.youtubeWebView).onPause()
         super.setOnDismissListener(listener)
     }
 
