@@ -80,8 +80,11 @@ class PlayChannelsNewActivity : AppCompatActivity() {
                             ChannelInPlayerRv.isVisible = !clicked
                         }
                     }
-//                        if(!clicked)
-                    handleChannelChoosed(liveStream, position)
+                    if (!clicked)
+                        handleChannelChoosed(liveStream, position)
+//                    binding.ChannelInPlayerRv.post {
+//                        channelsAdapter.notifyDataSetChanged()
+//                    }
                 }
             })
         categoryAdapter = ChannelsCategoryAdapter(

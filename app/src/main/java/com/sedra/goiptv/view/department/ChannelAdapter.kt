@@ -12,8 +12,8 @@ import com.sedra.goiptv.databinding.AdapterChannelItemBinding
 import com.sedra.goiptv.utils.ChannelOnClick
 
 class ChannelAdapter(
-        val activity: Activity,
-        val listener: ChannelOnClick,
+    val activity: Activity,
+    val listener: ChannelOnClick,
 ) : ListAdapter<LiveStream, CustomViewHolder>(Companion) {
 
     var selectedItemIndex = 0
@@ -51,30 +51,25 @@ class ChannelAdapter(
             )
             channelNumberList.text = "${position + 1}"
         }
+//        itemBinding.imageView15.isVisible = selectedItemIndex == position
         itemBinding.root.setOnFocusChangeListener { v, hasFocus ->
-            selectedItemIndex = position
-            listener.onClick(v, true, currentChannel, position)
-            notifyDataSetChanged()
-        }
-        if (selectedItemIndex == position) {
-            itemBinding.imageView15.isVisible = true
-        } else {
-            holder.binding.root.setOnFocusChangeListener { v, hasFocus ->
+            if (selectedItemIndex == position) {
+                itemBinding.imageView15.isVisible = true
+            } else {
                 itemBinding.imageView15.isVisible = hasFocus
             }
-
+            selectedItemIndex = position
+            listener.onClick(v, false, currentChannel, position)
         }
 
         itemBinding.root.setOnClickListener { v ->
-            selectedItemIndex = position
             listener.onClick(v, true, currentChannel, position)
-            notifyDataSetChanged()
         }
     }
 
     override fun submitList(list: MutableList<LiveStream>?) {
-        super.submitList(list)
         selectedItemIndex = 0
+        super.submitList(list)
     }
 
 }
