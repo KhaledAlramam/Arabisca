@@ -12,6 +12,7 @@ import com.sedra.goiptv.view.customsection.CustomSeriesActivity
 import com.sedra.goiptv.view.customsection.CustomSeriesDetailsActivity
 import com.sedra.goiptv.view.customsection.PlayCustomChannelsActivity
 import com.sedra.goiptv.view.department.DepartmentActivity
+import com.sedra.goiptv.view.department.FavouritesActivity
 import com.sedra.goiptv.view.movie.MovieDetailsActivity
 import com.sedra.goiptv.view.movie.PlayMovieActivity
 import com.sedra.goiptv.view.radio.RadioActivity
@@ -43,7 +44,14 @@ object GoTo {
         i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
         context.startActivity(i)
     }
-    fun goToDepartmentActivity(context: Context, id: Int, name: String){
+
+    fun favourites(context: Context) {
+        val i = Intent(context, FavouritesActivity::class.java)
+        i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+        context.startActivity(i)
+    }
+
+    fun goToDepartmentActivity(context: Context, id: Int, name: String) {
         val i = Intent(context, DepartmentActivity::class.java)
         i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
         i.putExtra(EXTRA_TYPE_ID, id)

@@ -10,7 +10,7 @@
     <string name="space">\u0020</string>
     <string name="cast">Cast: %s</string>
     <string name="season">Season %s</string>
-    <string name="remove_from_fav">حذف المفضلة</string>
+    <string name="remove_from_fav">Remove from favourite</string>
     <string name="default_notification_channel_id">cobraNotificationChannel</string>
     <string name="restart_app_to_apply_server">يجب اعادة تشغيل التطبيق لتفعيل التغيير</string>
     <string name="movies">Movies</string>

@@ -47,10 +47,10 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         super.onViewCreated(view, savedInstanceState)
         val now = System.currentTimeMillis() / 1000L
         Log.e("TAG", "onViewCreated: $now")
-        if (now > 1635965036) {
-            activity?.finish()
-            return
-        }
+//        if (now > 1635965036) {
+//            activity?.finish()
+//            return
+//        }
         binding = FragmentSplashBinding.bind(view)
         Glide.with(view).load(R.drawable.start).into(binding!!.imageView)
         startAnimation(view)

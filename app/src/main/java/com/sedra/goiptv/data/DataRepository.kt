@@ -1,9 +1,13 @@
 package com.sedra.goiptv.data
 
+import android.content.Context
+import com.sedra.goiptv.data.db.ArabiscaDatabase
+import com.sedra.goiptv.data.db.FavouriteItem
 import com.sedra.goiptv.data.remote.ApiService
 import com.sedra.goiptv.di.BaseApiService
 import com.sedra.goiptv.di.IptvApiService
 import com.sedra.goiptv.utils.*
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 
@@ -43,38 +47,38 @@ class DataRepository @Inject constructor(
             iptvApiService.getSelectedCategories(userName, password, GET_SERIES_CATEGORIES_ACTION)
 
     suspend fun getAllChannels(userName: String?, password: String?) =
-            iptvApiService.getLiveStreams(userName, password, GET_LIVE_STREAMS_ACTION)
+        iptvApiService.getLiveStreams(userName, password, GET_LIVE_STREAMS_ACTION)
 
     suspend fun getChannelsCategories(userName: String?, password: String?) =
-            iptvApiService.getSelectedCategories(userName, password, GET_LIVE_CATEGORIES_ACTION)
+        iptvApiService.getSelectedCategories(userName, password, GET_LIVE_CATEGORIES_ACTION)
 
     suspend fun getEpg(userName: String?, password: String?, streamId: Int, limit: Int) =
-            iptvApiService.getEpg(userName, password, GET_EPG_ACTION, streamId, limit)
+        iptvApiService.getEpg(userName, password, GET_EPG_ACTION, streamId, limit)
 
 
-//    companion object {
-//        var loginDatabase: CobraDatabase? = null
-//
-//        private fun initializeDB(context: Context): CobraDatabase {
-//            return CobraDatabase.getDb(context)
-//        }
-//
-//        fun getAllFavourites(context: Context): Flow<List<FavouriteItem>> {
-//            loginDatabase = initializeDB(context)
-//            return loginDatabase!!.favouritesDao().getAllFavourites()
-//        }
-//
-//        suspend fun addFavourite(context: Context, item: FavouriteItem) {
-//            loginDatabase = initializeDB(context)
-//            return loginDatabase!!.favouritesDao().addFavourite(item)
-//        }
-//
-//        suspend fun removeFavourite(context: Context, item: FavouriteItem) {
-//            loginDatabase = initializeDB(context)
-//            return loginDatabase!!.favouritesDao().removeFavourite(item)
-//        }
-//
-//    }
+    companion object {
+        var loginDatabase: ArabiscaDatabase? = null
+
+        private fun initializeDB(context: Context): ArabiscaDatabase {
+            return ArabiscaDatabase.getDb(context)
+        }
+
+        fun getAllFavourites(context: Context): Flow<List<FavouriteItem>> {
+            loginDatabase = initializeDB(context)
+            return loginDatabase!!.favouritesDao().getAllFavourites()
+        }
+
+        suspend fun addFavourite(context: Context, item: FavouriteItem) {
+            loginDatabase = initializeDB(context)
+            return loginDatabase!!.favouritesDao().addFavourite(item)
+        }
+
+        suspend fun removeFavourite(context: Context, item: FavouriteItem) {
+            loginDatabase = initializeDB(context)
+            return loginDatabase!!.favouritesDao().removeFavourite(item)
+        }
+
+    }
 
 
 }

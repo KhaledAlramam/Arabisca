@@ -179,7 +179,8 @@ class MainActivity : AppCompatActivity() {
             Section(-3, "", getString(R.string.channels), resourceId = R.drawable.go_live),
             Section(-1, "", getString(R.string.movies), resourceId = R.drawable.go_movies),
             Section(-2, "", getString(R.string.series), resourceId = R.drawable.go_series),
-            Section(-5, "", getString(R.string.catch_up), resourceId = R.drawable.time_small)
+            Section(-5, "", getString(R.string.catch_up), resourceId = R.drawable.time_small),
+            Section(-6, "", "Favourites", resourceId = R.drawable.time_small),
         ) + sections.reversed()
 //        + Section(-4, "", getString(R.string.setting))
 

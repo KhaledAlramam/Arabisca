@@ -138,18 +138,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
-            android:minHeight="48dp"
             android:background="@drawable/black_bk_selector"
-            android:text="@string/play_now"
             android:focusable="true"
+            android:minHeight="48dp"
             android:paddingHorizontal="32dp"
+            android:text="@string/play_now"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/cardView">
+            app:layout_constraintStart_toStartOf="@+id/guideline11">
 
             <requestFocus />
         </androidx.appcompat.widget.AppCompatButton>
+
+        <ImageView
+            android:id="@+id/favourite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/black_bk_selector"
+            android:focusable="true"
+            android:minHeight="48dp"
+            android:paddingHorizontal="32dp"
+            android:src="@drawable/ic_favorite"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/playMovie">
+
+            <requestFocus />
+        </ImageView>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/playTrailer"

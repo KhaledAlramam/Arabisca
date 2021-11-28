@@ -101,6 +101,9 @@ class SectionsAdapter(
                 DepartmentActivity.CATCH_UP_ID -> {
                     GoTo.catchUp(context)
                 }
+                DepartmentActivity.FAVOURITES_ID -> {
+                    GoTo.favourites(context)
+                }
                 else -> GoTo.goToDepartmentActivity(context, currentSection.id, currentSection.name)
             }
         else {

@@ -115,6 +115,7 @@
             android:name=".view.customsection.CustomSeriesDetailsActivity"
             android:configChanges="orientation"
             android:screenOrientation="landscape" />
+        <activity android:name=".view.department.FavouritesActivity" />
     </application>
 
 </manifest>

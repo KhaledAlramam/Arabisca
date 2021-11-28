@@ -10,7 +10,7 @@ interface ApiService {
         const val BASE_URL = "http://mahmoude28.sg-host.com/"
     }
 
-    @POST("/go/public/api/auth/login")
+    @POST("/arabisk/public/api/auth/login")
     @Headers("Accept: application/json")
     @FormUrlEncoded
     suspend fun getAccounts(
@@ -18,47 +18,47 @@ interface ApiService {
         @Field("mac_address") macAdd: String
     ): GetAccountsResponse
 
-    @GET("/go/public/api/sections")
+    @GET("/arabisk/public/api/sections")
     suspend fun getSections(): SectionsResponse
 
 
-    @GET("/go/public/api/check-client/{id}")
+    @GET("/arabisk/public/api/check-client/{id}")
     suspend fun checkAccount(
         @Path("id") id: Int
     ): ClientCheckResponse
 
-    @GET("/go/public/api/versions")
+    @GET("/arabisk/public/api/versions")
     suspend fun getVersions(): VersionsResponse
 
 
-    @GET("/go/public/api/settings")
+    @GET("/arabisk/public/api/settings")
     suspend fun getSettings(): SettingsResponse
 
 
-    @GET("/go/public/api/subsections/section/{id}}")
+    @GET("/arabisk/public/api/subsections/section/{id}}")
     suspend fun getSubSections(
             @Path("id") id: Int
     ): SubSectionsResponse
 
 
-    @GET("/go/public/api/series/subsection/{id}}")
+    @GET("/arabisk/public/api/series/subsection/{id}}")
     suspend fun getSeriesFromSubSections(
             @Path("id") id: Int
     ): ItemsResponse
 
 
-    @GET("/go/public/api/items/season/{id}}")
+    @GET("/arabisk/public/api/items/season/{id}}")
     suspend fun getSeasonItems(
             @Path("id") id: Int
     ): ItemsResponse
 
 
-    @GET("/go/public/api/seasons/series/{id}}")
+    @GET("/arabisk/public/api/seasons/series/{id}}")
     suspend fun getSeriesSeasons(
             @Path("id") id: Int
     ): ItemsResponse
 
-    @GET("/go/public/api/items/subsection/{id}}")
+    @GET("/arabisk/public/api/items/subsection/{id}}")
     suspend fun getItems(
             @Path("id") id: Int
     ): ItemsResponse

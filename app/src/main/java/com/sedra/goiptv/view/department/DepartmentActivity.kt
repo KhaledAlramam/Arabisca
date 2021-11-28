@@ -294,6 +294,7 @@ class DepartmentActivity : AppCompatActivity() {
         const val CHANNELS_ID = -3
         const val SETTING_ID = -4
         const val CATCH_UP_ID = -5
+        const val FAVOURITES_ID = -6
     }
 
     private fun checkTv(): Boolean {
